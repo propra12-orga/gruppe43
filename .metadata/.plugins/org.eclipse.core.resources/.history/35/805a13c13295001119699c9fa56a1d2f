@@ -30,7 +30,7 @@ public class BombermanLevel{
 	public BombermanLevel(int width, int height){
         //Berechne die Dimension des Feldes mit Hilfe der Pixel
 		this.width = width/DIM;
-		this.height = height/DIM;
+		this.height = height/DIM;A
         //erstelle ein leeres Spielfeld
 		tiles = new short[this.width][this.height];
 		fillRandomly();}
