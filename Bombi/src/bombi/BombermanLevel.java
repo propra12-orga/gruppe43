@@ -55,10 +55,14 @@ public class BombermanLevel {
                 else if ((j == 2 || j == height - 3) && ((i >= 0 && i < 2) || (i > width - 3 && i <= width - 1)))
                     tiles[i][j] = STONE;
 
-                // fülle alle andere Blöcke zufällig mit Steinen
-                else if ((i >= 3 && i <= width - 4)
-                        || (j >= 3 && j <= height - 4))
-                    tiles[i][j] = (short) (Math.random() * 2);
+                // fülle alle anderen Blöcke (außer den Startzonen) zufällig mit Steinen
+                else if ((i >= 3 && i <= width - 4) || (j >= 3 && j <= height - 4)){
+                    if(Math.random()<=0.75)//75% Chance für Steine
+                        tiles[i][j] = STONE;
+                    //das folgende ist auskommentiert, da Blöcke anfangs sowieso den Wert 0 besitzen.
+                    //else
+                    //    tiles[i][j] = GRASS;
+                    }
             }
         }
     }
