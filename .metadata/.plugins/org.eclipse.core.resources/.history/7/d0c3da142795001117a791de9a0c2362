@@ -1,0 +1,45 @@
+import java.awt.Color;
+import java.awt.Graphics;
+
+
+public class BombermanLevel {
+	
+	private short[][] tiles;
+	private int width, height;
+	
+	public BombermanLevel(int width, int height){
+		this.width = width;
+		this.height = height;
+		tiles = new short[width][height];
+		fillRandomly();}
+
+	private void createBorder(){
+		
+	}
+	
+	private void fillRandomly() {
+		for(int i=0;i<width;i++)
+			for(int j=0;j<height;j++){
+				//tiles[i][j]=(short)(Math.random()*2);
+				if((j%2 == 1) && (i%2 == 1))
+					tiles[i][j] = 1;
+				}
+	}
+
+	public void draw(Graphics g) {
+		for(int i=0;i<width;i++){
+			for(int j=0;j<height;j++){
+				if(tiles[i][j]==0){
+					g.setColor(Color.GREEN);
+					g.fillRect(i*20,j*20,20,20);}
+				else{
+					g.setColor(Color.RED);
+					g.fillRect(i*20,j*20,20,20);}
+			}
+			
+		}
+		
+	}
+
+	
+}

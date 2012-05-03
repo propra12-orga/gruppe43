@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 public class BombiGui extends JComponent{
 
 	BombermanLevel bLevel;
-	private static final int WIDTH = 840;
+	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	
 	public BombiGui(){

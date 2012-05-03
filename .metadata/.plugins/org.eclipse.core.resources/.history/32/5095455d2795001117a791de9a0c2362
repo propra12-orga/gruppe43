@@ -8,11 +8,11 @@ import javax.swing.JComponent;
 public class BombiGui extends JComponent{
 
 	BombermanLevel bLevel;
-	private static final int WIDTH = 840;
+	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
 	
 	public BombiGui(){
-		bLevel = new BombermanLevel(WIDTH,HEIGHT);}
+		bLevel = new BombermanLevel(39,29);}
 	
 	@Override
 	public void paintComponent(Graphics g){
