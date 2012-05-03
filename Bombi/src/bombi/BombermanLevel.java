@@ -79,18 +79,17 @@ public class BombermanLevel {
     }
 
     private void drawGrass(int posX, int posY, Graphics g) {
-        g.setColor(Color.GREEN);
-        g.fillRect(posX * DIM, posY * DIM, DIM, DIM);
+//        g.setColor(Color.GREEN);
+//        g.fillRect(posX * DIM, posY * DIM, DIM, DIM);
+        Texture.GRASS.draw(posX*DIM,posY*DIM,DIM,DIM,g);
     }
 
     private void drawStone(int posX, int posY, Graphics g) {
-        g.setColor(Color.GRAY);
-        g.fillRect(posX * DIM, posY * DIM, DIM, DIM);
+        Texture.STONE.draw(posX*DIM,posY*DIM,DIM,DIM,g);
     }
 
     private void drawIndestructible(int posX, int posY, Graphics g) {
-        g.setColor(Color.DARK_GRAY);
-        g.fillRect(posX * DIM, posY * DIM, DIM, DIM);
+        Texture.BEDROCK.draw(posX*DIM,posY*DIM,DIM,DIM,g);
     }
 
 }// Ende der Klasse BombermanLevel
