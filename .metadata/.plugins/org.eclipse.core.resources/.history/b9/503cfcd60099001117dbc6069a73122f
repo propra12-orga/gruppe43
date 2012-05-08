@@ -1,0 +1,101 @@
+package bombi;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+
+
+public class BombiGui extends JComponent implements Runnable{
+
+	BombermanLevel bLevel;
+	private static final int WIDTH = 840;
+	private static final int HEIGHT = 600;
+	private Image i;
+	private Graphics doubleG;
+	int x= 0;
+	int y=0;
+	int dx=1;
+	int dy=1;
+	int radius=10;
+	
+	
+	public BombiGui(){
+	        super();
+	        this.setSize(WIDTH,HEIGHT);
+		bLevel = new BombermanLevel(WIDTH,HEIGHT);}
+	
+
+	@Override
+	public void update(Graphics g) {
+		if(i==null){
+			i = createImage(this.getSize().width, this.getSize().height);
+			doubleG= i.getGraphics();
+		}
+		
+		doubleG.setColor(getBackground());
+		doubleG.fillRect(0, 0, this.getSize().width, this.getSize().height);
+        doubleG.setColor(getForeground());
+        paintComponent(doubleG);
+        
+        g.drawImage(i, 0, 0, this);
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponents(g);
+		bLevel.draw(g);
+	}
+	
+	public void paint(Graphics g){
+		g.setColor(Color.RED);
+		g.fillOval(x, y, radius, radius);
+	}
+	/**
+	 * Methode, welche die bevorzugte Größe dieser JComponent
+	 * zurück gibt.
+	 * @return: Dimension WIDTH x HEIGHT, welche fest codiert sind.
+	 */
+	@Override
+	public Dimension getPreferredSize(){
+	    return new Dimension(WIDTH,HEIGHT);}
+	
+	/**
+	 * Startet das Programm ;-)
+	 * @param args: Bisher werden alle Parameter ignoriert.
+	 */
+	public static void main(String[] args){
+		//Fenster erstellen
+		JFrame frame = new JFrame();
+		frame.setTitle("Bombi");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//BorderLayout hilft beim automatischen Anpassen der Größe
+		frame.setLayout(new BorderLayout());		
+		frame.add(new BombiGui(),BorderLayout.CENTER);
+		frame.pack(); //passt die Größe dem Inhalt an
+		
+		//zentriert das Fenster
+		frame.setLocationRelativeTo(null);
+		
+		frame.setVisible(true);}
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		while(true){
+			x += dx;
+			y += dy;
+			paint();
+			try {
+				Thread.sleep(17);
+			} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}

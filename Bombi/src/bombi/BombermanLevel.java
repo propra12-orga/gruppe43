@@ -1,6 +1,6 @@
 package bombi;
-import java.awt.Color;
 import java.awt.Graphics;
+
 
 /**
  * Diese Klasse erzeugt Objekte, welche als Spielfeld interpretiert werden.
@@ -21,14 +21,14 @@ public class BombermanLevel {
     private short[][]          tiles;
     // Dimension des obigen Arrays
     private int                width, height;
-
+    
     /**
      * Erzeugt ein neues Spielfeld.
      * 
      * @param width:  Breite des Spielfelds in Pixel
      * @param height: Höhe des Spielfelds in Pixel
      **/
-    public BombermanLevel(int width, int height) {
+    public BombermanLevel(int width, int height) {  
         // Berechne die Dimension des Feldes mit Hilfe der Pixel
         this.width = width / DIM;
         this.height = height / DIM;
@@ -64,8 +64,10 @@ public class BombermanLevel {
                     //    tiles[i][j] = GRASS;
                     }
             }
-        }
     }
+    }
+    
+    
 
     public void draw(Graphics g) {
         for (int i = 0; i < width; i++) {
@@ -94,6 +96,6 @@ public class BombermanLevel {
 
     private void drawIndestructible(int posX, int posY, Graphics g) {
         Texture.BEDROCK.draw(posX*DIM,posY*DIM,DIM,DIM,g);
-    }
-
+    }  
+  
 }// Ende der Klasse BombermanLevel
