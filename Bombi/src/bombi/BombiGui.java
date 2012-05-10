@@ -96,7 +96,7 @@ public class BombiGui extends JComponent implements Runnable{
         	}
         
         // zeichne das Lvel
-        bLevel.draw(dbg);
+        bLevel.draw(dbg);        
         
         // Eine kleine rote Kugel die zum testen der
         // Bewegung und des Double Bufferings gedacht ist
@@ -108,9 +108,11 @@ public class BombiGui extends JComponent implements Runnable{
         	Bombe1.draw(dbg);}
     }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(dbImage, 0, 0, this);        
+    public void paintGame() {
+    	Graphics2D g = (Graphics2D) this.getGraphics();
+    	if(g != null){
+    		g.drawImage(dbImage, 0, 0, this);
+        	g.dispose();}
     }
 
     /**
@@ -153,7 +155,7 @@ public class BombiGui extends JComponent implements Runnable{
 		long beforeUpdate, updateTime;
 		while(running){
 			
-			beforeUpdate = System.currentTimeMillis();
+			beforeUpdate = System.nanoTime();
 			
 			
 			//update alle Objekte, Spieler etc
@@ -162,18 +164,20 @@ public class BombiGui extends JComponent implements Runnable{
 			//zeichne alle Objekte auf den Buffer
 			paintBuffer();
 			//zeichne den Buffer sichtbar fuer den Nutzer
-			repaint();
+			paintGame();
 			
 			
-			updateTime = System.currentTimeMillis() - beforeUpdate;
+			updateTime = System.nanoTime() - beforeUpdate;
 			
-			//warte ein wenig....
-			try {
-				Thread.sleep((SLEEPTIME)/1000000);
-			}
-			catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(updateTime < SLEEPTIME){//warte ein wenig....
+				System.out.println("sleep");
+				try {
+					Thread.sleep((SLEEPTIME - updateTime)/1000000);
+				}
+				catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}
