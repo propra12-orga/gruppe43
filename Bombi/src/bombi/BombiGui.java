@@ -29,6 +29,7 @@ public class BombiGui extends JComponent implements Runnable{
     int x = 0;
     int y = 0;
     int radius = 36;
+	private Graphics2D g;
 
     /**
      * Input für Tasten und Begegung des Objektes mit den Pfeiltasten.
@@ -83,7 +84,7 @@ public class BombiGui extends JComponent implements Runnable{
         setFocusable(true);
         this.setSize(WIDTH, HEIGHT);
         bLevel = new BombermanLevel(WIDTH, HEIGHT);
-        addKeyListener(new AL());
+        //addKeyListener(new AL());
     }
 
     /**
@@ -96,7 +97,7 @@ public class BombiGui extends JComponent implements Runnable{
         	}
         
         // zeichne das Lvel
-        bLevel.draw(dbg);        
+        // bLevel.draw(dbg);        
         
         // Eine kleine rote Kugel die zum testen der
         // Bewegung und des Double Bufferings gedacht ist
@@ -109,10 +110,8 @@ public class BombiGui extends JComponent implements Runnable{
     }
 
     public void paintGame() {
-    	Graphics2D g = (Graphics2D) this.getGraphics();
-    	if(g != null){
-    		g.drawImage(dbImage, 0, 0, this);
-        	g.dispose();}
+    	if (g == null) g = (Graphics2D) this.getGraphics();
+		g.drawImage(dbImage, 0, 0, this);
     }
 
     /**
@@ -168,6 +167,8 @@ public class BombiGui extends JComponent implements Runnable{
 			
 			
 			updateTime = System.nanoTime() - beforeUpdate;
+			
+			System.out.println(updateTime/1000000);
 			
 			if(updateTime < SLEEPTIME){//warte ein wenig....
 				System.out.println("sleep");
