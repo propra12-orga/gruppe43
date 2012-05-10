@@ -9,9 +9,11 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent {
 
+	BombermansBomben Bombe1;
     BombermanLevel bLevel;
     private static final int WIDTH = 840;
     private static final int HEIGHT = 600;
@@ -19,7 +21,7 @@ public class BombiGui extends JComponent {
     private Graphics dbg;
     int x = 0;
     int y = 0;
-    int radius = 15;
+    int radius = 36;
 
     /**
      * Input für Tasten und Begegung des Objektes mit den Pfeiltasten.
@@ -28,16 +30,39 @@ public class BombiGui extends JComponent {
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
             if (keyCode == e.VK_RIGHT) {
-                x = x + 15;
+                x = x + 40;
+                if(x>804 ) {
+                	x=804;
+                }
             }
             if (keyCode == e.VK_LEFT) {
-                x = x - 15;
+                x = x - 40;
+                if(x<=0 ) {
+                	x=0;
+                }
             }
             if (keyCode == e.VK_UP) {
-                y = y - 15;
+                y = y - 40;
+                if(y<=0 ) {
+                	y=0;
+                }
             }
             if (keyCode == e.VK_DOWN) {
-                y = y + 15;
+                y = y + 40;
+                if(y>564) {
+                	y=564;
+                }
+            }
+            if (keyCode ==e.VK_ESCAPE) {
+            	int result = JOptionPane.showConfirmDialog(null,"Wollen Sie Bomberman wirklich beenden", "Bomberman beenden", JOptionPane.YES_NO_OPTION);
+            	switch(result){
+            	case JOptionPane.YES_OPTION:
+            	System.exit(0);
+            	case JOptionPane.NO_OPTION:
+            }
+            	}
+            if (keyCode == e.VK_SPACE) {
+            	Bombe1 = new BombermansBomben(x,y);
             }
         }
 
@@ -70,8 +95,10 @@ public class BombiGui extends JComponent {
         bLevel.draw(g);
         // Eine kleine rote Kugel die zum testen der
         // Bewegung und des Double Bufferings gedacht ist
+        if (Bombe1!= null){
+        Bombe1.draw(g);}
         g.setColor(Color.RED);
-        g.fillOval(x - radius, y - radius, radius * 2, radius * 2);
+        g.fillOval(x, y, radius, radius);
         repaint();
     }
 
