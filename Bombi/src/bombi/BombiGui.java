@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
-
+	Spieler spieler;
     BombermansBomben Bombe1;
     BombermanLevel bLevel;
     private static final int WIDTH = 840;
@@ -32,7 +32,7 @@ public class BombiGui extends JComponent implements Runnable {
     private Graphics2D g;
 
     /**
-     * Input f√ºr Tasten und Begegung des Objektes mit den Pfeiltasten.
+     * Input für Tasten und Begegung des Objektes mit den Pfeiltasten.
      */
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
@@ -88,7 +88,7 @@ public class BombiGui extends JComponent implements Runnable {
     }
 
     /**
-     * Double Buffering wobei ein Image erstellt wird und im Hintergrund das n√§chste Bild gemalt wird.
+     * Double Buffering wobei ein Image erstellt wird und im Hintergrund das nächste Bild gemalt wird.
      */
     public void paintBuffer() {
         if (dbImage == null) {
@@ -98,7 +98,9 @@ public class BombiGui extends JComponent implements Runnable {
 
         // zeichne das Lvel
         bLevel.draw(dbg);
-
+// HIER DAS PROBLEM ******************************************        
+        spieler.draw(Texture.SPIELER.draw(96, 0, 32, 32, g));
+//************************************************************
         // Eine kleine rote Kugel die zum testen der
         // Bewegung und des Double Bufferings gedacht ist
         dbg.setColor(Color.RED);
@@ -134,7 +136,7 @@ public class BombiGui extends JComponent implements Runnable {
     }
 
     /**
-     * Methode, welche die bevorzugte Gr√∂√üe dieser JComponent zur√ºck gibt.
+     * Methode, welche die bevorzugte Größe dieser JComponent zurück gibt.
      * 
      * @return: Dimension WIDTH x HEIGHT, welche fest codiert sind.
      */
@@ -157,7 +159,7 @@ public class BombiGui extends JComponent implements Runnable {
         BombiGui bGui = new BombiGui();
 
         frame.add(bGui);
-        frame.pack(); // passt die Gr√∂√üe dem Inhalt an
+        frame.pack(); // passt die Größe dem Inhalt an
 
         // zentriert das Fenster
         frame.setLocationRelativeTo(null);
@@ -173,10 +175,10 @@ public class BombiGui extends JComponent implements Runnable {
     public void run() {
         long beforeUpdate, updateTime;
 
-        // Vars zum FPS z√§hlen
+        // Vars zum FPS zählen
         long fpsCounter;
         int fps = 0;
-        fpsCounter = System.nanoTime();// messen sp√§ter, ob eine Sek. vergangen ist
+        fpsCounter = System.nanoTime();// messen später, ob eine Sek. vergangen ist
 
         while (running) {
 

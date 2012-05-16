@@ -97,5 +97,6 @@ public class BombermanLevel {
     private void drawIndestructible(int posX, int posY, Graphics g) {
         Texture.BEDROCK.draw(posX*DIM,posY*DIM,DIM,DIM,g);
     }  
+    
   
 }// Ende der Klasse BombermanLevel
