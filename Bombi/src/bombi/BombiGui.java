@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
-	Spieler spieler;
+    Spieler spieler;
     BombermansBomben Bombe1;
     BombermanLevel bLevel;
     private static final int WIDTH = 840;
@@ -32,7 +32,7 @@ public class BombiGui extends JComponent implements Runnable {
     private Graphics2D g;
 
     /**
-     * Input fŸr Tasten und Begegung des Objektes mit den Pfeiltasten.
+     * Input fÃ¼r Tasten und Begegung des Objektes mit den Pfeiltasten.
      */
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
@@ -84,11 +84,12 @@ public class BombiGui extends JComponent implements Runnable {
         setFocusable(true);
         this.setSize(WIDTH, HEIGHT);
         bLevel = new BombermanLevel(WIDTH, HEIGHT);
+        spieler = new Spieler();
         addKeyListener(new AL());
     }
 
     /**
-     * Double Buffering wobei ein Image erstellt wird und im Hintergrund das nŠchste Bild gemalt wird.
+     * Double Buffering wobei ein Image erstellt wird und im Hintergrund das nï¿½chste Bild gemalt wird.
      */
     public void paintBuffer() {
         if (dbImage == null) {
@@ -98,18 +99,14 @@ public class BombiGui extends JComponent implements Runnable {
 
         // zeichne das Lvel
         bLevel.draw(dbg);
-// HIER DAS PROBLEM ******************************************        
-        spieler.draw(Texture.SPIELER.draw(96, 0, 32, 32, g));
-//************************************************************
-        // Eine kleine rote Kugel die zum testen der
-        // Bewegung und des Double Bufferings gedacht ist
-        dbg.setColor(Color.RED);
-        dbg.fillOval(x, y, radius, radius);
 
         // zeichne die Bombe
         if (Bombe1 != null) {
             Bombe1.draw(dbg);
         }
+
+        // zeichne zuletzt den Spieler
+        spieler.draw(dbg);
 
         // zeige fps an
         dbg.setColor(Color.ORANGE);
@@ -136,7 +133,7 @@ public class BombiGui extends JComponent implements Runnable {
     }
 
     /**
-     * Methode, welche die bevorzugte Grš§e dieser JComponent zurŸck gibt.
+     * Methode, welche die bevorzugte Grï¿½ï¿½e dieser JComponent zurï¿½ck gibt.
      * 
      * @return: Dimension WIDTH x HEIGHT, welche fest codiert sind.
      */
@@ -159,7 +156,7 @@ public class BombiGui extends JComponent implements Runnable {
         BombiGui bGui = new BombiGui();
 
         frame.add(bGui);
-        frame.pack(); // passt die Grš§e dem Inhalt an
+        frame.pack(); // passt die Grï¿½ï¿½e dem Inhalt an
 
         // zentriert das Fenster
         frame.setLocationRelativeTo(null);
@@ -175,10 +172,10 @@ public class BombiGui extends JComponent implements Runnable {
     public void run() {
         long beforeUpdate, updateTime;
 
-        // Vars zum FPS zŠhlen
+        // Vars zum FPS zï¿½hlen
         long fpsCounter;
         int fps = 0;
-        fpsCounter = System.nanoTime();// messen spŠter, ob eine Sek. vergangen ist
+        fpsCounter = System.nanoTime();// messen spï¿½ter, ob eine Sek. vergangen ist
 
         while (running) {
 

@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
  * 
  */
 public class Texture {
-    private static final String IMGURL = "/texture.bmp";
+    private static final String IMGURL = "/texture.png";
 
     /**
      * Statische Methode zum Einlesen eines Bildes, welches durch url gegeben ist. Das Bild wird als BufferedImage zurück gegeben
@@ -48,6 +48,7 @@ public class Texture {
     public static final Texture STONE = new Texture(32, 0, 32, 32);
     public static final Texture BEDROCK = new Texture(64, 0, 32, 32);
     public static final Texture SPIELER = new Texture(96, 0, 32, 32);
+
     private BufferedImage texture;
 
     public Texture() {}// dummy-constructor für obige Methode.. das muss besser gehn!
