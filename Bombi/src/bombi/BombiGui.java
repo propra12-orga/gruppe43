@@ -3,8 +3,6 @@ package bombi;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
@@ -13,90 +11,52 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
-    Spieler spieler;
-    BombermansBomben Bombe1;
-    BombermanLevel bLevel;
     private static final int WIDTH = 840;
     private static final int HEIGHT = 600;
 
-    private static final long SECOND = 1000000000;
-    private static final long SLEEPTIME = SECOND / 60;
+    private static final long SECOND = 1000000000; // eine Sekunde in Nanosekunden
+    private static final long SLEEPTIME = SECOND / 60; // 60 FPS
 
     private boolean running = true;
-    private Image dbImage;
+
+    // im Speicher gehaltenes Bild & zugehöriges Graphics-Objekt für Double-Buffering
+    private BufferedImage dbImage;
     private Graphics2D dbg;
+
+    // managet die Tastatur.. stellt im Grunde eine auf Polling basierende Lösung dar (statt Interrupts)
+    private KeyPoller keyPoller;
+
+    Spieler spieler;
+    BombermansBomben Bombe1;
+    BombermanLevel bLevel;
+
     int x = 0;
     int y = 0;
     int radius = 36;
     int fps = 0; // wird durch den main-loop gesetzt
-    private Graphics2D g;
-
-    /**
-     * Input für Tasten und Begegung des Objektes mit den Pfeiltasten.
-     */
-    public class AL extends KeyAdapter {
-        public void keyPressed(KeyEvent e) {
-            int keyCode = e.getKeyCode();
-            if (keyCode == e.VK_RIGHT) {
-                x = x + 40;
-                if (x > 804) {
-                    x = 804;
-                }
-            }
-            if (keyCode == e.VK_LEFT) {
-                x = x - 40;
-                if (x <= 0) {
-                    x = 0;
-                }
-            }
-            if (keyCode == e.VK_UP) {
-                y = y - 40;
-                if (y <= 0) {
-                    y = 0;
-                }
-            }
-            if (keyCode == e.VK_DOWN) {
-                y = y + 40;
-                if (y > 564) {
-                    y = 564;
-                }
-            }
-            if (keyCode == e.VK_ESCAPE) {
-                int result = JOptionPane.showConfirmDialog(null, "Wollen Sie Bomberman wirklich beenden", "Bomberman beenden", JOptionPane.YES_NO_OPTION);
-                switch (result) {
-                case JOptionPane.YES_OPTION:
-                    System.exit(0);
-                case JOptionPane.NO_OPTION:
-                }
-            }
-            if (keyCode == e.VK_SPACE) {
-                Bombe1 = new BombermansBomben(x, y);
-            }
-        }
-
-        public void keyReleased(KeyEvent e) {
-
-        }
-    }
 
     public BombiGui() {
         super();
+        // erzeuge die Objekte für Doublebuffering
+        dbImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        dbg = (Graphics2D) dbImage.getGraphics();
+
+        // erzeuge unseren KeyPoller
+        keyPoller = new KeyPoller();
+        addKeyListener(keyPoller);
+
         setFocusable(true);
         this.setSize(WIDTH, HEIGHT);
         bLevel = new BombermanLevel(WIDTH, HEIGHT);
         spieler = new Spieler();
-        addKeyListener(new AL());
+
+        System.out.println(KeyEvent.VK_LEFT + " " + KeyEvent.VK_A);
     }
 
     /**
-     * Double Buffering wobei ein Image erstellt wird und im Hintergrund das n�chste Bild gemalt wird.
+     * Double Buffering wobei ein Image erstellt wird und im Hintergrund das nächste Bild gemalt wird.
      */
     public void paintBuffer() {
-        if (dbImage == null) {
-            dbImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-            dbg = (Graphics2D) dbImage.getGraphics();
-        }
-
         // zeichne das Lvel
         bLevel.draw(dbg);
 
@@ -111,11 +71,6 @@ public class BombiGui extends JComponent implements Runnable {
         // zeige fps an
         dbg.setColor(Color.ORANGE);
         dbg.drawString(fps + "FPS", 800, 20);
-    }
-
-    public void paintGame() {
-        if (g == null) g = (Graphics2D) this.getGraphics();
-        g.drawImage(dbImage, 0, 0, null);
     }
 
     private void gameDrawBuffer() {
@@ -133,7 +88,7 @@ public class BombiGui extends JComponent implements Runnable {
     }
 
     /**
-     * Methode, welche die bevorzugte Gr��e dieser JComponent zur�ck gibt.
+     * Methode, welche die bevorzugte Groesse dieser JComponent zurueck gibt.
      * 
      * @return: Dimension WIDTH x HEIGHT, welche fest codiert sind.
      */
@@ -144,8 +99,7 @@ public class BombiGui extends JComponent implements Runnable {
     /**
      * Startet das Programm ;-)
      * 
-     * @param args
-     *            Bisher werden alle Parameter ignoriert.
+     * @param args Bisher werden alle Parameter ignoriert.
      */
     public static void main(String[] args) {
         // Fenster erstellen
@@ -172,7 +126,7 @@ public class BombiGui extends JComponent implements Runnable {
     public void run() {
         long beforeUpdate, updateTime;
 
-        // Vars zum FPS z�hlen
+        // Vars zum FPS zaehlen
         long fpsCounter;
         int fps = 0;
         fpsCounter = System.nanoTime();// messen sp�ter, ob eine Sek. vergangen ist
@@ -212,7 +166,30 @@ public class BombiGui extends JComponent implements Runnable {
 
     }
 
+    /**
+     * Methode, welche (atm) 60x pro Sekunde aufgerufen wird und (nicht sichtbare) Updates an der Spielumgebung durchführt. Hierzu gehören das Einlesen von
+     * Tastatureingaben, Bewegen des Spielerobjekts, Herunterzählen des BombenCounters etc.
+     */
     public void bombermanUpdate() {
-        // bisher sind keine updatebaren Objekte da
+        // überprüfe Tastatureingaben
+        if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
+            spieler.moveLeft();
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
+            spieler.moveRight();
+        }
+        if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
+            spieler.moveUp();
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
+            spieler.moveDown();
+        }
+        if (keyPoller.isKeyDown(KeyEvent.VK_ESCAPE)) {
+            int result = JOptionPane.showConfirmDialog(null, "Wollen Sie Bomberman wirklich beenden", "Bomberman beenden", JOptionPane.YES_NO_OPTION);
+            switch (result) {
+            case JOptionPane.YES_OPTION:
+                System.exit(0);
+            case JOptionPane.NO_OPTION:
+            }
+        }
+        // Ende der Tastatureingabenüberprüfung
     }
 }

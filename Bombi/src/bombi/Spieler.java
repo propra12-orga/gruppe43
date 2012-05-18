@@ -20,4 +20,20 @@ public class Spieler {
 
     }
 
+    public void moveLeft() {
+        px -= 5;
+    }
+
+    public void moveRight() {
+        px += 5;
+    }
+
+    public void moveUp() {
+        py -= 5;
+    }
+
+    public void moveDown() {
+        py += 5;
+    }
+
 }
