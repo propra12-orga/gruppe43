@@ -1,5 +1,7 @@
-import java.awt.Graphics;
+package bombi;
 
+import java.awt.Color;
+import java.awt.Graphics;
 
 /**
  * Diese Klasse erzeugt Objekte, welche als Spielfeld interpretiert werden.
@@ -9,11 +11,12 @@ import java.awt.Graphics;
 public class BombermanLevel {
 
     // ein paar Konstanten, um das Manipulieren des Felder einfacher zu gestalten
-    private static final short GRASS          = 0;
-    private static final short STONE          = 1;
-    private static final short INDESTRUCTIBLE = 2;
+    public static final short GRASS          = 0;
+    public static final short STONE          = 1;
+    public static final short INDESTRUCTIBLE = 2;
+    public static final short EXIT = 3;
 
-    // statische Variable, welche die Grš§e der Felder in Pixeln spezifiziert
+    // statische Variable, welche die Groesse der Felder in Pixeln spezifiziert
     private static final int   DIM            = 40;
 
     // zweidimensionales Array, welches das Spielfeld darstellt
@@ -25,7 +28,7 @@ public class BombermanLevel {
      * Erzeugt ein neues Spielfeld.
      * 
      * @param width:  Breite des Spielfelds in Pixel
-     * @param height: Hšhe des Spielfelds in Pixel
+     * @param height: Hoehe des Spielfelds in Pixel
      **/
     public BombermanLevel(int width, int height) {  
         // Berechne die Dimension des Feldes mit Hilfe der Pixel
@@ -35,18 +38,22 @@ public class BombermanLevel {
         tiles = new short[this.width][this.height];
         fillRandomly();
     }
+    
+    public short getTileByPixel(int posX, int posY){
+    	return tiles[posX/DIM][posY/DIM];
+    }
 
     /**
      * Methode, welche das Spielfeld initialisiert. Alle zwei Zeilen/Spalten
-     * wird ein unzerstšrbarer Stein erzeugt. Ein 2x2 Block in den Ecken wird
-     * freigelassen, um dem Spieler Bewegungsfreiraum zu ermšglichen.
+     * wird ein unzerstoerbarer Stein erzeugt. Ein 2x2 Block in den Ecken wird
+     * freigelassen, um dem Spieler Bewegungsfreiraum zu ermoeglichen.
      **/
     private void fillRandomly() {
         // iteriere ueber die x- und dann die y-Koordinaten
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if ((j % 2 == 1) && (i % 2 == 1)) // alle 2 Zeilen/Spalten..
-                    tiles[i][j] = INDESTRUCTIBLE; // ... erzeuge einen unzerstšrbaren Block
+                    tiles[i][j] = INDESTRUCTIBLE; // ... erzeuge einen unzerstoerbaren Block
 
                 // gehe sicher, dass alle vier Spieler anfangs eingemauert sind
                 else if ((i == 2 || i == width - 3) && ((j >= 0 && j <= 2) || (j >= height - 3 && j <= height - 1)))
@@ -54,16 +61,20 @@ public class BombermanLevel {
                 else if ((j == 2 || j == height - 3) && ((i >= 0 && i < 2) || (i > width - 3 && i <= width - 1)))
                     tiles[i][j] = STONE;
 
-                // fŸlle alle anderen Blšcke (au§er den Startzonen) zufŠllig mit Steinen
+                // fuelle alle anderen Bloecke (ausser den Startzonen) zufaellig mit Steinen
                 else if ((i >= 3 && i <= width - 4) || (j >= 3 && j <= height - 4)){
-                    if(Math.random()<=0.75)//75% Chance fŸr Steine
+                    if(Math.random()<=0.75)//75% Chance fuer Steine
                         tiles[i][j] = STONE;
-                    //das folgende ist auskommentiert, da Blšcke anfangs sowieso den Wert 0 besitzen.
+                    //das folgende ist auskommentiert, da Bloecke anfangs sowieso den Wert 0 besitzen.
                     //else
                     //    tiles[i][j] = GRASS;
                     }
             }
-    }
+        }
+        //fuege zufaellig einen Ausgang ein
+        int i = (int) (Math.random() * tiles.length);
+        int j = (int) (Math.random() * tiles[1].length);
+        tiles[i][j] = EXIT;        
     }
     
     
@@ -79,6 +90,9 @@ public class BombermanLevel {
 
                 else if (tiles[i][j] == INDESTRUCTIBLE)
                     drawIndestructible(i, j, g);
+                
+                else if (tiles[i][j] == EXIT)
+                	drawExit(i, j, g);
             }
         }
     }
@@ -97,6 +111,11 @@ public class BombermanLevel {
     private void drawIndestructible(int posX, int posY, Graphics g) {
         Texture.BEDROCK.draw(posX*DIM,posY*DIM,DIM,DIM,g);
     }  
+    
+    private void drawExit(int posX, int posY, Graphics g){
+    	g.setColor(Color.CYAN);
+    	g.fillRect(posX*DIM, posY*DIM, DIM, DIM);
+    }
     
   
 }// Ende der Klasse BombermanLevel
