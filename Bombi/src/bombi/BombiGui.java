@@ -48,7 +48,7 @@ public class BombiGui extends JComponent implements Runnable {
         setFocusable(true);
         this.setSize(WIDTH, HEIGHT);
         bLevel = new BombermanLevel(WIDTH, HEIGHT);
-        spieler = new Spieler();
+        spieler = new Spieler(bLevel);
 
         System.out.println(KeyEvent.VK_LEFT + " " + KeyEvent.VK_A);
     }
@@ -173,14 +173,15 @@ public class BombiGui extends JComponent implements Runnable {
     public void bombermanUpdate() {
         // überprüfe Tastatureingaben
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            spieler.moveLeft();
+            spieler.Direction(-40,0);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            spieler.moveRight();
+        	
+            spieler.Direction(+40,0);
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            spieler.moveUp();
+            spieler.Direction(0,-40);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-            spieler.moveDown();
+            spieler.Direction(0,+40);
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_ESCAPE)) {
             int result = JOptionPane.showConfirmDialog(null, "Wollen Sie Bomberman wirklich beenden", "Bomberman beenden", JOptionPane.YES_NO_OPTION);
