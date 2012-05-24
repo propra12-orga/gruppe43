@@ -103,7 +103,7 @@ public class BombermanLevel {
     public void draw(Graphics g) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (markedForUpdate(tiles[i][j])) {
+                //if (markedForUpdate(tiles[i][j])) {
                     unmarkForUpdate(i, j);
                     if (tiles[i][j] == GRASS) drawGrass(i, j, g);
 
@@ -112,7 +112,7 @@ public class BombermanLevel {
                     else if (tiles[i][j] == INDESTRUCTIBLE) drawIndestructible(i, j, g);
 
                     else if (tiles[i][j] == EXIT) drawExit(i, j, g);
-                }
+                //}
             }
         }
     }

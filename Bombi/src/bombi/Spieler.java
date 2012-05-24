@@ -1,20 +1,15 @@
 package bombi;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.net.URL;
 
-import javax.media.j3d.Clip;
-
-public class Spieler extends Applet{
+public class Spieler{
 	
 	
 	
 	BombermanLevel l;
 	Graphics g;
-    private int health = 1; // Zustand fŸr abfrage ob Spieler verloren(=0)hat
+    private int health = 1; // Zustand fï¿½r abfrage ob Spieler verloren(=0)hat
     private int posX, posY, width, height;
     Spieler s;
     Texture t;
