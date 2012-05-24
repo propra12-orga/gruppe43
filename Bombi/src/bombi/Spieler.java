@@ -1,69 +1,77 @@
 package bombi;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.net.URL;
 
-public class Spieler {
+import javax.media.j3d.Clip;
+
+public class Spieler extends Applet{
+	
+	
 	
 	BombermanLevel l;
-	
 	Graphics g;
     private int health = 1; // Zustand für abfrage ob Spieler verloren(=0)hat
-    private static int x, y, width, height;
+    private int posX, posY, width, height;
     Spieler s;
     Texture t;
-    
+  
     public Spieler(BombermanLevel l) {
     	this.l=l;
     	
-        x = y = 0;
+        posX = posY = 0;
         width = height = 40;
     }
  
     public void draw(Graphics2D g) {
         if (health == 1) {
-            Texture.SPIELER1.draw(x, y, width, height, g);
+            Texture.SPIELER1.draw(posX, posY, width, height, g);
+            
         }
     }
     
-    public void stopStein() {
-    	
-    
-    	
-    	if((l.width==0)||(INDESTRUCTIBLE==2)){
-    		x=x;
-    		y=y;
-    	}
+    public boolean stopStein() {
+    	return((l.getTileByPixel(posX, posY)==BombermanLevel.STONE)||(l.getTileByPixel(posX, posY)==BombermanLevel.INDESTRUCTIBLE));
     }
-   
+    public boolean spielEnde(){
+    	return((l.getTileByPixel(posX, posY)==BombermanLevel.EXIT));
+    }
         
     public void move(){
-    	if(x < 0)
-            x = 0;
-        if(x > 800)
-            x = 800;
-        if(y < 0)
-            y = 0;
-        if(y > 560)
-            y = 560;
+    	if(posX < 0)
+            posX = 0;
+        if(posX > 800)
+            posX = 800;
+        if(posY < 0)
+            posY = 0;
+        if(posY > 560)
+            posY = 560;
     }
    
     public void Direction(int xdir,int ydir){
         
-    	x += xdir;
-        y += ydir;
+    	posX += xdir; 
+        posY += ydir;
         move();
-        
+        if (stopStein()) {
+       posX -= xdir;
+        posY -= ydir;}
     } 
    
-        
+    
+	
+	
 
        
         
         public void verloren(){
         	if(health == 0){
-        		x=0;
-        		y=0;
+        		posX=0;
+        		posY=0;
+        		
         	}
         	
         	
@@ -88,14 +96,11 @@ public class Spieler {
   
  
   
-    public void run(){
-        try{
-            while(true){
-                move();
-                Thread.sleep(60);
-            }
-        }catch(Exception e){System.err.println(e.getMessage());}
-    }
+    
+       
+              
+
+    
     
 }
 

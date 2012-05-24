@@ -1,10 +1,13 @@
 package bombi;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.net.URL;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -29,7 +32,7 @@ public class BombiGui extends JComponent implements Runnable {
     Spieler spieler;
     BombermansBomben Bombe1;
     BombermanLevel bLevel;
-
+   
     int x = 0;
     int y = 0;
     int radius = 36;
@@ -49,7 +52,7 @@ public class BombiGui extends JComponent implements Runnable {
         this.setSize(WIDTH, HEIGHT);
         bLevel = new BombermanLevel(WIDTH, HEIGHT);
         spieler = new Spieler(bLevel);
-
+        
         System.out.println(KeyEvent.VK_LEFT + " " + KeyEvent.VK_A);
     }
 
@@ -57,12 +60,17 @@ public class BombiGui extends JComponent implements Runnable {
      * Double Buffering wobei ein Image erstellt wird und im Hintergrund das nächste Bild gemalt wird.
      */
     public void paintBuffer() {
+    	if(spieler.spielEnde()) {
+    		dbg.drawString("Spieler ... hat gewonnen!", 400, 300);
+    		return;
+    	}
         // zeichne das Lvel
         bLevel.draw(dbg);
 
         // zeichne die Bombe
         if (Bombe1 != null) {
             Bombe1.draw(dbg);
+            
         }
 
         // zeichne zuletzt den Spieler
@@ -95,7 +103,7 @@ public class BombiGui extends JComponent implements Runnable {
     public Dimension getPreferredSize() {
         return new Dimension(WIDTH, HEIGHT);
     }
-
+  
     /**
      * Startet das Programm ;-)
      * 
@@ -108,7 +116,7 @@ public class BombiGui extends JComponent implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         BombiGui bGui = new BombiGui();
-
+       
         frame.add(bGui);
         frame.pack(); // passt die Gr��e dem Inhalt an
 
@@ -116,8 +124,10 @@ public class BombiGui extends JComponent implements Runnable {
         frame.setLocationRelativeTo(null);
 
         frame.setVisible(true);
-
+      
         new Thread(bGui).start();
+        
+       
     }
 
     /**
@@ -130,7 +140,12 @@ public class BombiGui extends JComponent implements Runnable {
         long fpsCounter;
         int fps = 0;
         fpsCounter = System.nanoTime();// messen sp�ter, ob eine Sek. vergangen ist
-
+       
+ /*while-schleife war vorher auf "running".hab die Abfrage ob ein spieler
+  * das EXIT erreicht hat wenn ja m�sste die while schleife abrechen und 
+  * das spiel beendet werden. 
+  * Gibt bestimmt eine bessere m�glichkeit mit etwas wie stop()...     
+  */
         while (running) {
 
             beforeUpdate = System.nanoTime();
@@ -144,7 +159,7 @@ public class BombiGui extends JComponent implements Runnable {
             gameDrawBuffer();
             // haben gezeichnet, ergo..
             fps++;
-
+            
             if (System.nanoTime() - fpsCounter >= SECOND) {
                 this.fps = fps; // update die GLOBALE Variable mit den aktuellen fps
                 fps = 0; // lokaler Counter auf 0
@@ -163,6 +178,7 @@ public class BombiGui extends JComponent implements Runnable {
             }
 
         }
+       
 
     }
 
@@ -171,11 +187,15 @@ public class BombiGui extends JComponent implements Runnable {
      * Tastatureingaben, Bewegen des Spielerobjekts, Herunterzählen des BombenCounters etc.
      */
     public void bombermanUpdate() {
+    	
+    	if(spieler.spielEnde())
+    		return;
+    	
+    	
         // überprüfe Tastatureingaben
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
             spieler.Direction(-40,0);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-        	
             spieler.Direction(+40,0);
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
@@ -184,6 +204,7 @@ public class BombiGui extends JComponent implements Runnable {
             spieler.Direction(0,+40);
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_ESCAPE)) {
+        	
             int result = JOptionPane.showConfirmDialog(null, "Wollen Sie Bomberman wirklich beenden", "Bomberman beenden", JOptionPane.YES_NO_OPTION);
             switch (result) {
             case JOptionPane.YES_OPTION:
