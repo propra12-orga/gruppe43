@@ -142,11 +142,7 @@ public class Spieler {
 		
 		posX += xdir;
 		posY += ydir; move();
-		if(stopStein()){
-			posX-=xdir;
-			posY-=ydir;
-			
-		}
+		
 		
 	}
 	
