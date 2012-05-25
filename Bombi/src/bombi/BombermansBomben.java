@@ -10,7 +10,7 @@ import java.awt.Graphics;
 
 public class BombermansBomben {
 
-	// Ein paar Konstanten f√ºr die verschiedene Arten von Bomben
+	// Ein paar Konstanten für die verschiedene Arten von Bomben
     private static final short EXPLODEDBOMB          = 0;
     private static final short BOMB                  = 1;
     private int zustand=BOMB;
