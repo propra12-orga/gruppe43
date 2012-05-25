@@ -14,8 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
-    private static final int WIDTH = 840;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 600;
+    private static final int HEIGHT = 440;
 
     private static final long SECOND = 1000000000; // eine Sekunde in Nanosekunden
     private static final long SLEEPTIME = SECOND / 60; // 60 FPS
@@ -50,7 +50,7 @@ public class BombiGui extends JComponent implements Runnable {
 
         setFocusable(true);
         this.setSize(WIDTH, HEIGHT);
-        bLevel = new BombermanLevel(WIDTH, HEIGHT);
+        bLevel = new BombermanLevel(15,11,WIDTH, HEIGHT);
         spieler = new Spieler(bLevel);
         
         System.out.println(KeyEvent.VK_LEFT + " " + KeyEvent.VK_A);
@@ -78,7 +78,7 @@ public class BombiGui extends JComponent implements Runnable {
 
         // zeige fps an
         dbg.setColor(Color.ORANGE);
-        dbg.drawString(fps + "FPS", 800, 20);
+        dbg.drawString(fps + "FPS", this.getWidth() - 50, 20);
     }
 
     private void gameDrawBuffer() {
@@ -142,9 +142,9 @@ public class BombiGui extends JComponent implements Runnable {
         fpsCounter = System.nanoTime();// messen spï¿½ter, ob eine Sek. vergangen ist
        
  /*while-schleife war vorher auf "running".hab die Abfrage ob ein spieler
-  * das EXIT erreicht hat wenn ja mŸsste die while schleife abrechen und 
+  * das EXIT erreicht hat wenn ja mï¿½sste die while schleife abrechen und 
   * das spiel beendet werden. 
-  * Gibt bestimmt eine bessere mšglichkeit mit etwas wie stop()...     
+  * Gibt bestimmt eine bessere mï¿½glichkeit mit etwas wie stop()...     
   */
         while (running) {
 

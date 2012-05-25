@@ -24,7 +24,26 @@ public class BombermansBomben {
         posY = y;
 	}
 
+ //Dummy-Methode für Bomenexplusionskollision. Getter und Setter zur Wertermittlung 
+public void explusion(){
+	
+}
 
+public int getPosX() {
+	return posX;
+}
+
+public int getPosY() {
+	return posY;
+}
+
+public void setPosX(int posX) {
+	this.posX = posX;
+}
+
+public void setPosY(int posY) {
+	this.posY = posY;
+}
 
 public void draw(Graphics g) {
 	if(zustand==BOMB){

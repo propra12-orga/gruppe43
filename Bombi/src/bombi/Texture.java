@@ -1,6 +1,7 @@
 package bombi;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -44,20 +45,74 @@ public class Texture {
      **/
 
     // tatsächlicher Zweck dieser Klasse.. Bereitstellung der Texturen =)
-    public static final Texture GRASS = new Texture(0, 0, 32, 32);
-    public static final Texture STONE = new Texture(32, 0, 32, 32);
-    public static final Texture BEDROCK = new Texture(64, 0, 32, 32);
-    public static final Texture SPIELER = new Texture(96, 0, 32, 32);
+    public static Texture GRASS = new Texture(0, 0, 32, 32);
+    public static Texture STONE = new Texture(32, 0, 32, 32);
+    public static Texture BEDROCK = new Texture(64, 0, 32, 32);
+    public static Texture EXIT = new Texture(0, 32, 32, 32);
 
-    private BufferedImage texture;
+    public static Texture SPIELER1 = new Texture(96, 0, 32, 32);
+
+    public static Texture BOMB1 = new Texture(0, 64, 32, 32);
+    public static Texture BOMB2 = new Texture(32, 64, 32, 32);
+    public static Texture BOMB3 = new Texture(64, 64, 32, 32);
+    public static Texture[] BOMB = { BOMB1, BOMB2, BOMB3 };
+
+    public static Texture EXPLMID = new Texture(96, 32, 32, 32);
+    public static Texture EXPLHOR = new Texture(128, 32, 32, 32);
+    public static Texture EXPLVER = new Texture(96, 64, 32, 32);
+    public static Texture EXPLRIG = new Texture(160, 32, 32, 32);
+    public static Texture EXPLBOT = new Texture(96, 96, 32, 32);
+    public static Texture EXPLTOP = EXPLBOT.mirrorVertically();
+    public static Texture EXPLLEF = EXPLRIG.mirrorHorizontally();
+
+    private BufferedImage texture; // Original-Bild zum verlustfreien Skalieren
+    private BufferedImage scaledTexture; // tatsächlich gemaltes Bild
+
+    private int width, height;
 
     public Texture() {}// dummy-constructor für obige Methode.. das muss besser gehn!
 
     public Texture(int sx, int sy, int width, int height) {
-        texture = TEXTURE.getSubimage(sx, sy, width, height);
+        scaledTexture = texture = TEXTURE.getSubimage(sx, sy, width, height);
+        this.width = width;
+        this.height = height;
+    }
+
+    public Texture(BufferedImage texture) {
+        this.texture = scaledTexture = texture;
+        width = texture.getWidth();
+        height = texture.getHeight();
     }
 
     public void draw(int px, int py, int width, int height, Graphics g) {
-        g.drawImage(texture, px, py, width, height, null);
+        if (this.width != width || this.height != height) rescale(width, height);
+        g.drawImage(scaledTexture, px, py, null);
+    }
+
+    private void rescale(int width, int height) {
+        scaledTexture = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = (Graphics2D) scaledTexture.getGraphics();
+        g.drawImage(texture, 0, 0, width, height, null);
+        g.dispose();
+    }
+
+    private Texture mirrorHorizontally() {
+        int width = this.texture.getWidth();
+        int height = this.texture.getHeight();
+        BufferedImage texture = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = (Graphics2D) texture.getGraphics();
+        g.drawImage(this.texture, 0, 0, width, height, width, 0, 0, height, null);
+        g.dispose();
+        return new Texture(texture);
+    }
+
+    private Texture mirrorVertically() {
+        int width = this.texture.getWidth();
+        int height = this.texture.getHeight();
+        BufferedImage texture = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = (Graphics2D) texture.getGraphics();
+        g.drawImage(this.texture, 0, 0, width, height, 0, width, height, 0, null);
+        g.dispose();
+        return new Texture(texture);
     }
 }
