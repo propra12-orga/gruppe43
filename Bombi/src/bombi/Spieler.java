@@ -120,17 +120,17 @@ public class Spieler {
     public void move(){
     	if(posX < 0)
             posX = 0;
-        if(posX > 800)
-            posX = 800;
+        if(posX > 600)
+            posX = 600;
         if(posY < 0)
             posY = 0;
-        if(posY > 560)
-            posY = 560;
+        if(posY > 440)
+            posY = 440;
     }
 	
     /**
      * Diese Methode bekommt bei Tastendruck dazugehörige x und y Werte und aktualisiert
-     * die Momentane Position.Beispiel: Pfeiltaste Links wird betätigt die Werte die übergeben werden
+     * die momentane Position.Beispiel: Pfeiltaste Links wird betätigt die Werte die übergeben werden
      * lauten -40 für x-Koordinate ,0 für y-Koordinate
      * ,dann wird posX = posX + (-40) um 40 Pixel kleiner und die neue Position wird gesetzt
      * move() siehe Methode
@@ -142,7 +142,11 @@ public class Spieler {
 		
 		posX += xdir;
 		posY += ydir; move();
-		
+		if(stopStein()){
+			posX-=xdir;
+			posY-=ydir;
+			
+		}
 		
 	}
 	
