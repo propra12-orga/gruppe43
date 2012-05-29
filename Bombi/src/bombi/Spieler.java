@@ -5,12 +5,12 @@ import java.awt.Graphics2D;
 
 public class Spieler {
 	
-	BombermansBomben b;
+	Bomben b;
 	Spieler s;
 	Texture t;
 	BombermanLevel l;
 	Graphics g;
-    private int health = 1; // Zustand fŸr abfrage ob Spieler verloren(=0)hat
+    private int health = 1; // Zustand fï¿½r abfrage ob Spieler verloren(=0)hat
     private int posX, posY, width, height;
 	
 	
@@ -37,7 +37,7 @@ public class Spieler {
 	/**
 	 * 
 	 * @return
-	 * Getter fŸr x-Position
+	 * Getter fï¿½r x-Position
 	 */
     public int getPosX() {
 		return posX;
@@ -45,7 +45,7 @@ public class Spieler {
 	/**
 	 *     
 	 * @return
-	 * Getter fŸr y-Position
+	 * Getter fï¿½r y-Position
 	 */
 	public int getPosY() {
 		return posY;
@@ -65,11 +65,11 @@ public class Spieler {
 		this.posY = posY;
 	}
 	/**
-	 * Konstructor um Bomben-Daten fŸr Kollision zu bekommen 
+	 * Konstructor um Bomben-Daten fï¿½r Kollision zu bekommen 
 	 * @param b
 	 */
 	public Spieler(BombermansBomben b) {
-    	this.b=b;
+    	//this.b=b;
     	posX=posY=0;
     	
     }
@@ -115,7 +115,7 @@ public class Spieler {
     }
     
 	/**   
-	 * Diese Methode ŸberprŸft ob x und y am Rand sind und setzt sie bei †berschreitung zurŸck 
+	 * Diese Methode ï¿½berprï¿½ft ob x und y am Rand sind und setzt sie bei ï¿½berschreitung zurï¿½ck 
 	 */
     public void move(){
     	if(posX < 0)
@@ -129,12 +129,12 @@ public class Spieler {
     }
 	
     /**
-     * Diese Methode bekommt bei Tastendruck dazugehšrige x und y Werte und aktualisiert
-     * die momentane Position.Beispiel: Pfeiltaste Links wird betŠtigt die Werte die Ÿbergeben werden
-     * lauten -40 fŸr x-Koordinate ,0 fŸr y-Koordinate
+     * Diese Methode bekommt bei Tastendruck dazugehï¿½rige x und y Werte und aktualisiert
+     * die momentane Position.Beispiel: Pfeiltaste Links wird betï¿½tigt die Werte die ï¿½bergeben werden
+     * lauten -40 fï¿½r x-Koordinate ,0 fï¿½r y-Koordinate
      * ,dann wird posX = posX + (-40) um 40 Pixel kleiner und die neue Position wird gesetzt
      * move() siehe Methode
-     * Die if Abfrage prŸft ob Spieler vor einem Hinderniss steht.Wenn ja soll er stehen bleiben    
+     * Die if Abfrage prï¿½ft ob Spieler vor einem Hinderniss steht.Wenn ja soll er stehen bleiben    
      * @param xdir
      * @param ydir
      */

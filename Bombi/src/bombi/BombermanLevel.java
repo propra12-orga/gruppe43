@@ -1,3 +1,4 @@
+
 package bombi;
 
 import java.awt.Graphics;
@@ -172,7 +173,9 @@ public class BombermanLevel {
 
     public void destroyBlock(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-        if ((tiles[posX][posY] & ~(1 << 15)) == STONE) tiles[posX][posY] = GRASS;
+        if ((tiles[posX+1][posY] &~(1<<15)) == INDESTRUCTIBLE) return;
+        if ((tiles[posX][posY+1] &~(1<<15)) == INDESTRUCTIBLE) return;
+        if ((tiles[posX][posY] &~(1<<15)) == STONE) tiles[posX][posY] = GRASS;
         markForUpdate(posX, posY);
     }
 
