@@ -180,6 +180,7 @@ public class BombermanLevel {
     public void markForUpdate(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
         tiles[posX][posY] |= DRAW;
+        addFire(posX,posY);
     }
 
     public void markForUpdateByPixel(int pixelX, int pixelY) {
@@ -193,15 +194,13 @@ public class BombermanLevel {
     public void destroyBlock(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
         if ((tiles[posX][posY] & TILE) == STONE) tiles[posX][posY] = GRASS;
-        addFire(posX,posY);
         markForUpdate(posX, posY);
     }
 
     public void unmarkForUpdate(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-        removeFire(posX,posY);
         tiles[posX][posY] &= ~DRAW;
-       
+        removeFire(posX,posY);
     }
 
     public void markAllForUpdate() {

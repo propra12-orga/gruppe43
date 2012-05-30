@@ -13,7 +13,7 @@ public class Bomben {
     private static final short EXPLODING = 2;
     // Countdowns & Timer
     private static final short COUNTDOWN = 120;
-    private static final short ANIMCOUNTER = 10;
+    private static final short ANIMCOUNTER = 0;
     private static final short RADIUSDELAY = 0;
     
     
@@ -21,6 +21,7 @@ public class Bomben {
     private int state = BOMB;
     private int posX, posY;
     private int radius;
+    private int radiusCounter = 0;
     private int radiusup=0;
     private int radiusdown=0;
     private int radiusleft=0;

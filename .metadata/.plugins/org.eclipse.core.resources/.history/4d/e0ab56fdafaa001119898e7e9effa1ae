@@ -21,6 +21,7 @@ public class Bomben {
     private int state = BOMB;
     private int posX, posY;
     private int radius;
+    private int radiusCounter = 0;
     private int radiusup=0;
     private int radiusdown=0;
     private int radiusleft=0;
@@ -101,7 +102,7 @@ public class Bomben {
         } else if (state == EXPLODING) {
             Texture.EXPLMID.draw(posX, posY, width, height, g);
             
-            for (int i = 1; i < radiusup && !bLevel.isSolidByPixel(posX, posY - i * height); i++) {
+            for (int i = 1; i < radiusup && !bLevel.isSolidByPixel(posX, posY - i * height) && !bLevel.hasFireByPixel(posX, posY); i++) {
                 if (radius == 0) {
                     bLevel.markForUpdateByPixel(posX, posY - i * height);
                     if (i == radiusup) break;
@@ -113,7 +114,7 @@ public class Bomben {
                 }
             }
             
-            for (int i = 1; i < radiusdown && !bLevel.isSolidByPixel(posX, posY + i * height); i++) {
+            for (int i = 1; i < radiusdown && !bLevel.isSolidByPixel(posX, posY + i * height) && !bLevel.hasFireByPixel(posX, posY); i++) {
                 if (radius == 0) {
                     bLevel.markForUpdateByPixel(posX, posY + i * height);
                     if (i == radiusdown) break;
@@ -125,7 +126,7 @@ public class Bomben {
                 }
             }
             
-            for (int i = 1; i < radiusleft && !bLevel.isSolidByPixel(posX - i * width, posY); i++) {
+            for (int i = 1; i < radiusleft && !bLevel.isSolidByPixel(posX - i * width, posY) && !bLevel.hasFireByPixel(posX, posY); i++) {
                 if (radius == 0) {
                     bLevel.markForUpdateByPixel(posX - i * width, posY);
                     if (i == radiusleft) break;
@@ -137,14 +138,14 @@ public class Bomben {
                 }
             }
             
-            for (int i = 1; i < radiusright && !bLevel.isSolidByPixel(posX + i * width, posY); i++) {
+            for (int i = 1; i < radiusright && !bLevel.isSolidByPixel(posX + i * width, posY) && !bLevel.hasFireByPixel(posX, posY); i++) {
                 if (radius == 0) {
                     bLevel.markForUpdateByPixel(posX + i * width, posY);
                     
                     if (i == radiusright) break;
                 }
                 Texture.EXPLHOR.draw(posX + i * width, posY, width, height, g);
-              if (radius == 0 && bLevel.isSolidByPixel(posX * width, posY*width)) {
+              if (radius == 0 && bLevel.isSolidByPixel(posX * width, posY*width) && !bLevel.hasFireByPixel(posX, posY)) {
             	  Texture.EXPLRIG.draw(posX + radiusright * width, posY, width, height, g);
             	  bLevel.markForUpdateByPixel(posX + radiusright * width, posY);
               }

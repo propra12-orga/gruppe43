@@ -21,6 +21,7 @@ public class Bomben {
     private int state = BOMB;
     private int posX, posY;
     private int radius;
+    private int radiusCounter = 0;
     private int radiusup=0;
     private int radiusdown=0;
     private int radiusleft=0;
@@ -56,7 +57,7 @@ public class Bomben {
         int width = bLevel.getTileWidth();
         int height = bLevel.getTileHeight();
         
-        if(countdown>0 && !bLevel.hasFireByPixel(posX, posY)) countdown--;
+        if(countdown>0 && bLevel.hasFireByPixel(posX, posY)) countdown--;
         else if (state == BOMB) {
         	state = EXPLODING;
         } else if (state == EXPLODING && radius >0) {

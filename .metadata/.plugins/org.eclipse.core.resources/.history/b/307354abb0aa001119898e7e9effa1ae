@@ -14,13 +14,14 @@ public class Bomben {
     // Countdowns & Timer
     private static final short COUNTDOWN = 120;
     private static final short ANIMCOUNTER = 10;
-    private static final short RADIUSDELAY = 0;
+    private static final short RADIUSDELAY = -5;
     
     
     // Verschiedene Variablen
     private int state = BOMB;
     private int posX, posY;
     private int radius;
+    private int radiusCounter = 0;
     private int radiusup=0;
     private int radiusdown=0;
     private int radiusleft=0;
