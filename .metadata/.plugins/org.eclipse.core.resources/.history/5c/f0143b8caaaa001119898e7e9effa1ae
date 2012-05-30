@@ -82,7 +82,7 @@ public class BombermanLevel {
     public boolean isSolid(int posX, int posY) {
         short tile = getTile(posX, posY);
     	tile &= TILE;
-        return (tile == INDESTRUCTIBLE);
+        return (tile == INDESTRUCTIBLE || tile == STONE);
     }
 
     /**
