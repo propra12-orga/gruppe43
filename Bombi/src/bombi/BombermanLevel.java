@@ -1,4 +1,3 @@
-
 package bombi;
 
 import java.awt.Graphics;
@@ -6,6 +5,13 @@ import java.awt.Graphics;
 /**
  * Diese Klasse erzeugt Objekte, welche als Spielfeld interpretiert werden. Hierzu wird ein zweidimensionales short-Array benutzt. IdR wird nur ein Objekt
  * dieser Klasse erstellt.
+ * 
+ * Die Elemente des Arrays haben folgenden Aufbau:
+ * 
+ *     DBF0000000TTTTTT (binaer)
+ * 
+ * Wobei D anzeigt, ob sich visuell etwas in dieser "Kachel" geaendert hat, B, ob in diesem Feld
+ * eine Bombe liegt und F, ob sich eine Flamme (einer explodierenden Bombe) in dem Feld befindet.
  **/
 public class BombermanLevel {
 
@@ -18,6 +24,12 @@ public class BombermanLevel {
     // statische Variable, welche die Groesse der Felder in Pixeln spezifiziert
     private static int tileWidth = 32;
     private static int tileHeight = 32;
+    
+    // Konstante fuer die Flags
+    private static final short DRAW = (short)(1 << 15);
+    private static final short BOMB = (short)(1 << 14);
+    private static final short FIRE = (short)(1 << 13);
+    private static final short TILE = 127;
 
     public static int getTileWidth() {
         return tileWidth;
@@ -59,12 +71,17 @@ public class BombermanLevel {
     }
 
     public short getTile(int posX, int posY) {
-        if (posX < 0 || posX >= width || posY < 0 || posY >= height) return GRASS;
-        return tiles[posX][posY];
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height) return INDESTRUCTIBLE;
+        return (short)(tiles[posX][posY]&15);
+    }
+    
+    public boolean isSolidByPixel(int pixelX, int pixelY){
+    	return isSolid(pixelX / tileWidth, pixelY / tileHeight);
     }
 
-    public boolean isSolid(short tile) {
-        tile &= ~(1 << 15);
+    public boolean isSolid(int posX, int posY) {
+        short tile = getTile(posX, posY);
+    	tile &= TILE;
         return (tile == INDESTRUCTIBLE || tile == STONE);
     }
 
@@ -102,24 +119,26 @@ public class BombermanLevel {
     }
 
     public void draw(Graphics g) {
+    	short currentTile;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 //if (markedForUpdate(tiles[i][j])) {
-                    unmarkForUpdate(i, j);
-                    if (tiles[i][j] == GRASS) drawGrass(i, j, g);
+                	unmarkForUpdate(i, j);
+                    currentTile = (short)(tiles[i][j]&15);
+                	if (currentTile == GRASS) drawGrass(i, j, g);
 
-                    else if (tiles[i][j] == STONE) drawStone(i, j, g);
+                    else if (currentTile == STONE) drawStone(i, j, g);
 
-                    else if (tiles[i][j] == INDESTRUCTIBLE) drawIndestructible(i, j, g);
+                    else if (currentTile == INDESTRUCTIBLE) drawIndestructible(i, j, g);
 
-                    else if (tiles[i][j] == EXIT) drawExit(i, j, g);
+                    else if (currentTile == EXIT) drawExit(i, j, g);
                 //}
             }
         }
     }
 
     private boolean markedForUpdate(short tile) {
-        return (tile &= (1 << 15)) != 0;
+        return (tile &= DRAW) != 0;
     }
 
     private void drawGrass(int posX, int posY, Graphics g) {
@@ -160,7 +179,7 @@ public class BombermanLevel {
 
     public void markForUpdate(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-        tiles[posX][posY] |= (1 << 15);
+        tiles[posX][posY] |= DRAW;
     }
 
     public void markForUpdateByPixel(int pixelX, int pixelY) {
@@ -173,15 +192,14 @@ public class BombermanLevel {
 
     public void destroyBlock(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-        if ((tiles[posX+1][posY] &~(1<<15)) == INDESTRUCTIBLE) return;
-        if ((tiles[posX][posY+1] &~(1<<15)) == INDESTRUCTIBLE) return;
-        if ((tiles[posX][posY] &~(1<<15)) == STONE) tiles[posX][posY] = GRASS;
+        if ((tiles[posX][posY] & TILE) == STONE) tiles[posX][posY] = GRASS;
         markForUpdate(posX, posY);
+        addFire(posX,posY);
     }
 
     public void unmarkForUpdate(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-        tiles[posX][posY] &= ~(1 << 15);
+        tiles[posX][posY] &= ~DRAW;
     }
 
     public void markAllForUpdate() {
@@ -191,5 +209,60 @@ public class BombermanLevel {
             }
         }
     }
+    
+	public boolean hasFireByPixel(int posX, int posY) {
+		return hasFire(posX/tileWidth,posY/tileHeight);
+	}
+
+	private boolean hasFire(int posX, int posY) {
+		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return false;
+		return (tiles[posX][posY] & FIRE) != 0;
+	}
+
+	public boolean hasBombByPixel(int posX, int posY) {
+		return hasBomb(posX/tileWidth,posY/tileHeight);
+	}
+
+	private boolean hasBomb(int posX, int posY) {
+		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return false;
+		return (tiles[posX][posY] & BOMB) != 0;
+	}
+	
+	public void putBomb(int posX, int posY){
+		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+		tiles[posX][posY] |= (1 << 14);
+	}
+	
+	public void removeBomb(int posX, int posY){
+		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+		tiles[posX][posY] &= ~(1 << 14);
+	}
+	
+	public void putBombByPixel(int posX, int posY){
+		putBomb(posX/tileWidth , posY/tileHeight);
+	}
+	
+	public void removeBombByPixel(int posX, int posY){
+		removeBomb(posX/tileWidth , posY/tileHeight);
+	}
+	
+	public void addFireByPixel(int posX, int posY) {
+		addFire(posX/tileWidth , posY/tileHeight);
+	}
+
+	private void addFire(int posX, int posY) {
+		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+		tiles[posX][posY] |= FIRE;
+		
+	}
+
+	public void removeFireByPixel(int posX, int posY) {
+		removeFire(posX/tileWidth , posY/tileHeight);
+	}
+
+	private void removeFire(int posX, int posY) {
+		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+		tiles[posX][posY] &= ~FIRE;		
+	}
 
 }// Ende der Klasse BombermanLevel
