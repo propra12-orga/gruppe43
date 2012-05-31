@@ -160,10 +160,10 @@ public class BombermanLevel {
         return isSolid(pixelX / tileDim, pixelY / tileDim);
     }
 
-    public boolean isSolid(int posX, int posY) {
+    private boolean isSolid(int posX, int posY) {
         short tile = getTile(posX, posY);
         tile &= TILE;
-        return (tile == INDESTRUCTIBLE || tile == STONE);
+        return (tile == INDESTRUCTIBLE);// || tile == STONE);
     }
 
     /*
@@ -312,13 +312,16 @@ public class BombermanLevel {
     public void destroyBlock(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
         if ((tiles[posX][posY] & TILE) == STONE) tiles[posX][posY] = GRASS;
+        else if ((tiles[posX][posY] & TILE) == HIDDENEXIT) tiles[posX][posY] = EXIT;
         markForUpdate(posX, posY);
         addFire(posX, posY);
     }
 
     public void unmarkForUpdate(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+        removeFire(posX, posY);
         tiles[posX][posY] &= ~DRAW;
+
     }
 
     public void markAllForUpdate() {

@@ -1,17 +1,18 @@
 package bombi;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 
 public class BombiGui extends JComponent implements Runnable {
     private static final int WIDTH = 600;
@@ -29,6 +30,9 @@ public class BombiGui extends JComponent implements Runnable {
     // managet die Tastatur.. stellt im Grunde eine auf Polling basierende Lösung dar (statt Interrupts)
     private KeyPoller keyPoller;
 
+    // Liste für die Bomben
+    private List<Bomben> bombs;
+    
     Spieler spieler;
     BombermansBomben Bombe1;
     BombermanLevel bLevel;
@@ -53,6 +57,7 @@ public class BombiGui extends JComponent implements Runnable {
         this.setSize(WIDTH, HEIGHT);
         bLevel = new BombermanLevel(15,11,WIDTH, HEIGHT);
         spieler = new Spieler(bLevel);
+        bombs = new ArrayList<Bomben>();
         robot = new Robot(bLevel);
         System.out.println(KeyEvent.VK_LEFT + " " + KeyEvent.VK_A);
     }
@@ -71,10 +76,9 @@ public class BombiGui extends JComponent implements Runnable {
         // zeichne das Lvel
         bLevel.draw(dbg);
 
-        // zeichne die Bombe
-        if (Bombe1 != null) {
-            Bombe1.draw(dbg);
-            
+     // zeichne die Bombe
+        for (int i=0; i<bombs.size(); i++) {
+        	bombs.get(i).draw(dbg);   
         }
 
         // zeichne zuletzt den Spieler
@@ -209,6 +213,10 @@ public class BombiGui extends JComponent implements Runnable {
             spieler.Direction(0,-40);robot.RobotDirection(0,-40);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
             spieler.Direction(0,+40);robot.RobotDirection(0, 40);
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
+        	int posX = spieler.getPosX();
+            int posY = spieler.getPosY();
+            bombs.add(new Bomben(posX, posY, 2, bLevel));
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_ESCAPE)) {
         	
@@ -220,5 +228,11 @@ public class BombiGui extends JComponent implements Runnable {
             }
         }
         // Ende der Tastatureingabenüberprüfung
+        updateBombs();
+    }
+    private void updateBombs() {
+    	for (int i=0; i<bombs.size();i++) {
+    		bombs.get(i).update();
+    	}
     }
 }

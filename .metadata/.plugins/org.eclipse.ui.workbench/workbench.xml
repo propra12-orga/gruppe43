@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="14" version="2.0">
+<workbench progressCount="17" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1020" x="66" y="26">
 <fastViewData fastViewLocation="1024"/>
@@ -30,31 +30,21 @@
 <part id="0"/>
 <part id="1"/>
 <part id="2"/>
-<part id="3"/>
-<part id="4"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" partName="BombiGui.java" path="/home/harry/GruppeCG/Bombi/src/bombi/BombiGui.java" title="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" partName="BombiGui.java" path="/home/harry/GruppeCG/Bombi/src/bombi/BombiGui.java" title="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/BombiGui.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="4" selectionOffset="2659" selectionTopPixel="1326"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="306" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Spieler.java" partName="Spieler.java" path="/home/harry/GruppeCG/Bombi/src/bombi/Spieler.java" title="Spieler.java" tooltip="Bombi/src/bombi/Spieler.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Spieler.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1645" selectionTopPixel="1310"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Bomben.java" partName="Bomben.java" path="/home/harry/GruppeCG/Bombi/src/bombi/Bomben.java" title="Bomben.java" tooltip="Bombi/src/bombi/Bomben.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Bomben.java" partName="Bomben.java" path="/home/harry/GruppeCG/Bombi/src/bombi/Bomben.java" title="Bomben.java" tooltip="Bombi/src/bombi/Bomben.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Bomben.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1943" selectionTopPixel="762"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3082" selectionTopPixel="1194"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermanLevel.java" partName="BombermanLevel.java" path="/home/harry/GruppeCG/Bombi/src/bombi/BombermanLevel.java" title="BombermanLevel.java" tooltip="Bombi/src/bombi/BombermanLevel.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/BombermanLevel.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6260" selectionTopPixel="2574"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Texture.java" partName="Texture.java" path="/home/harry/GruppeCG/Bombi/src/bombi/Texture.java" title="Texture.java" tooltip="Bombi/src/bombi/Texture.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Texture.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="688"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="7283" selectionTopPixel="2883"/>
 </editor>
 </editors>
 <views>
@@ -64,8 +54,8 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Warnings (7 items)"/>
 <category IMemento.internal.id="Errors"/>
+<category IMemento.internal.id="Warnings (12 items)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="870" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="105" org.eclipse.ui.ide.severityAndDescriptionField="350"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -309,104 +299,11 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Bomben.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombermanLevel.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombiGui.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Spieler.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Texture.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombiGui.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Bomben.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombermanLevel.java"/>
 </editors>
-<item historyLabel="Bomben.java" index="0">
-<position/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="703" y="12"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="1981" y="13"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="1981" y="13"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2290" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="1884" y="0"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="1884" y="0"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6285" y="0"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6390" y="7"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6445" y="14"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="1884" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2068" y="4"/>
-</item>
-<item historyLabel="BombiGui.java" index="2">
-<position info="not_deleted" x="6997" y="4"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2068" y="4"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6445" y="14"/>
-</item>
-<item historyLabel="BombiGui.java" index="2">
-<position info="not_deleted" x="2659" y="4"/>
-</item>
-<item historyLabel="Spieler.java" index="3">
-<position info="not_deleted" x="1645" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2068" y="4"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6445" y="14"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2068" y="4"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6540" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2068" y="4"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="392" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="380" y="4"/>
-</item>
 <item historyLabel="Bomben.java" index="0">
 <position info="not_deleted" x="2003" y="307"/>
 </item>
@@ -458,8 +355,104 @@
 <item historyLabel="BombermanLevel.java" index="1">
 <position info="not_deleted" x="6260" y="0"/>
 </item>
-<item active="true" historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2030" y="19"/>
+<item historyLabel="Bomben.java" index="0">
+<position info="not_deleted" x="1943" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="2">
+<position info="not_deleted" x="2659" y="4"/>
+</item>
+<item historyLabel="Texture.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="6785" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="6740" y="5"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="996" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="984" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="6765" y="1"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="6740" y="5"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="1737" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="7365" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="6419" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="6">
+<position info="not_deleted" x="2889" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="7365" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="960" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="306" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="6">
+<position info="not_deleted" x="9108" y="49"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="6419" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="6">
+<position info="not_deleted" x="7255" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="1786" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="6">
+<position info="not_deleted" x="7255" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="2328" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="6">
+<position info="not_deleted" x="7531" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="2328" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="1820" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="6">
+<position info="not_deleted" x="7318" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="639" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="6">
+<position info="not_deleted" x="7283" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="3082" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="6">
+<position info="not_deleted" x="7283" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="5">
+<position info="not_deleted" x="3082" y="0"/>
+</item>
+<item active="true" historyLabel="BombiGui.java" index="4">
+<position info="not_deleted" x="306" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -478,23 +471,23 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Texture.java" tooltip="Bombi/src/bombi/Texture.java">
-<persistable path="/Bombi/src/bombi/Texture.java"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermanLevel.java" tooltip="Bombi/src/bombi/BombermanLevel.java">
 <persistable path="/Bombi/src/bombi/BombermanLevel.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermansBomben.java" tooltip="Bombi/src/bombi/BombermansBomben.java">
-<persistable path="/Bombi/src/bombi/BombermansBomben.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Bomben.java" tooltip="Bombi/src/bombi/Bomben.java">
 <persistable path="/Bombi/src/bombi/Bomben.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Spieler.java" tooltip="Bombi/src/bombi/Spieler.java">
-<persistable path="/Bombi/src/bombi/Spieler.java"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java">
 <persistable path="/Bombi/src/bombi/BombiGui.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Texture.java" tooltip="Bombi/src/bombi/Texture.java">
+<persistable path="/Bombi/src/bombi/Texture.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermansBomben.java" tooltip="Bombi/src/bombi/BombermansBomben.java">
+<persistable path="/Bombi/src/bombi/BombermansBomben.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Spieler.java" tooltip="Bombi/src/bombi/Spieler.java">
+<persistable path="/Bombi/src/bombi/Spieler.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="KeyPoller.java" tooltip="Bombi/src/bombi/KeyPoller.java">
 <persistable path="/Bombi/src/bombi/KeyPoller.java"/>
