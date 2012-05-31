@@ -3,45 +3,86 @@ package bombi;
 import java.awt.Graphics;
 
 /**
- * Diese Klasse erzeugt Objekte, welche als Spielfeld interpretiert werden. Hierzu wird ein zweidimensionales short-Array benutzt. IdR wird nur ein Objekt
- * dieser Klasse erstellt.
+ * Diese Klasse erzeugt Objekte, welche als Spielfeld interpretiert werden. Hierzu wird ein zweidimensionales short-Array benutzt. Die Eintraege dieses Arrays
+ * werden im Folgenden als "Kacheln" bezeichnet und stellen einen Teil des Spielfeldes mit fester Groesse dar. In Kacheln werden mehr oder weniger
+ * "unbewegliche" Objekte des Spieles festgehalten, also zum Beispiel ein Mauerstueck.
  * 
  * Die Elemente des Arrays haben folgenden Aufbau:
  * 
- *     DBF0000000TTTTTT (binaer)
+ * DBF0000000TTTTTT (Binaerdarstellung)
  * 
- * Wobei D anzeigt, ob sich visuell etwas in dieser "Kachel" geaendert hat, B, ob in diesem Feld
- * eine Bombe liegt und F, ob sich eine Flamme (einer explodierenden Bombe) in dem Feld befindet.
+ * Wobei D anzeigt, ob sich visuell etwas in dieser Kachel geaendert hat, B, ob in diesem Feld eine Bombe liegt und F, ob sich eine Flamme (einer explodierenden
+ * Bombe) in dem Feld befindet.
+ * 
+ * Die niedrigsten 6 Bit (d.h. die Werte zwischen 0 und 127, inklusiv) sind fuer verschiedene Kachelarten reserviert, also fuer (un)zerstoerbare Mauern, Gras
+ * oder Ausgaenge.
  **/
 public class BombermanLevel {
 
-    // ein paar Konstanten, um das Manipulieren des Felder einfacher zu gestalten
+    // ein paar Konstanten, um das Manipulieren des Feldes einfacher zu gestalten
+    /** Wert (ohne D, B, oder F Flag), welcher als Gras-Kachel interpretiert wird. */
     public static final short GRASS = 0;
+    /** Wert (ohne D, B, oder F Flag), welcher als zerstoerbare Mauer interpretiert wird. */
     public static final short STONE = 1;
+    /** Wert (ohne D, B, oder F Flag), welcher als unzerstoerbare Mauer interpretiert wird. */
     public static final short INDESTRUCTIBLE = 2;
+    /** Wert (ohne D, B, oder F Flag), welcher als Ausgang interpretiert wird. */
     public static final short EXIT = 3;
+    /** Wert (ohne D, B, oder F Flag), welcher als hinter einer zerstoerbaren Mauer liegender Ausgang interpretiert wird. */
+    public static final short HIDDENEXIT = 4;
 
-    // statische Variable, welche die Groesse der Felder in Pixeln spezifiziert
-    private static int tileWidth = 32;
-    private static int tileHeight = 32;
-    
-    // Konstante fuer die Flags
-    private static final short DRAW = (short)(1 << 15);
-    private static final short BOMB = (short)(1 << 14);
-    private static final short FIRE = (short)(1 << 13);
-    private static final short TILE = 127;
+    // Variable, welche die Groesse der Felder in Pixeln spezifiziert. Dieser Wert wurde zuvor in tileWidth und tileHeight gespeichert, wir bevorzugen aber
+    // quadratische Kacheln
+    private int tileDim;
+    private boolean drawAll = true; // wird auf true gesetzt, wenn ALLE Kacheln neu gezeichnet werden sollen, da dies effizienter ist, als ueberall D-Flags zu
+                                    // setzen. ATM auf true, da partielles Updaten noch nicht von den anderen Klassen unterstuetzt ist
 
-    public static int getTileWidth() {
-        return tileWidth;
+    // Konstanten fuer die Flags
+    private static final short DRAW = (short) (1 << 15);
+    private static final short BOMB = (short) (1 << 14);
+    private static final short FIRE = (short) (1 << 13);
+    private static final short TILE = 127; // 0...0111111
+
+    /**
+     * Liefert die aktuelle Kantenlaenge aller Kacheln in Pixeln zurueck. Der hier zurueckgegebene Wert wird auch von der draw()-Methode der gleichen Klasse
+     * genutzt.
+     * 
+     * @return Die Kantenlaenge der Kacheln in Pixeln.
+     */
+    public int getTileDim() {
+        return tileDim;
     }
 
-    public static int getTileHeight() {
-        return tileHeight;
+    // für Abwärtskompatibilität
+
+    /**
+     * @deprecated
+     * @return siehe getTileDim()
+     */
+    public int getTileHeight() {
+        return tileDim;
     }
 
+    /**
+     * @deprecated
+     * @return siehe getTileDim()
+     */
+    public int getTileWidth() {
+        return tileDim;
+    }
+
+    /**
+     * Diese Methode aktualisiert die Kantenlaenge der Kacheln anhand der Breite und Hoehe (in Pixeln) des zur Verfuegung stehenden Bereichs. Konkreter: In der
+     * Regel soll ein Objekt dieser Klasse auf ein Panel/Component/BufferedImage gezeichnet werden. Diese Methode passt die Kantenlaenge so an, dass das
+     * Spielfeld eben jenes Panel/Component/BufferedImage moeglichst komplett ausfuellt (die Kacheln haben weiterhin quadratische Groesse).
+     * 
+     * Diese Methode sollte zum Beispiel beim Vergroessern oder Verkleinern des Spielfensters aufgerufen werden.
+     * 
+     * @param pixelWidth Breite des Bereichs, auf welchen dieses Objekt spaeter gezeichnet werden soll.
+     * @param pixelHeight Hoehe des Bereichs, auf welchen dieses Objekt spaeter gezeichnet werden soll
+     */
     public void updateTileDimensions(int pixelWidth, int pixelHeight) {
-        tileWidth = pixelWidth / width;
-        tileHeight = pixelHeight / height;
+        tileDim = Math.min(pixelWidth / width, pixelHeight / height);
     }
 
     // zweidimensionales Array, welches das Spielfeld darstellt
@@ -50,12 +91,21 @@ public class BombermanLevel {
     public int width, height;
 
     /**
-     * Erzeugt ein neues Spielfeld.
+     * Erzeugt ein neues Spielfeld. Die Anzahl der Kacheln sowie die Groesse des Viewports (also Panel/Component/Image), auf welchen dieses Objekt gezeichnet
+     * werden soll, muessen hierzu angegeben werden. Das Spielfeld wird dann zufaellig mit Mauern, Gras und einem Eingang befuellt. In jeder zweiten Reihe und
+     * jeder zweiten Spalte wird eine unzerstoerbare Mauer erzeugt.
      * 
-     * @param width: Breite des Spielfelds in Pixel
-     * @param height: Hoehe des Spielfelds in Pixel
-     **/
+     * @param width Breite des Spielfelds in Kacheln
+     * @param height Hoehe des Spielfelds in Kacheln
+     * @param pixelWidth Breite des Spielfelds in Pixeln
+     * @param pixelHeight Hoehe des Spielfelds in Pixeln
+     */
     public BombermanLevel(int width, int height, int pixelWidth, int pixelHeight) {
+        if (width < 5 || height < 5) {
+            width = Math.max(width, 5);
+            height = Math.max(height, 5);
+            System.err.println("Ein sinnvoll erzeugtes Zufallsspielfeld sollte mindestens 5x5 Kacheln besitzen.");
+        }
         // Berechne die Dimension des Feldes mit Hilfe der Pixel
         this.width = width;
         this.height = height;
@@ -66,29 +116,60 @@ public class BombermanLevel {
         fillRandomly();
     }
 
+    /**
+     * Erzeugt ein neues Spielfeld. Die Groesse des Viewports (also Panel/Component/Image), auf welchen dieses Objekt gezeichnet werden soll, muss hierzu
+     * angegeben werden. Das Spielfeld wird aus dem uebergebem short-Array erzeugt. Dieses sollte ausschliesslich mit Konstanten dieser Klasse befuellt sein, um
+     * eine sinnvolle Auswertung der Kacheln zu ermoeglichen. Bei weniger als 5x5 Kacheln wird ein zufaellig Feld erzeugt.
+     * 
+     * Eine moegliche Anwendung ist das Auslesen eines Levels aus einer Datei.
+     * 
+     * @param tiles Die Kacheln in Form eines short-Arrays.
+     * @param pixelWidth Breite des Spielfelds in Pixeln
+     * @param pixelHeight Hoehe des Spielfelds in Pixeln
+     */
+    public BombermanLevel(short[][] tiles, int pixelWidth, int pixelHeight) {
+        if (tiles.length < 5 || tiles[1].length < 5) {
+            width = 5;
+            height = 5;
+            System.err.println("Ein sinnvoll erzeugtes Zufallsspielfeld sollte mindestens 5x5 Kacheln besitzen.");
+            // Berechne die Größe der Felder in Pixel
+            updateTileDimensions(pixelWidth, pixelHeight);
+            // erstelle ein leeres Spielfeld
+            tiles = new short[this.width][this.height];
+            fillRandomly();
+            return;
+        }
+        // Dimensionen sind in Ordnung, normales Prozedere
+        this.tiles = tiles;
+        this.width = tiles.length;
+        this.height = tiles[1].length;
+        // Berechne die Größe der Felder in Pixel
+        updateTileDimensions(pixelWidth, pixelHeight);
+    }
+
     public short getTileByPixel(int pixelX, int pixelY) {
-        return getTile(pixelX / tileWidth, pixelY / tileHeight);
+        return getTile(pixelX / tileDim, pixelY / tileDim);
     }
 
     public short getTile(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return INDESTRUCTIBLE;
-        return (short)(tiles[posX][posY]&15);
+        return (short) (tiles[posX][posY] & TILE);
     }
-    
-    public boolean isSolidByPixel(int pixelX, int pixelY){
-    	return isSolid(pixelX / tileWidth, pixelY / tileHeight);
+
+    public boolean isSolidByPixel(int pixelX, int pixelY) {
+        return isSolid(pixelX / tileDim, pixelY / tileDim);
     }
 
     public boolean isSolid(int posX, int posY) {
         short tile = getTile(posX, posY);
-    	tile &= TILE;
+        tile &= TILE;
         return (tile == INDESTRUCTIBLE || tile == STONE);
     }
 
-    /**
+    /*
      * Methode, welche das Spielfeld initialisiert. Alle zwei Zeilen/Spalten wird ein unzerstoerbarer Stein erzeugt. Ein 2x2 Block in den Ecken wird
      * freigelassen, um dem Spieler Bewegungsfreiraum zu ermoeglichen.
-     **/
+     */
     private void fillRandomly() {
         // iteriere ueber die x- und dann die y-Koordinaten
         for (int i = 0; i < width; i++) {
@@ -108,58 +189,96 @@ public class BombermanLevel {
                     // else
                     // tiles[i][j] = GRASS;
                 }
-                markForUpdate(i, j);
             }
         }
-        // fuege zufaellig einen Ausgang ein
-        int i = (int) (Math.random() * tiles.length);
-        int j = (int) (Math.random() * tiles[1].length);
-        tiles[i][j] = EXIT;
-        markForUpdate(i, j);
+        // fuege zufaellig einen Ausgang ein. Berechne hierzu zunaechst eine zufaellige Koordinate im Inneren des Spielfelds.
+        // Wollen zumindest keinen Eingang im unmittelbar um die Spieler bestehenden Bereich (je 2x2) haben, gerne aber im inneren Drittel
+        int freeXSpace = Math.min(2, tiles.length / 3);
+        int freeYSpace = Math.min(2, tiles[1].length / 3);
+        int i = freeXSpace + (int) (Math.random() * (tiles.length - freeXSpace));
+        int j = freeYSpace + (int) (Math.random() * (tiles[1].length - freeYSpace));
+        if (tiles[i][j] == INDESTRUCTIBLE) i++; // hier wird keine unzerstoerbare Mauer sein (alle 2 Zeilen/Spalten)
+        // Stelle fest, ob der Eingang sichtbar oder hinter einer Mauer platziert wird
+        if (tiles[i][j] == STONE) tiles[i][j] = HIDDENEXIT;
+        else tiles[i][j] = EXIT;
+        markAllForUpdate();
     }
 
+    /**
+     * Diese Methode zeichnet das Spielfeld auf den zum Graphics-Objekt gehoerenden Bereich (zum Beispiel ein BufferedImage). Es wird immer nur der Ausschnitt
+     * gezeichnet, in dem sich tatsaechlich etwas geaendert hat; dazu muss das Spielfeld ueber die Methode markForUpdateByPixel informiert werden.
+     * 
+     * @param g Das Graphics-Objekt, welches genutzt wird, um das Level zu zeichnen.
+     */
     public void draw(Graphics g) {
-    	short currentTile;
+        short currentTile;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                //if (markedForUpdate(tiles[i][j])) {
-                	unmarkForUpdate(i, j);
-                    currentTile = (short)(tiles[i][j]&15);
-                	if (currentTile == GRASS) drawGrass(i, j, g);
+                if (drawAll || markedForUpdate(tiles[i][j])) {
+                    if (!drawAll) unmarkForUpdate(i, j); // if-Abfrage spart unnoetige Bitoperationen
+                    currentTile = (short) (tiles[i][j] & TILE); // Betrachtung unabhaengig von D, B oder F Flags
+                    if (currentTile == GRASS) drawGrass(i, j, g);
 
-                    else if (currentTile == STONE) drawStone(i, j, g);
+                    else if (currentTile == STONE || currentTile == HIDDENEXIT) drawStone(i, j, g);
 
                     else if (currentTile == INDESTRUCTIBLE) drawIndestructible(i, j, g);
 
                     else if (currentTile == EXIT) drawExit(i, j, g);
-                //}
+                }
             }
         }
+        // drawAll = false; // partielles Updaten von anderen Klassen nicht unterstuetzt
     }
 
+    /*
+     * Liefert true, wenn das D-Flag einer Kachel gesetzt ist.
+     */
     private boolean markedForUpdate(short tile) {
         return (tile &= DRAW) != 0;
     }
 
+    // es folgen Methoden zum einzelnen Zeichnen von Kacheln.
+
     private void drawGrass(int posX, int posY, Graphics g) {
-        // g.setColor(Color.GREEN);
-        // g.fillRect(posX * DIM, posY * DIM, DIM, DIM);
-        Texture.GRASS.draw(posX * tileWidth, posY * tileHeight, tileWidth, tileHeight, g);
+        Texture.GRASS.draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
     }
 
     private void drawStone(int posX, int posY, Graphics g) {
-        Texture.STONE.draw(posX * tileWidth, posY * tileHeight, tileWidth, tileHeight, g);
+        Texture.STONE.draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
     }
 
     private void drawIndestructible(int posX, int posY, Graphics g) {
-        Texture.BEDROCK.draw(posX * tileWidth, posY * tileHeight, tileWidth, tileHeight, g);
+        Texture.BEDROCK.draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
     }
 
     private void drawExit(int posX, int posY, Graphics g) {
-        Texture.EXIT.draw(posX * tileWidth, posY * tileHeight, tileWidth, tileHeight, g);
+        Texture.EXIT.draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
     }
 
-    public void markForUpdate(int posX, int posY, int radius) {
+    // es folgen Methoden zum Setzen der D, B und F Flags
+
+    // D Flag (d.h. Aufforderung, die entsprechende Kachel zu zeichnen)
+
+    /**
+     * Diese Methode setzt das D-Flag (teilt dem Level mit, dass diese Kachel neu zu zeichnen ist) aller Kacheln, welche sich im Quadrat mit dem Mittelpunkt
+     * (pixelX, pixelY) und der Seitenlaenge 2*pixelRadius + 1 befinden. Alle Angaben sind, wie aus der Namensgebung der Parameter gefolgert werden kann, in
+     * Pixeln.
+     * 
+     * Eine sinnvolle Anwendung dieser Methode waere zum Beispiel bei der Bewegung eines Spielerobjekts, welches sich zwischen mehreren Kacheln befinden kann.
+     * Auch Bomben, die frei gelegt werden koennen, sollten sich diese Methode bedienen.
+     * 
+     * Diese Methode ist ueberladen; fuer das Markieren einer einzelnen Kachel bietet sich markForUpdateByPixel(int pixelX, int pixelY) an.
+     * 
+     * @param pixelX x-Koordinate des innersten Pixels, dessen ihn enthaltende Kachel markiert werden soll
+     * @param pixelY y-Koordinate des innersten Pixels, dessen ihn enthaltende Kachel markiert werden soll
+     * @param pixelRadius Radius in Pixeln, innerhalb dessen Kacheln markiert werden sollen.
+     */
+    public void markForUpdateByPixel(int pixelX, int pixelY, int pixelRadius) {
+        markForUpdate(pixelX / tileDim, pixelY / tileDim, pixelRadius / tileDim);
+    }
+
+    // eigentliche Methode... fuer Anwender ist es von aussen sicherer, nur obige Methode aufzurufen
+    private void markForUpdate(int posX, int posY, int radius) {
         int leftX = posX - radius;
         int rightX = posX + radius;
         int topY = posY - radius;
@@ -177,24 +296,24 @@ public class BombermanLevel {
 
     }
 
-    public void markForUpdate(int posX, int posY) {
+    public void markForUpdateByPixel(int pixelX, int pixelY) {
+        markForUpdate(pixelX / tileDim, pixelY / tileDim);
+    }
+
+    private void markForUpdate(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
         tiles[posX][posY] |= DRAW;
     }
 
-    public void markForUpdateByPixel(int pixelX, int pixelY) {
-        markForUpdate(pixelX / tileWidth, pixelY / tileHeight);
-    }
-
     public void destroyBlockByPixel(int pixelX, int pixelY) {
-        destroyBlock(pixelX / tileWidth, pixelY / tileHeight);
+        destroyBlock(pixelX / tileDim, pixelY / tileDim);
     }
 
     public void destroyBlock(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
         if ((tiles[posX][posY] & TILE) == STONE) tiles[posX][posY] = GRASS;
         markForUpdate(posX, posY);
-        addFire(posX,posY);
+        addFire(posX, posY);
     }
 
     public void unmarkForUpdate(int posX, int posY) {
@@ -203,66 +322,62 @@ public class BombermanLevel {
     }
 
     public void markAllForUpdate() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                markForUpdate(i, j);
-            }
-        }
+        drawAll = true;
     }
-    
-	public boolean hasFireByPixel(int posX, int posY) {
-		return hasFire(posX/tileWidth,posY/tileHeight);
-	}
 
-	private boolean hasFire(int posX, int posY) {
-		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return false;
-		return (tiles[posX][posY] & FIRE) != 0;
-	}
+    public boolean hasFireByPixel(int posX, int posY) {
+        return hasFire(posX / tileDim, posY / tileDim);
+    }
 
-	public boolean hasBombByPixel(int posX, int posY) {
-		return hasBomb(posX/tileWidth,posY/tileHeight);
-	}
+    private boolean hasFire(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height) return false;
+        return (tiles[posX][posY] & FIRE) != 0;
+    }
 
-	private boolean hasBomb(int posX, int posY) {
-		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return false;
-		return (tiles[posX][posY] & BOMB) != 0;
-	}
-	
-	public void putBomb(int posX, int posY){
-		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-		tiles[posX][posY] |= (1 << 14);
-	}
-	
-	public void removeBomb(int posX, int posY){
-		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-		tiles[posX][posY] &= ~(1 << 14);
-	}
-	
-	public void putBombByPixel(int posX, int posY){
-		putBomb(posX/tileWidth , posY/tileHeight);
-	}
-	
-	public void removeBombByPixel(int posX, int posY){
-		removeBomb(posX/tileWidth , posY/tileHeight);
-	}
-	
-	public void addFireByPixel(int posX, int posY) {
-		addFire(posX/tileWidth , posY/tileHeight);
-	}
+    public boolean hasBombByPixel(int posX, int posY) {
+        return hasBomb(posX / tileDim, posY / tileDim);
+    }
 
-	private void addFire(int posX, int posY) {
-		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-		tiles[posX][posY] |= FIRE;
-		
-	}
+    private boolean hasBomb(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height) return false;
+        return (tiles[posX][posY] & BOMB) != 0;
+    }
 
-	public void removeFireByPixel(int posX, int posY) {
-		removeFire(posX/tileWidth , posY/tileHeight);
-	}
+    public void putBomb(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+        tiles[posX][posY] |= (1 << 14);
+    }
 
-	private void removeFire(int posX, int posY) {
-		if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
-		tiles[posX][posY] &= ~FIRE;		
-	}
+    public void removeBomb(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+        tiles[posX][posY] &= ~(1 << 14);
+    }
+
+    public void putBombByPixel(int posX, int posY) {
+        putBomb(posX / tileDim, posY / tileDim);
+    }
+
+    public void removeBombByPixel(int posX, int posY) {
+        removeBomb(posX / tileDim, posY / tileDim);
+    }
+
+    public void addFireByPixel(int posX, int posY) {
+        addFire(posX / tileDim, posY / tileDim);
+    }
+
+    private void addFire(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+        tiles[posX][posY] |= FIRE;
+
+    }
+
+    public void removeFireByPixel(int posX, int posY) {
+        removeFire(posX / tileDim, posY / tileDim);
+    }
+
+    private void removeFire(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height) return;
+        tiles[posX][posY] &= ~FIRE;
+    }
 
 }// Ende der Klasse BombermanLevel
