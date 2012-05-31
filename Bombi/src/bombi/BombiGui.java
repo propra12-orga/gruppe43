@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -31,13 +29,11 @@ public class BombiGui extends JComponent implements Runnable {
     // managet die Tastatur.. stellt im Grunde eine auf Polling basierende Lösung dar (statt Interrupts)
     private KeyPoller keyPoller;
 
-    // Liste für die Bomben
-    private List<Bomben> bombs;
-    
     Spieler spieler;
     BombermansBomben Bombe1;
     BombermanLevel bLevel;
-   
+    Robot robot;
+    
     int x = 0;
     int y = 0;
     int radius = 36;
@@ -57,8 +53,7 @@ public class BombiGui extends JComponent implements Runnable {
         this.setSize(WIDTH, HEIGHT);
         bLevel = new BombermanLevel(15,11,WIDTH, HEIGHT);
         spieler = new Spieler(bLevel);
-        bombs = new ArrayList<Bomben>();
-        
+        robot = new Robot(bLevel);
         System.out.println(KeyEvent.VK_LEFT + " " + KeyEvent.VK_A);
     }
 
@@ -67,20 +62,25 @@ public class BombiGui extends JComponent implements Runnable {
      */
     public void paintBuffer() {
     	if(spieler.spielEnde()) {
-    		dbg.drawString("Spieler ... hat gewonnen!", 400, 300);
+    		dbg.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
+    		return;
+    	}if(robot.spielEnde()) {
+    		dbg.drawString("DER COMPUTER HAT GEWONNEN !!! ", 300, 250);
     		return;
     	}
         // zeichne das Lvel
         bLevel.draw(dbg);
 
         // zeichne die Bombe
-        for (int i=0; i<bombs.size(); i++) {
-        	bombs.get(i).draw(dbg);   
+        if (Bombe1 != null) {
+            Bombe1.draw(dbg);
+            
         }
 
         // zeichne zuletzt den Spieler
         spieler.draw(dbg);
-
+        // robot zeichnen
+        robot.draw(dbg);
         // zeige fps an
         dbg.setColor(Color.ORANGE);
         dbg.drawString(fps + "FPS", this.getWidth() - 50, 20);
@@ -117,9 +117,10 @@ public class BombiGui extends JComponent implements Runnable {
     public static void main(String[] args) {
         // Fenster erstellen
         JFrame frame = new JFrame();
+        
         frame.setTitle("Bombi");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         BombiGui bGui = new BombiGui();
        
         frame.add(bGui);
@@ -195,22 +196,19 @@ public class BombiGui extends JComponent implements Runnable {
     	
     	if(spieler.spielEnde())
     		return;
-    	
-    	
+    	if(robot.spielEnde())
+    		return;
+    	robot.RobotDirection(0, 0);
         // überprüfe Tastatureingaben
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            spieler.Direction(-40,0);
+            spieler.Direction(-40,0);robot.RobotDirection(-40, 0);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            spieler.Direction(+40,0);
+            spieler.Direction(+40,0);robot.RobotDirection(40, 0);
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            spieler.Direction(0,-40);
+            spieler.Direction(0,-40);robot.RobotDirection(0,-40);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-            spieler.Direction(0,+40);
-        } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
-        	int posX = spieler.getPosX();
-            int posY = spieler.getPosY();
-            bombs.add(new Bomben(posX, posY, 2, bLevel));
+            spieler.Direction(0,+40);robot.RobotDirection(0, 40);
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_ESCAPE)) {
         	
@@ -222,11 +220,5 @@ public class BombiGui extends JComponent implements Runnable {
             }
         }
         // Ende der Tastatureingabenüberprüfung
-        updateBombs();
-    }
-    private void updateBombs() {
-    	for (int i=0; i<bombs.size();i++) {
-    		bombs.get(i).update();
-    	}
     }
 }

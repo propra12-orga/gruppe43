@@ -50,6 +50,7 @@ public class Texture {
     public static Texture BEDROCK = new Texture(64, 0, 32, 32);
     public static Texture EXIT = new Texture(0, 32, 32, 32);
 
+    public static Texture ROBOT = new Texture(192, 0, 32, 32);
     public static Texture SPIELER1 = new Texture(96, 0, 32, 32);
 
     public static Texture BOMB1 = new Texture(0, 64, 32, 32);
