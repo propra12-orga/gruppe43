@@ -2,6 +2,10 @@ package bombi;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -49,10 +53,28 @@ public class Texture {
     public static Texture STONE = new Texture(32, 0, 32, 32);
     public static Texture BEDROCK = new Texture(64, 0, 32, 32);
     public static Texture EXIT = new Texture(0, 32, 32, 32);
+    
+    public static Texture PLAYER_MOVE_FRONT1 = new Texture(224, 0, 32, 48);
+    public static Texture PLAYER_MOVE_FRONT2 = PLAYER_MOVE_FRONT1.mirrorHorizontally();
+    
+    public static Texture PLAYER_MOVE_BACK1 = new Texture(224, 48, 32, 48);
+    public static Texture PLAYER_MOVE_BACK2 = PLAYER_MOVE_BACK1.mirrorHorizontally();
+    
+    public static Texture PLAYER_MOVE_LEFT1 = new Texture(256, 48, 32, 48);
+    public static Texture PLAYER_MOVE_LEFT2 = new Texture(288, 48, 32, 48);
+    
+    public static Texture PLAYER_MOVE_RIGHT1 = PLAYER_MOVE_LEFT1.mirrorHorizontally();
+    public static Texture PLAYER_MOVE_RIGHT2 = PLAYER_MOVE_LEFT2.mirrorHorizontally();
+    
+    public static Texture PLAYER_IDLE_FRONT = new Texture(192, 0, 32, 48);
+    public static Texture PLAYER_IDLE_BACK = new Texture(192, 48, 32, 48);
+    public static Texture PLAYER_IDLE_LEFT = new Texture(256, 0, 32, 48);
+    public static Texture PLAYER_IDLE_RIGHT = PLAYER_IDLE_LEFT.mirrorHorizontally();
+    
+    public static Texture[][] PLAYER_MOVE = {{PLAYER_MOVE_FRONT1, PLAYER_IDLE_FRONT, PLAYER_MOVE_FRONT2, PLAYER_IDLE_FRONT} , {PLAYER_MOVE_BACK1, PLAYER_IDLE_BACK, PLAYER_MOVE_BACK2, PLAYER_IDLE_BACK}, {PLAYER_MOVE_LEFT1,PLAYER_IDLE_LEFT, PLAYER_MOVE_LEFT2,PLAYER_IDLE_LEFT}, {PLAYER_MOVE_RIGHT1,PLAYER_IDLE_RIGHT,PLAYER_MOVE_RIGHT2,PLAYER_IDLE_RIGHT}};
 
-    public static Texture ROBOT = new Texture(192, 0, 32, 32);
-    public static Texture SPIELER1 = new Texture(96, 0, 32, 32);
-
+    public static Texture[] PLAYER_IDLE = {PLAYER_IDLE_FRONT, PLAYER_IDLE_BACK, PLAYER_IDLE_LEFT, PLAYER_IDLE_RIGHT};
+    
     public static Texture BOMB1 = new Texture(0, 64, 32, 32);
     public static Texture BOMB2 = new Texture(32, 64, 32, 32);
     public static Texture BOMB3 = new Texture(64, 64, 32, 32);
@@ -66,6 +88,10 @@ public class Texture {
     public static Texture EXPLTOP = EXPLBOT.mirrorVertically();
     public static Texture EXPLLEF = EXPLRIG.mirrorHorizontally();
 
+    // Abwaertskompatibilitaet
+    public static Texture SPIELER1 = PLAYER_IDLE_FRONT;
+    public static Texture ROBOT = PLAYER_IDLE_FRONT;
+    
     private BufferedImage texture; // Original-Bild zum verlustfreien Skalieren
     private BufferedImage scaledTexture; // tatsächlich gemaltes Bild
 
@@ -91,8 +117,11 @@ public class Texture {
     }
 
     private void rescale(int width, int height) {
-        scaledTexture = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = (Graphics2D) scaledTexture.getGraphics();
+    	this.width = width;
+    	this.height = height;
+        scaledTexture = new BufferedImage(width,height,texture.getType());
+        scaledTexture.setAccelerationPriority(texture.getAccelerationPriority());
+    	Graphics2D g = (Graphics2D) scaledTexture.getGraphics();
         g.drawImage(texture, 0, 0, width, height, null);
         g.dispose();
     }
@@ -100,7 +129,8 @@ public class Texture {
     private Texture mirrorHorizontally() {
         int width = this.texture.getWidth();
         int height = this.texture.getHeight();
-        BufferedImage texture = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage texture = new BufferedImage(width, height, this.texture.getType());
+        texture.setAccelerationPriority(this.texture.getAccelerationPriority());
         Graphics2D g = (Graphics2D) texture.getGraphics();
         g.drawImage(this.texture, 0, 0, width, height, width, 0, 0, height, null);
         g.dispose();
@@ -110,7 +140,8 @@ public class Texture {
     private Texture mirrorVertically() {
         int width = this.texture.getWidth();
         int height = this.texture.getHeight();
-        BufferedImage texture = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage texture = new BufferedImage(width, height, this.texture.getType());
+        texture.setAccelerationPriority(this.texture.getAccelerationPriority());
         Graphics2D g = (Graphics2D) texture.getGraphics();
         g.drawImage(this.texture, 0, 0, width, height, 0, width, height, 0, null);
         g.dispose();
