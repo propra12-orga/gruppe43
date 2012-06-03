@@ -34,7 +34,7 @@ public class Robot{
     public Robot(BombermanLevel l) {
     	this.l=l;
         posX = 560;
-        posY = 440;
+        posY = 400;
         width = height = 40;
     }
     /**
@@ -105,19 +105,7 @@ public class Robot{
 		}
         
     }
-    
-    /**
-     * 
-     * @return Die Methode stopStein() überprüft die Position des Spielers mit
-     * getTileByPixel und STONE,INDESTRUCTIBLE auf Gleichheit.
-     * Rückgabe true wenn gleich ansonsten false
-     * Mit der Methode soll im Spiel der Spieler bei einem Stein nicht durchlaufen koennen.
-     *  
-     */
-    public boolean stopStein() {
-    	return((l.getTileByPixel(posX, posY)==BombermanLevel.STONE)||(l.getTileByPixel(posX, posY)==BombermanLevel.INDESTRUCTIBLE));
-    }
-    
+ 
     /**
      * 
      * @return
@@ -127,21 +115,7 @@ public class Robot{
     public boolean spielEnde(){
     	return((l.getTileByPixel(posX, posY)==BombermanLevel.EXIT));
     }
-    
-	/**   
-	 * Diese Methode überprüft ob x und y am Rand sind und setzt sie bei Überschreitung zurück 
-	 */
-    public void move(){
-    	if(posX < 0)
-            posX = 0;
-        if(posX > 560)
-            posX = 560;
-        if(posY < 0)
-            posY = 0;
-        if(posY > 400)
-            posY = 400;
-    }
-	
+   
     /**
      * Diese Methode bekommt bei Tastendruck dazugehörige x und y Werte und aktualisiert
      * die momentane Position.Beispiel: Pfeiltaste Links wird betätigt die Werte die übergeben werden
@@ -154,16 +128,15 @@ public class Robot{
      * 
      */
     
-    public void RobotDirection(int xdir, int ydir) {
+    public void robotDirection(int xdir,int ydir) {
+        
+    	if((l.getTileByPixel(getPosX()+xdir,getPosY()+ydir)==2)||(l.getTileByPixel(getPosX()+xdir,getPosY()+ydir)==1))
+    	return;
+    	posX+=xdir;
+		posY+=ydir;
+	
     
-    	posX += xdir;
-    	posY += ydir;
-    	
-    	move();
-    	if(stopStein()){
-    		posX -= xdir;
-    		posY -= ydir;
-    	}
+    }
     	
     }
 /**
@@ -185,4 +158,4 @@ public class Robot{
     	}
     	
 }*/
-}   
+  

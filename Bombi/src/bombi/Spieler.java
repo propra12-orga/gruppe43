@@ -2,8 +2,12 @@ package bombi;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
-public class Spieler {
+import javax.imageio.ImageIO;
+
+public class Spieler{
 	
 	Bomben b;
 	Spieler s;
@@ -50,6 +54,9 @@ public class Spieler {
 	public int getPosY() {
 		return posY;
 	}
+	public int getHealth(){
+		return health;
+	}
 	/**
 	 * Setter x-Position
 	 * @param posX
@@ -77,9 +84,10 @@ public class Spieler {
 	 * Methode wenn den Spieler die Bombe trift, Variable health auf 0 setzt
 	 */
     public void erwischt(){
-    	if( (b.getPosX()==s.getPosX()) && (b.getPosY()==s.getPosY()) )
-    		health=0;
+    	if( l.hasFireByPixel(s.getPosX(), s.getPosY()))
+		health = 0;
     }
+   
 	
     /**
      * 
@@ -94,40 +102,15 @@ public class Spieler {
     
     /**
      * 
-     * @return Die Methode stopStein() ueberprueft die Position des Spielers mit
-     * getTileByPixel und STONE,INDESTRUCTIBLE auf Gleichheit.
-     * Rueckgabe true wenn gleich ansonsten false
-     * Mit der Methode soll im Spiel der Spieler bei einem Stein nicht durchlaufen koennen.
-     *  
-     */
-    public boolean stopStein() {
-    	return((l.getTileByPixel(posX, posY)==BombermanLevel.STONE)||(l.getTileByPixel(posX, posY)==BombermanLevel.INDESTRUCTIBLE));
-    }
-    
-    /**
-     * 
      * @return
      * Die Methode spielEnde() ueberprueft die Position des Spielers mit
      * getTileByPixel und EXIT auf Gleichheit
      */
     public boolean spielEnde(){
-    	return((l.getTileByPixel(posX, posY)==BombermanLevel.EXIT));
+    	return ((l.getTileByPixel(posX, posY)==BombermanLevel.EXIT));
+    	
     }
-    
-	/**   
-	 * Diese Methode �berpr�ft ob x und y am Rand sind und setzt sie bei �berschreitung zur�ck 
-	 */
-    public void move(){
-    	if(posX < 0)
-            posX = 0;
-        if(posX > 600)
-            posX = 600;
-        if(posY < 0)
-            posY = 0;
-        if(posY > 440)
-            posY = 440;
-    }
-	
+  
     /**
      * Diese Methode bekommt bei Tastendruck dazugeh�rige x und y Werte und aktualisiert
      * die momentane Position.Beispiel: Pfeiltaste Links wird bet�tigt die Werte die �bergeben werden
@@ -138,18 +121,18 @@ public class Spieler {
      * @param xdir
      * @param ydir
      */
+  
     public void Direction(int xdir,int ydir) {
-		
-		posX += xdir;
-		posY += ydir; move();
-		if(stopStein()){
-			posX-=xdir;
-			posY-=ydir;
-			
-		}
-		
-	}
+    
+    	if((l.getTileByPixel(getPosX()+xdir,getPosY()+ydir)==2)||(l.getTileByPixel(getPosX()+xdir,getPosY()+ydir)==1))
+    	return;
+    	posX+=xdir;
+		posY+=ydir;
 	
+    
+    }
+	
+    
     
 	
 }
