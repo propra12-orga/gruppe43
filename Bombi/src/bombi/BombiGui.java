@@ -202,21 +202,24 @@ public class BombiGui extends JComponent implements Runnable {
     		return;
     	if(robot.spielEnde())
     		return;
-    	robot.RobotDirection(0, 0);
+    	if(spieler.getHealth()==0)
+    		return;
+    	robot.robotDirection(0, 0);
         // überprüfe Tastatureingaben
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            spieler.Direction(-40,0);robot.RobotDirection(-40, 0);
+            spieler.Direction(-40,0);robot.robotDirection(-40, 0);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            spieler.Direction(+40,0);robot.RobotDirection(40, 0);
+            spieler.Direction(+40,0);robot.robotDirection(40, 0);
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            spieler.Direction(0,-40);robot.RobotDirection(0,-40);
+            spieler.Direction(0,-40);robot.robotDirection(0,-40);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-            spieler.Direction(0,+40);robot.RobotDirection(0, 40);
+            spieler.Direction(0,+40);robot.robotDirection(0, 40);
         } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
         	int posX = spieler.getPosX();
             int posY = spieler.getPosY();
             bombs.add(new Bomben(posX, posY, 2, bLevel));
+            bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2, bLevel));
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_ESCAPE)) {
         	
