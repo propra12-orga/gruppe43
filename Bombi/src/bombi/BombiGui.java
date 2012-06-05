@@ -48,7 +48,7 @@ public class BombiGui extends JComponent implements Runnable {
         // erzeuge die Objekte für Doublebuffering
         dbImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         dbg = (Graphics2D) dbImage.getGraphics();
-
+    	s.playSound("Fight");
         // erzeuge unseren KeyPoller
         keyPoller = new KeyPoller();
         addKeyListener(keyPoller);
@@ -66,10 +66,14 @@ public class BombiGui extends JComponent implements Runnable {
      * Double Buffering wobei ein Image erstellt wird und im Hintergrund das nächste Bild gemalt wird.
      */
     public void paintBuffer() {
+    	
     	if(spieler.spielEnde()) {
+    		//s.playSound("Exit");
     		dbg.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
     		return;
-    	}if(robot.spielEnde()) {
+    	}
+    	
+    	if(robot.spielEnde()) {
     		dbg.drawString("DER COMPUTER HAT GEWONNEN !!! ", 300, 250);
     		return;
     	}
@@ -126,7 +130,7 @@ public class BombiGui extends JComponent implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         BombiGui bGui = new BombiGui();
-       
+        
         frame.add(bGui);
         frame.pack(); // passt die Gr��e dem Inhalt an
 
@@ -134,12 +138,21 @@ public class BombiGui extends JComponent implements Runnable {
         frame.setLocationRelativeTo(null);
 
         frame.setVisible(true);
-      
-        new Thread(bGui).start();
         
-       
+        new Thread(bGui).start();
+              
     }
-
+  
+    //SoundManager instanz (Audios einlesen)
+    SoundManager s = new SoundManager() {
+    	public void initSounds() {
+    		sounds.add(new Sound("Exit", Sound.getURL("Exit.wav")));
+    		sounds.add(new Sound("Bumm", Sound.getURL("Bumm.wav")));
+    		sounds.add(new Sound("Put", Sound.getURL("Put.wav")));
+    		sounds.add(new Sound("Step", Sound.getURL("Step.wav")));
+    		sounds.add(new Sound("Fight", Sound.getURL("Fight.wav")));
+    	}
+    };
     /**
      * Startet den Spieleloop.
      */
@@ -197,25 +210,27 @@ public class BombiGui extends JComponent implements Runnable {
      * Tastatureingaben, Bewegen des Spielerobjekts, Herunterzählen des BombenCounters etc.
      */
     public void bombermanUpdate() {
-    	
+    
     	if(spieler.spielEnde())
     		return;
     	if(robot.spielEnde())
-    		return;
-    	if(spieler.getHealth()==0)
-    		return;
-    	robot.robotDirection(0, 0);
+    		return;	
         // überprüfe Tastatureingaben
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            spieler.Direction(-40,0);robot.robotDirection(-40, 0);
+        	s.playSound("Step");
+            spieler.Direction(-40,0);robot.robotDirection();
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            spieler.Direction(+40,0);robot.robotDirection(40, 0);
+        	s.playSound("Step");
+            spieler.Direction(+40,0);robot.robotDirection();
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            spieler.Direction(0,-40);robot.robotDirection(0,-40);
+        	s.playSound("Step");
+            spieler.Direction(0,-40);robot.robotDirection();
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-            spieler.Direction(0,+40);robot.robotDirection(0, 40);
+        	s.playSound("Step");
+            spieler.Direction(0,+40);robot.robotDirection();
         } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
+        	s.playSound("Put");
         	int posX = spieler.getPosX();
             int posY = spieler.getPosY();
             bombs.add(new Bomben(posX, posY, 2, bLevel));

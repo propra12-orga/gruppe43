@@ -12,7 +12,7 @@ import java.util.List;
  * Funktioniert wie die Spieler-Klasse mit Ausnahme der  RobotDirection Methode die 
  * zufällig die Bewegung simulieren soll.
  * Es kommt noch eine Methode dazu die die Bomben nach einem Schema ablegen soll.
- * @author Hassan
+ * @author abuubaida
  */
 public class Robot{
 	/**

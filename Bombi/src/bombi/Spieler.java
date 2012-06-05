@@ -6,7 +6,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * @author abuubaida
+ *
+ */
 public class Spieler{
 	
 	Bomben b;
@@ -17,7 +21,11 @@ public class Spieler{
     private int health = 1; // Zustand f�r abfrage ob Spieler verloren(=0)hat
     private int posX, posY, width, height;
 	
-	
+    SoundManager a = new SoundManager() {
+    	public void initSounds() {
+    		sounds.add(new Sound("Exit", Sound.getURL("Exit.wav")));
+    	}
+    };
     
     /**
      * 
@@ -57,6 +65,9 @@ public class Spieler{
 	public int getHealth(){
 		return health;
 	}
+	public void setHealth(int health){
+		this.health=health;
+	}
 	/**
 	 * Setter x-Position
 	 * @param posX
@@ -75,16 +86,15 @@ public class Spieler{
 	 * Konstructor um Bomben-Daten f�r Kollision zu bekommen 
 	 * @param b
 	 */
-	public Spieler(BombermansBomben b) {
-    	//this.b=b;
-    	posX=posY=0;
-    	
+	public boolean er() {
+    return	l.hasFireByPixel(b.getPosX(), b.getPosY());
+    		 	
     }
 	/**
 	 * Methode wenn den Spieler die Bombe trift, Variable health auf 0 setzt
 	 */
     public void erwischt(){
-    	if( l.hasFireByPixel(s.getPosX(), s.getPosY()))
+    	if(( l.hasFireByPixel(s.getPosX(), s.getPosY()))  ==s.er())
 		health = 0;
     }
    
