@@ -146,11 +146,11 @@ public class BombiGui extends JComponent implements Runnable {
     //SoundManager instanz (Audios einlesen)
     SoundManager s = new SoundManager() {
     	public void initSounds() {
-    		sounds.add(new Sound("Exit", Sound.getURL("Exit.wav")));
-    		sounds.add(new Sound("Bumm", Sound.getURL("Bumm.wav")));
-    		sounds.add(new Sound("Put", Sound.getURL("Put.wav")));
-    		sounds.add(new Sound("Step", Sound.getURL("Step.wav")));
-    		sounds.add(new Sound("Fight", Sound.getURL("Fight.wav")));
+    		sounds.add(new Sound("Exit", Sound.getURL("/Exit.wav")));
+    		sounds.add(new Sound("Bumm", Sound.getURL("/Bumm.wav")));
+    		sounds.add(new Sound("Put", Sound.getURL("/Put.wav")));
+    		sounds.add(new Sound("Step", Sound.getURL("/Step.wav")));
+    		sounds.add(new Sound("Fight", Sound.getURL("/Fight.wav")));
     	}
     };
     /**

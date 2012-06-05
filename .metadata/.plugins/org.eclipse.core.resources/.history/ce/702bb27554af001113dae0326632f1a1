@@ -1,0 +1,51 @@
+package bombi;
+
+import java.applet.Applet;
+import java.applet.AudioClip;
+import java.net.URL;
+
+public class Sound {
+	public String name;
+	public AudioClip sound;
+	private static Sound staticSound = new Sound();
+	Spieler spieler;
+	BombermanLevel l;
+	public Sound(String name, URL url){
+		this.name = name;
+		
+		try {
+			sound = Applet.newAudioClip(url);
+			}
+			catch(Exception e){ 	
+								e.printStackTrace(System.err);
+							  }
+	}
+	private Sound() {
+		
+	}
+	
+	public void play() {
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				if(sound != null) sound.play();
+			}
+		}).start();
+		}
+	
+	public void loop() {
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				if(sound != null) sound.loop();
+			}
+		}).start();
+		}
+	public void stop() {
+		if(l.getTileByPixel(spieler.getPosX(),spieler.getPosY())==BombermanLevel.EXIT) sound.stop();
+	}
+	
+	public static URL getURL(String filName) {
+		return staticSound.getClass().getResource(filName);
+	}
+}

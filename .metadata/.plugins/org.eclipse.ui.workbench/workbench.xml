@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="17" version="2.0">
+<workbench progressCount="31" version="2.0">
 <workbenchAdvisor/>
-<window height="768" maximized="true" width="1020" x="66" y="26">
+<window height="540" maximized="true" width="526" x="565" y="32">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
 </perspectiveBar>
 <coolbarLayout>
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="132" y="30"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="136" y="22"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="120" y="30"/>
-<coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="76" y="30"/>
-<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="76" y="30"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="124" y="30"/>
-<coolItem id="group.nav" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="184" y="30"/>
-<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="100" y="22"/>
 <coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="62" y="22"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="84" y="22"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="120" y="22"/>
+<coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="group.nav" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="152" y="22"/>
+<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -30,33 +33,45 @@
 <part id="0"/>
 <part id="1"/>
 <part id="2"/>
+<part id="3"/>
+<part id="4"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" partName="BombiGui.java" path="/home/harry/GruppeCG/Bombi/src/bombi/BombiGui.java" title="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" partName="BombiGui.java" path="/Users/abuubaida/GITHUB/Gruppe43/gruppe43/Bombi/src/bombi/BombiGui.java" title="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/BombiGui.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="306" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6817" selectionTopPixel="2861"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Bomben.java" partName="Bomben.java" path="/home/harry/GruppeCG/Bombi/src/bombi/Bomben.java" title="Bomben.java" tooltip="Bombi/src/bombi/Bomben.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Bomben.java" partName="Bomben.java" path="/Users/abuubaida/GITHUB/Gruppe43/gruppe43/Bombi/src/bombi/Bomben.java" title="Bomben.java" tooltip="Bombi/src/bombi/Bomben.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Bomben.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3082" selectionTopPixel="1194"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1147" selectionTopPixel="202"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermanLevel.java" partName="BombermanLevel.java" path="/home/harry/GruppeCG/Bombi/src/bombi/BombermanLevel.java" title="BombermanLevel.java" tooltip="Bombi/src/bombi/BombermanLevel.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermanLevel.java" partName="BombermanLevel.java" path="/Users/abuubaida/GITHUB/Gruppe43/gruppe43/Bombi/src/bombi/BombermanLevel.java" title="BombermanLevel.java" tooltip="Bombi/src/bombi/BombermanLevel.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/BombermanLevel.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="7283" selectionTopPixel="2883"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="7558" selectionTopPixel="4820"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Spieler.java" partName="Spieler.java" path="/Users/abuubaida/GITHUB/Gruppe43/gruppe43/Bombi/src/bombi/Spieler.java" title="Spieler.java" tooltip="Bombi/src/bombi/Spieler.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Spieler.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1577" selectionTopPixel="871"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Robot.java" partName="Robot.java" path="/Users/abuubaida/GITHUB/Gruppe43/gruppe43/Bombi/src/bombi/Robot.java" title="Robot.java" tooltip="Bombi/src/bombi/Robot.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Robot.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3792" selectionTopPixel="1667"/>
 </editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
 <viewState CommonNavigator.LINKING_ENABLED="0" org.eclipse.cdt.ui.cview.groupincludes="false" org.eclipse.cdt.ui.cview.groupmacros="false" org.eclipse.cdt.ui.editor.CUChildren="true" org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets="0"/>
 </view>
+<view id="org.eclipse.search.ui.views.SearchView" partName="Search">
+<viewState isPinned="false">
+<view IMemento.internal.id="org.eclipse.jdt.ui.JavaSearchResultPage" org.eclipse.jdt.search.resultpage.grouping="3" org.eclipse.jdt.search.resultpage.limit="1000" org.eclipse.jdt.search.resultpage.limit_enabled="TRUE" org.eclipse.jdt.search.resultpage.sorting="1" org.eclipse.search.lastActivation="1" org.eclipse.search.resultpage.layout="2"/>
+<view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
+</viewState>
+</view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>
-<category IMemento.internal.id="Errors"/>
-<category IMemento.internal.id="Warnings (12 items)"/>
-</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="870" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="105" org.eclipse.ui.ide.severityAndDescriptionField="350"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -75,7 +90,6 @@
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.LibraryFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.LocalTypesFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.StaticsFilter" isEnabled="false"/>
-<child filterId="org.eclipse.pde.ui.ExternalPluginLibrariesFilter1" isEnabled="true"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.ClosedProjectsFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.NonSharedProjectsFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.NonJavaElementFilter" isEnabled="false"/>
@@ -85,16 +99,15 @@
 <child filterId="org.eclipse.jdt.internal.ui.PackageExplorer.EmptyInnerPackageFilter" isEnabled="true"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.PackageDeclarationFilter" isEnabled="true"/>
 <child filterId="org.eclipse.jdt.internal.ui.PackageExplorer.EmptyPackageFilter" isEnabled="false"/>
-<child filterId="org.eclipse.jdt.ui.PackageExplorer_patternFilterId_RemoteSystemsConnections" isEnabled="true"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.ImportDeclarationFilter" isEnabled="true"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.FieldsFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.internal.ui.PackageExplorer.HideInnerClassFilesFilter" isEnabled="true"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.NonPublicFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer_patternFilterId_.*" isEnabled="true"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.EmptyLibraryContainerFilter" isEnabled="true"/>
-<child filterId="org.eclipse.jdt.ui.PackageExplorer_patternFilterId_RemoteSystemsTempFiles" isEnabled="true"/>
-<child filterId="org.eclipse.pde.ui.BinaryProjectFilter1" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.SyntheticMembersFilter" isEnabled="true"/>
+<child filterId="org.eclipse.mylyn.java.ui.MembersFilter" isEnabled="false"/>
+<child filterId="org.eclipse.m2e.MavenModuleFilter" isEnabled="false"/>
 </xmlDefinedFilters>
 </customFilters>
 </viewState>
@@ -193,7 +206,6 @@
 <alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
 <alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
-<alwaysOnActionSet id="org.eclipse.rse.core.search.searchActionSet"/>
 <alwaysOnActionSet id="org.eclipse.debug.ui.launchActionSet"/>
 <alwaysOnActionSet id="org.eclipse.jdt.ui.JavaActionSet"/>
 <alwaysOnActionSet id="org.eclipse.jdt.ui.JavaElementCreationActionSet"/>
@@ -201,6 +213,10 @@
 <alwaysOnActionSet id="org.eclipse.debug.ui.breakpointActionSet"/>
 <alwaysOnActionSet id="org.eclipse.jdt.debug.ui.JDTDebugActionSet"/>
 <alwaysOnActionSet id="org.eclipse.jdt.junit.JUnitActionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.tasks.ui.navigation"/>
+<alwaysOnActionSet id="org.eclipse.wb.core.ui.actionset"/>
 <show_view_action id="org.eclipse.jdt.ui.PackageExplorer"/>
 <show_view_action id="org.eclipse.jdt.ui.TypeHierarchy"/>
 <show_view_action id="org.eclipse.jdt.ui.SourceView"/>
@@ -234,12 +250,17 @@
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <view id="org.eclipse.jdt.ui.PackageExplorer"/>
-<view id="org.eclipse.ui.views.ProblemView"/>
-<view id="org.eclipse.jdt.ui.JavadocView"/>
-<view id="org.eclipse.jdt.ui.SourceView"/>
-<view id="org.eclipse.ui.console.ConsoleView"/>
-<view id="org.eclipse.ui.views.ContentOutline"/>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="1024" id="bottom" orientation="256" selectedTabId="org.eclipse.ui.console.ConsoleView" style="0">
+<fastViews>
+<view id="org.eclipse.ui.views.ProblemView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.JavadocView" ratio="0.3"/>
+<view id="org.eclipse.jdt.ui.SourceView" ratio="0.3"/>
+<view id="org.eclipse.ui.console.ConsoleView" ratio="0.2990654"/>
+<view id="org.eclipse.search.ui.views.SearchView" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="left">
@@ -261,32 +282,25 @@
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 </folder>
 </info>
-<info part="org.eclipse.ui.editorss" ratio="0.24950495" ratioLeft="252" ratioRight="758" relationship="2" relative="left"/>
-<info folder="true" part="bottom" ratio="0.74882996" ratioLeft="480" ratioRight="161" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
-<page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
-<page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
-<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info part="org.eclipse.ui.editorss" ratio="0.13869189" ratioLeft="176" ratioRight="1093" relationship="2" relative="left"/>
+<info folder="true" part="bottom" ratio="0.7668232" ratioLeft="490" ratioRight="149" relationship="4" relative="org.eclipse.ui.editorss">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ProblemView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.JavadocView" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.SourceView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="LabelNotFound"/>
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info folder="true" part="right" ratio="0.74934036" ratioLeft="568" ratioRight="190" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </mainWindow>
@@ -296,163 +310,162 @@
 <workingSets/>
 <navigationHistory>
 <editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Robot.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Bomben.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Spieler.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/KeyPoller.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombermanLevel.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombiGui.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Texture.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombiGui.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Bomben.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombermanLevel.java"/>
 </editors>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2003" y="307"/>
+<item historyLabel="Spieler.java" index="2">
+<position info="not_deleted" x="1365" y="0"/>
 </item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="1943" y="0"/>
+<item historyLabel="Spieler.java" index="2">
+<position info="not_deleted" x="1361" y="0"/>
 </item>
-<item historyLabel="Bomben.java" index="0">
-<position/>
+<item historyLabel="Spieler.java" index="2">
+<position info="not_deleted" x="1392" y="0"/>
 </item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2310" y="0"/>
+<item historyLabel="Spieler.java" index="2">
+<position info="not_deleted" x="1392" y="0"/>
 </item>
-<item historyLabel="Bomben.java" index="0">
-<position/>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="2547" y="0"/>
 </item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2150" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="372" y="0"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6468" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="372" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2290" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2030" y="19"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6196" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="2030" y="19"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6196" y="0"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6468" y="0"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6468" y="0"/>
-</item>
-<item historyLabel="BombermanLevel.java" index="1">
-<position info="not_deleted" x="6260" y="0"/>
-</item>
-<item historyLabel="Bomben.java" index="0">
-<position info="not_deleted" x="1943" y="0"/>
-</item>
-<item historyLabel="BombiGui.java" index="2">
-<position info="not_deleted" x="2659" y="4"/>
-</item>
-<item historyLabel="Texture.java" index="3">
+<item historyLabel="KeyPoller.java" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3156" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="6785" y="0"/>
+<item historyLabel="BombermanLevel.java" index="4">
+<position info="not_deleted" x="7558" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="6740" y="5"/>
+<item historyLabel="Spieler.java" index="2">
+<position info="not_deleted" x="1392" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="996" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="6804" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="984" y="0"/>
+<item historyLabel="Bomben.java" index="1">
+<position info="not_deleted" x="1147" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="6765" y="1"/>
+<item historyLabel="Spieler.java" index="2">
+<position info="not_deleted" x="1392" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="6740" y="5"/>
+<item historyLabel="BombermanLevel.java" index="4">
+<position info="not_deleted" x="7558" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="1737" y="0"/>
+<item historyLabel="Spieler.java" index="2">
+<position info="not_deleted" x="1577" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="7365" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3156" y="0"/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="6419" y="0"/>
+<item historyLabel="Bomben.java" index="1">
+<position info="not_deleted" x="1147" y="0"/>
 </item>
-<item historyLabel="BombermanLevel.java" index="6">
-<position info="not_deleted" x="2889" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="6804" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="7365" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3089" y="0"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="960" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="968" y="27"/>
 </item>
-<item historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="306" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3089" y="0"/>
 </item>
-<item historyLabel="BombermanLevel.java" index="6">
-<position info="not_deleted" x="9108" y="49"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="968" y="27"/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="6419" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position/>
 </item>
-<item historyLabel="BombermanLevel.java" index="6">
-<position info="not_deleted" x="7255" y="0"/>
+<item historyLabel="Bomben.java" index="1">
+<position info="not_deleted" x="1147" y="0"/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="1786" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="2318" y="83"/>
 </item>
-<item historyLabel="BombermanLevel.java" index="6">
-<position info="not_deleted" x="7255" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="2328" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="1386" y="42"/>
 </item>
-<item historyLabel="BombermanLevel.java" index="6">
-<position info="not_deleted" x="7531" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="2328" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="1386" y="42"/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="1820" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position/>
 </item>
-<item historyLabel="BombermanLevel.java" index="6">
-<position info="not_deleted" x="7318" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="769" y="24"/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="639" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position/>
 </item>
-<item historyLabel="BombermanLevel.java" index="6">
-<position info="not_deleted" x="7283" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="735" y="30"/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="3082" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3089" y="0"/>
 </item>
-<item historyLabel="BombermanLevel.java" index="6">
-<position info="not_deleted" x="7283" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="735" y="30"/>
 </item>
-<item historyLabel="Bomben.java" index="5">
-<position info="not_deleted" x="3082" y="0"/>
+<item historyLabel="Robot.java" index="0">
+<position/>
 </item>
-<item active="true" historyLabel="BombiGui.java" index="4">
-<position info="not_deleted" x="306" y="0"/>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="735" y="30"/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position/>
+</item>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="735" y="30"/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3710" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="6817" y="0"/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="2782" y="0"/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="2759" y="0"/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3072" y="23"/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3710" y="0"/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="2932" y="0"/>
+</item>
+<item historyLabel="Bomben.java" index="1">
+<position info="not_deleted" x="1147" y="0"/>
+</item>
+<item historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3569" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="5">
+<position info="not_deleted" x="6817" y="0"/>
+</item>
+<item active="true" historyLabel="Robot.java" index="0">
+<position info="not_deleted" x="3569" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -461,16 +474,45 @@
 <actionBarAdvisor/>
 <trimLayout>
 <trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.mylyn.tasks.ui.trim.container"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
 <trimArea IMemento.internal.id="1024">
 <trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
 <trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+<trimItem IMemento.internal.id="bottom"/>
 </trimArea>
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="texture.bmp" tooltip="Bombi/src/Bilder/texture.bmp">
+<persistable path="/Bombi/src/Bilder/texture.bmp"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="Thread.class" tooltip="java.lang.Thread">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Bombi/\/System\/Library\/Frameworks\/JavaVM.framework\/Versions\/1.6.0\/Classes\/classes.jar&lt;java.lang(Thread.class"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="BufferedImage.class" tooltip="java.awt.image.BufferedImage">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Bombi/\/System\/Library\/Frameworks\/JavaVM.framework\/Versions\/1.6.0\/Classes\/classes.jar&lt;java.awt.image(BufferedImage.class"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Texture.java" tooltip="Bombi/src/bombi/Texture.java">
+<persistable path="/Bombi/src/bombi/Texture.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermansBomben.java" tooltip="Bombi/src/bombi/BombermansBomben.java">
+<persistable path="/Bombi/src/bombi/BombermansBomben.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Robot.java" tooltip="Bombi/src/bombi/Robot.java">
+<persistable path="/Bombi/src/bombi/Robot.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="KeyPoller.java" tooltip="Bombi/src/bombi/KeyPoller.java">
+<persistable path="/Bombi/src/bombi/KeyPoller.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Menu.java" tooltip="Bombi/src/bombi/Menu.java">
+<persistable path="/Bombi/src/bombi/Menu.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Spieler.java" tooltip="Bombi/src/bombi/Spieler.java">
+<persistable path="/Bombi/src/bombi/Spieler.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermanLevel.java" tooltip="Bombi/src/bombi/BombermanLevel.java">
 <persistable path="/Bombi/src/bombi/BombermanLevel.java"/>
 </file>
@@ -479,18 +521,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java">
 <persistable path="/Bombi/src/bombi/BombiGui.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Texture.java" tooltip="Bombi/src/bombi/Texture.java">
-<persistable path="/Bombi/src/bombi/Texture.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermansBomben.java" tooltip="Bombi/src/bombi/BombermansBomben.java">
-<persistable path="/Bombi/src/bombi/BombermansBomben.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Spieler.java" tooltip="Bombi/src/bombi/Spieler.java">
-<persistable path="/Bombi/src/bombi/Spieler.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="KeyPoller.java" tooltip="Bombi/src/bombi/KeyPoller.java">
-<persistable path="/Bombi/src/bombi/KeyPoller.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.systemExternalEditor" name="StartBild.png" tooltip="Bombi/img/StartBild.png">
 <persistable path="/Bombi/img/StartBild.png"/>

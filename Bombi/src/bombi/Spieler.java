@@ -20,13 +20,7 @@ public class Spieler{
 	Graphics g;
     private int health = 1; // Zustand fï¿½r abfrage ob Spieler verloren(=0)hat
     private int posX, posY, width, height;
-	
-    SoundManager a = new SoundManager() {
-    	public void initSounds() {
-    		sounds.add(new Sound("Exit", Sound.getURL("Exit.wav")));
-    	}
-    };
-    
+
     /**
      * 
      * @param l erzeugte BombermanLevel mit seinen x,y werten
@@ -83,7 +77,7 @@ public class Spieler{
 		this.posY = posY;
 	}
 	/**
-	 * Konstructor um Bomben-Daten fï¿½r Kollision zu bekommen 
+	 * Konstructor um Bomben-Daten fŸr Kollision zu bekommen 
 	 * @param b
 	 */
 	public boolean er() {

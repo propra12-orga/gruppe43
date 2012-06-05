@@ -22,6 +22,27 @@
 <entry path="/usr/lib/jvm/java-6-openjdk-i386/jre/lib/endorsed"/>
 </endorsedDirs>
 </libraryInfo>
+<libraryInfo home="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home" version="1.6.0_15">
+<bootpath>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/jsfd.jar"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/classes.jar"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/ui.jar"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/laf.jar"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/sunrsasign.jar"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/jsse.jar"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/jce.jar"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Classes/charsets.jar"/>
+</bootpath>
+<extensionDirs>
+<entry path="/Library/Java/Extensions"/>
+<entry path="/System/Library/Java/Extensions"/>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
 <libraryInfo home="/usr/lib/jvm/java-6-openjdk-i386" version="1.6.0_24">
 <bootpath>
 <entry path="/usr/lib/jvm/java-6-openjdk-i386/jre/lib/resources.jar"/>

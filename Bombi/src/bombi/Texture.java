@@ -17,7 +17,6 @@ import javax.imageio.ImageIO;
  */
 public class Texture {
     private static final String IMGURL = "/texture.png";
-
     /**
      * Statische Methode zum Einlesen eines Bildes, welches durch url gegeben
      * ist. Das Bild wird als BufferedImage zurück gegeben
