@@ -1,15 +1,19 @@
 package bombi;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+
 /**
  * Diese Klasse erstellt den Computer als Gegner, wenn er denn ausgewählt wurde,dar.
  * Funktioniert wie die Spieler-Klasse mit Ausnahme der  RobotDirection Methode die 
  * zufällig die Bewegung simulieren soll.
- * TODO
  * Es kommt noch eine Methode dazu die die Bomben nach einem Schema ablegen soll.
  * @author Hassan
  */
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
 public class Robot{
 	/**
 	 * TODO 
@@ -17,16 +21,15 @@ public class Robot{
 	 * abgefragt wird.Diese erzeugt dann den Robot oder auch nicht:).
 	 * 
 	 */
-	BombermansBomben b;
+	Bomben b;
 	Robot r;
 	Texture t;
 	BombermanLevel l;
 	Graphics g;
     private int health = 1; // Zustand für abfrage ob Spieler verloren(=0)hat
     private int posX, posY, width, height;
-	
-	
-    
+  
+
     /**
      * 
      * @param l erzeugte BombermanLevel mit seinen x,y werten
@@ -81,7 +84,7 @@ public class Robot{
 	 * Konstructor um Bomben-Koordinaten für Kollision zu bekommen 
 	 * @param b
 	 */
-	public Robot(BombermansBomben b) {
+	public Robot(Bomben b) {
     	this.b=b;
     	posX=posY=0;
     	
@@ -100,10 +103,8 @@ public class Robot{
      * @param g Grafik erzeugen durch laden aus Texture Klasse
      */
     public void draw(Graphics2D g) {
-		if(health==1){Texture.ROBOT.draw(posX, posY, width, height, g);
-			
-		}
-        
+		if(health==1){Texture.ROBOT.draw(posX, posY, width, height, g);		
+		}   
     }
  
     /**
@@ -115,47 +116,40 @@ public class Robot{
     public boolean spielEnde(){
     	return((l.getTileByPixel(posX, posY)==BombermanLevel.EXIT));
     }
-   
-    /**
-     * Diese Methode bekommt bei Tastendruck dazugehörige x und y Werte und aktualisiert
-     * die momentane Position.Beispiel: Pfeiltaste Links wird betätigt die Werte die übergeben werden
-     * lauten -40 für x-Koordinate ,0 für y-Koordinate
-     * ,dann wird posX = posX + (-40) um 40 Pixel kleiner und die neue Position wird gesetzt
-     * move() siehe Methode
-     * Die if Abfrage prüft ob Spieler vor einem Hinderniss steht.Wenn ja soll er stehen bleiben    
-     * @param xdir
-     * @param ydir
-     * 
-     */
-    
-    public void robotDirection(int xdir,int ydir) {
-        
-    	if((l.getTileByPixel(getPosX()+xdir,getPosY()+ydir)==2)||(l.getTileByPixel(getPosX()+xdir,getPosY()+ydir)==1))
-    	return;
-    	posX+=xdir;
-		posY+=ydir;
-	
-    
-    }
-    	
-    }
+ 
 /**
- *TODO hier muss noch ein zufällige Bewegung von Robot implemeniert werden
+ * TODO
+ * 
+ * Diese Methode bewegt den Robot zufällig, ist aber noch abhängig vom Spieler ebenso die Bombenablage
+ * 
  */
-    
- /*   public void RobotDirection(int xdir,int ydir) {
-    	
-    	
-    	xdir =(int) ((Math.random() * 40)*(Math.random() * -1 ));
-    		if((xdir==40)||(xdir==-40)){ ydir = 0;posX+=xdir;posY+=ydir;}
-    		else{	
-    			ydir= (int) ((Math.random() * 40)*(Math.random() * -1 ));
-    			posX+=xdir;posY+=ydir;
-    		}move();	
-    		if(!stopStein()){
-    	}posX-=xdir;
-    	posY-=ydir;
-    	}
-    	
-}*/
-  
+    public void robotDirection() {
+     	int r = (int)( Math.random()*4); //Zufällig eine Zahl 0,1,2 oder 3  
+     	
+      	int wert1 = 40;  	// für Bewegung nach +
+     	int wert2 = -40;	// für Bewegung nach -
+     	int wert3 = 0;		// für Bewegung 0
+     	
+     	if(r==3){
+     		if((l.getTileByPixel(getPosX()+wert1,getPosY()+wert3)==2)||(l.getTileByPixel(getPosX()+wert1,getPosY()+wert3)==1)){
+     	    	return;}else
+     		posX+=wert1;posY+=wert3;return;}
+     	
+     	if(r==0){
+     		if((l.getTileByPixel(getPosX()+wert2,getPosY()+wert3)==2)||(l.getTileByPixel(getPosX()+wert2,getPosY()+wert3)==1)){
+     			return;}else
+     		posX+=wert2;posY+=wert3;return;}
+     
+     	if(r==1){
+     		if((l.getTileByPixel(getPosX()+wert3,getPosY()+wert2)==2)||(l.getTileByPixel(getPosX()+wert3,getPosY()+wert2)==1)){
+     			return;}else
+     		posX+=wert3;posY+=wert2;return;}
+     	
+     	if(r==2){
+     		if((l.getTileByPixel(getPosX()+wert3,getPosY()+wert1)==2)||(l.getTileByPixel(getPosX()+wert3,getPosY()+wert1)==1)){
+     			return;}else
+     		posX+=wert3;posY+=wert1;return;}
+
+    }	
+}
+ 	// Ende der robot Klasse
