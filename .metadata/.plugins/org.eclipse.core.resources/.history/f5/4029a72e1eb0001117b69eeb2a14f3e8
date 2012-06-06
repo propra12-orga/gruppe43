@@ -22,33 +22,16 @@ public class Menu extends JFrame{
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setSize(250,250);
     }
  
     private JPanel createMenuPanel() {
-        JPanel panel = new JPanel(new GridLayout(4 , 1));
+        JPanel panel = new JPanel(new GridLayout(0 , 1));
         
-        JButton start = new JButton("Einzelspieler");
+        JButton start = new JButton("Start");
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //start das Spiel
-            }
-        });
-        
-        JButton button1 = new JButton("Mehrspieler");
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-            }
-        });
-        
-        JButton button2 = new JButton("Einstellungen");
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
             }
         });
         
@@ -61,8 +44,6 @@ public class Menu extends JFrame{
         });
  
         panel.add(start);
-        panel.add(button1);
-        panel.add(button2);
         panel.add(close);
         return panel;
     }

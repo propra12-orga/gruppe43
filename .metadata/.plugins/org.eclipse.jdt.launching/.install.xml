@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
+<entry loc="/usr/lib/jvm/java-6-openjdk-i386/jre" stamp="1337707911000"/>
 <entry loc="/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home" stamp="1336581884000"/>
-<entry loc="/usr/lib/jvm/java-6-openjdk-i386" stamp="1337499978000"/>
+<entry loc="/usr/lib/jvm/java-6-openjdk-i386" stamp="1337707915000"/>
 </dirs>
