@@ -233,8 +233,10 @@ public class BombiGui extends JComponent implements Runnable {
         	s.playSound("Put");
         	int posX = spieler.getPosX();
             int posY = spieler.getPosY();
-            bombs.add(new Bomben(posX, posY, 2, bLevel));
-            bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2, bLevel));
+            if (!bLevel.hasBombByPixel(posX,posY)){
+                bombs.add(new Bomben(posX, posY, 2, bLevel));
+                bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2, bLevel));
+                }
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_ESCAPE)) {
         	

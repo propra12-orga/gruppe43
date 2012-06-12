@@ -32,27 +32,48 @@ public class Bomben {
     private BombermanLevel bLevel;
 
     
-    // erstellt eine Bombe
+    /**
+     * Erstellt die Bombe
+     * @param posX Position des Spielers auf der X-Achse
+     * @param posY Position des Spielers auf der Y-Achse
+     * @param radius Explosionsradius der Bombe
+     * @param bLevel Level in dem die Bombe gezeichnet wird
+     */
     public Bomben(int posX, int posY, int radius, BombermanLevel bLevel) {
         this.posX = posX;
         this.posY = posY;
         this.radius = radius;
         this.bLevel = bLevel;
+        bLevel.putBombByPixel(posX,posY);
     }
     
-    // Gibt die Position der Bombe auf der X-Achse zurück
+    /**
+     * 
+     * @return Gibt die Position der Bombe auf der X-Achse zurück
+     */
     public int getPosX() {
         return posX;
     }
 
-    // Gibt die Position der Bombe auf der Y-Achse zurück
+    /**
+     * 
+     * @return Gibt die Position der Bombe auf der Y-Achse zurück
+     */
     public int getPosY() {
         return posY;
     }
     
     // Update für die Bombe. Countdown etc wird runter gezählt
     // Sobald Countdown auf 0 steht, wir markiert welche Steine zerstört werden und prüft, ob unzerstörbare im Weg sind.
+    /**
+     *  Überprüft dauerhaft den Zustand der Bombe
+     *  Falls die Bombe noch nicht explodiert, läuft ein Countdown runter bis zur Explosion.
+     *  Falls die Bombe explodiert wird markiert, wo der Strahl sichtbar ist, welche Blöcke zerstört werden und löst Kettenreaktion aus.
+     *  Ebenfalls wird Feuer erstellt, dass Spieler und Gegner schaden kann.
+     */
     public void update() {
+    	if(state == EXPLODED)
+    		return;
         int width = bLevel.getTileWidth();
         int height = bLevel.getTileHeight();
         
@@ -72,21 +93,44 @@ public class Bomben {
                 radiusright++;
                 for (int i=1; i<=radiusup && !bLevel.isSolidByPixel(posX, posY - i * height) ; i++) {
                 	bLevel.destroyBlockByPixel(posX, posY - i * height);
+                	bLevel.addFireByPixel(posX, posY - i * height);
                 }
                 for (int i=1; i<=radiusdown && !bLevel.isSolidByPixel(posX, posY + i * height); i++) {
                 	bLevel.destroyBlockByPixel(posX, posY + i * height);
+                	bLevel.addFireByPixel(posX, posY + i * height);
                 }
                 for (int i=1; i<=radiusright && !bLevel.isSolidByPixel(posX + i * width, posY); i++) {
                 	bLevel.destroyBlockByPixel(posX + i * width, posY);
+                	bLevel.addFireByPixel(posX + i * width, posY);
                 }
                 for (int i=1; i<=radiusleft && !bLevel.isSolidByPixel(posX - i * width, posY); i++) {
                 	bLevel.destroyBlockByPixel(posX - i * width, posY);
+                	bLevel.addFireByPixel(posX - i * width, posY);
                 }
-        	}else if (radiusDelayCounter > 0) radiusDelayCounter--;
-        	else state = EXPLODED;
-    }
+        	}else if (radiusDelayCounter > 0)radiusDelayCounter--;
+        	else {
+        		state = EXPLODED;
+		        for (int i=1; i<=radiusup;i++) {
+			    	 bLevel.removeFireByPixel(posX, posY - i * height);
+			     }
+			     for (int i=1; i<=radiusdown;i++) {
+			    	 bLevel.removeFireByPixel(posX, posY + i * height);
+			     }
+			     for (int i=1; i<=radiusright;i++) {
+			    	 bLevel.removeFireByPixel(posX + i * width, posY);
+			     }
+			     for (int i=1; i<=radiusleft;i++) {
+			    	 bLevel.removeFireByPixel(posX - i * width, posY);
+			     }
+			     bLevel.removeBombByPixel(posX,posY);
+        	}
+	}
+    
 
-    // Markiert wo die Explosion sichtbar ist.
+ /**
+  * Diese Methode zeichnet die Bombe und die Explosion.
+  * @param g Das Graphics-Objekt, welches genutzt wird, um die Bomben zu zeichnen.
+  */
     public void draw(Graphics2D g) {
         if (state == EXPLODED) return;
         int width = bLevel.getTileWidth();
@@ -155,7 +199,6 @@ public class Bomben {
     }
 }
         
-
 
 
 
