@@ -17,6 +17,12 @@ import javax.imageio.ImageIO;
  */
 public class Texture {
     private static final String IMGURL = "/texture.png";
+
+    private static final int HOUSECOLOR1 = 0xffcccccc;
+    private static final int HOUSECOLOR1_SHADOW = 0xffaaaaaa;
+    private static final int HOUSECOLOR2 = 0xffcccc00;
+    private static final int HOUSECOLOR2_SHADOW = 0xffaaaa00;
+
     /**
      * Statische Methode zum Einlesen eines Bildes, welches durch url gegeben
      * ist. Das Bild wird als BufferedImage zurück gegeben
@@ -70,10 +76,19 @@ public class Texture {
     public static Texture PLAYER_MOVE_RIGHT2 = PLAYER_MOVE_LEFT2
             .mirrorHorizontally();
 
-    public static Texture PLAYER_IDLE_FRONT = new Texture(192, 0, 32, 48);
+    public static Texture PLAYER_IDLE_FRONTlll = new Texture(192, 0, 32, 48);
+    public static Texture PLAYER_IDLE_FRONT = PLAYER_IDLE_FRONTlll
+            .replaceColor(HOUSECOLOR1, 0xffff0000)
+            .replaceColor(HOUSECOLOR1_SHADOW, 0xffbb0000)
+            .replaceColor(HOUSECOLOR2, 0xff0000ff)
+            .replaceColor(HOUSECOLOR2_SHADOW, 0xff0000bb);
+
     public static Texture PLAYER_IDLE_BACK = new Texture(192, 48, 32, 48);
-    public static Texture PLAYER_IDLE_LEFT = new Texture(256, 0, 32, 48);
-    public static Texture PLAYER_IDLE_RIGHT = PLAYER_IDLE_LEFT
+    public static Texture PLAYER_IDLE_LEFT1 = new Texture(256, 0, 32, 48);
+    public static Texture PLAYER_IDLE_LEFT2 = new Texture(288, 0, 32, 48);
+    public static Texture PLAYER_IDLE_RIGHT1 = PLAYER_IDLE_LEFT1
+            .mirrorHorizontally();
+    public static Texture PLAYER_IDLE_RIGHT2 = PLAYER_IDLE_LEFT2
             .mirrorHorizontally();
 
     public static Texture[][] PLAYER_MOVE = {
@@ -81,13 +96,13 @@ public class Texture {
                     PLAYER_IDLE_FRONT },
             { PLAYER_MOVE_BACK1, PLAYER_IDLE_BACK, PLAYER_MOVE_BACK2,
                     PLAYER_IDLE_BACK },
-            { PLAYER_MOVE_LEFT1, PLAYER_IDLE_LEFT, PLAYER_MOVE_LEFT2,
-                    PLAYER_IDLE_LEFT },
-            { PLAYER_MOVE_RIGHT1, PLAYER_IDLE_RIGHT, PLAYER_MOVE_RIGHT2,
-                    PLAYER_IDLE_RIGHT } };
+            { PLAYER_MOVE_LEFT1, PLAYER_IDLE_LEFT2, PLAYER_MOVE_LEFT2,
+                    PLAYER_IDLE_LEFT1 },
+            { PLAYER_MOVE_RIGHT1, PLAYER_IDLE_RIGHT2, PLAYER_MOVE_RIGHT2,
+                    PLAYER_IDLE_RIGHT1 } };
 
     public static Texture[] PLAYER_IDLE = { PLAYER_IDLE_FRONT,
-            PLAYER_IDLE_BACK, PLAYER_IDLE_LEFT, PLAYER_IDLE_RIGHT };
+            PLAYER_IDLE_BACK, PLAYER_IDLE_LEFT1, PLAYER_IDLE_RIGHT1 };
 
     public static Texture BOMB1 = new Texture(0, 64, 32, 32);
     public static Texture BOMB2 = new Texture(32, 64, 32, 32);
@@ -127,7 +142,8 @@ public class Texture {
     }
 
     public void draw(int px, int py, int width, int height, Graphics g) {
-        if (this.width != width || this.height != height) rescale(width, height);
+        if (this.width != width || this.height != height)
+            rescale(width, height);
         g.drawImage(scaledTexture, px, py, null);
     }
 
@@ -166,6 +182,27 @@ public class Texture {
         g.drawImage(this.texture, 0, 0, width, height, 0, width, height, 0,
                 null);
         g.dispose();
+        return new Texture(texture);
+    }
+
+    private Texture replaceColor(int fromColor, int toColor) {
+        int width = this.texture.getWidth();
+        int height = this.texture.getHeight();
+        BufferedImage temp = new BufferedImage(width, height,
+                BufferedImage.TYPE_4BYTE_ABGR);
+        temp.getGraphics().drawImage(texture, 0, 0, null);
+        int[] rgb = new int[width * height];
+        temp.getRGB(0, 0, width, height, rgb, 0, width);
+        for (int i = 0; i < rgb.length; i++) {
+            if (rgb[i] == fromColor)
+                rgb[i] = toColor;
+        }
+        temp.setRGB(0, 0, width, height, rgb, 0, width);
+        BufferedImage texture = new BufferedImage(width, height,
+                BufferedImage.TYPE_4BYTE_ABGR);
+        texture.setAccelerationPriority(this.texture.getAccelerationPriority());
+        Graphics2D g = (Graphics2D) texture.getGraphics();
+        g.drawImage(temp, 0, 0, width, height, null);
         return new Texture(texture);
     }
 }
