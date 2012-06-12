@@ -194,7 +194,7 @@ public class BombiGui extends JComponent implements Runnable {
     	if(stepCount>=10){playAudio.playSound("Step");stepCount=0;}
     	if(player1.exit()||player2.exit())
     		return;
-    // ŸberprŸfe Tastatureingaben player 1
+    // ï¿½berprï¿½fe Tastatureingaben player 1
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
             player1.Direction(-40,0);robot.robotDirection();
             stepCount++;
@@ -212,7 +212,9 @@ public class BombiGui extends JComponent implements Runnable {
         	playAudio.playSound("Put");
         	int posX = player1.getPosX();
             int posY = player1.getPosY();
+            if (!bLevel.hasBombByPixel(posX,posY)){
             bombs.add(new Bomben(posX, posY, 2, bLevel));
+            }
             //bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2, bLevel));
         }
         
@@ -233,7 +235,8 @@ public class BombiGui extends JComponent implements Runnable {
         	playAudio.playSound("Put");
         	int posX = player2.getPosX();
             int posY = player2.getPosY();
-            bombs.add(new Bomben(posX, posY, 2, bLevel));
+            if (!bLevel.hasBombByPixel(posX,posY)){
+            bombs.add(new Bomben(posX, posY, 2, bLevel)); }
            
         }
 

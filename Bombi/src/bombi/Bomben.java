@@ -102,6 +102,7 @@ public class Bomben {
                 	}
                 	if (bLevel.getTileByPixel(posX, posY-i*height)==1 && breakup==0) { 
                     	bLevel.destroyBlockByPixel(posX, posY - i * height);
+                    	breakup=1;
                 	}
                 }
                 for (int i=1; i<=radiusdown; i++) {
