@@ -29,8 +29,8 @@ public class Player{
         width = height = 40;
     }
     /**
-     * Dieser Konstructor erstell Objekt fŸr zweiten Spieler.
-     * Position ist variabel wŠhlbar
+     * Dieser Konstructor erstell Objekt fï¿½r zweiten Spieler.
+     * Position ist variabel wï¿½hlbar
      * @param l
      * @param x
      * @param y
@@ -98,9 +98,11 @@ public class Player{
 	 * Methode wenn den Spieler die Bombe trift, Variable health auf 0 setzt
 	 * TODO
 	 */
-    public void dead(){
-    	if(( l.hasFireByPixel(p.getPosX(), p.getPosY()))  == p.bombPos()) 		
-		health = 0;
+    public boolean dead(){
+    	if(l.hasFireByPixel(posX, posY))
+		return true;
+    	return l.hasFireByPixel(posX, posY);
+    	
     }
    
 	
@@ -117,7 +119,7 @@ public class Player{
   
     
     /**
-     * Grafik erzeugen um anhand Ÿbergebener Werte zu laden
+     * Grafik erzeugen um anhand ï¿½bergebener Werte zu laden
      * @param g
      */
     public void draw1(Graphics2D g) {
@@ -149,7 +151,7 @@ public class Player{
   
     public void Direction(int xdir,int ydir) {
     
-    	if((l.getTileByPixel(getPosX()+xdir,getPosY()+ydir)==2)||(l.getTileByPixel(getPosX()+xdir,getPosY()+ydir)==1))
+    	if((l.isSolidByPixel(getPosX()+xdir,getPosY()+ydir)))
     	return;
     	posX+=xdir;
 		posY+=ydir;

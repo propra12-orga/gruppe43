@@ -76,8 +76,12 @@ public class BombiGui extends JComponent implements Runnable {
     		return;
     	}
     	
-    	if(robot.spielEnde()) {
-    		dbg.drawString("DER COMPUTER HAT GEWONNEN !!! ", 300, 250);
+    	if(player1.dead()) {
+    		dbg.drawString("Spieler1 wurden von einer Bombe getötet. ", 300, 250);
+    		return;
+    	}
+    	if(player2.dead()) {
+    		dbg.drawString("Spieler2 wurden von einer Bombe getötet. ", 300, 250);
     		return;
     	}
         // zeichne das Lvel
@@ -192,7 +196,7 @@ public class BombiGui extends JComponent implements Runnable {
     public void bombermanUpdate() {
 
     	if(stepCount>=10){playAudio.playSound("Step");stepCount=0;}
-    	if(player1.exit()||player2.exit())
+    	if(player1.exit()||player2.exit()||player1.dead()||player2.dead())
     		return;
     // �berpr�fe Tastatureingaben player 1
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {

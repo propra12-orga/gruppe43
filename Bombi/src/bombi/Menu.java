@@ -66,7 +66,7 @@ public class Menu extends JFrame{
         });
         
         JButton button1 = new JButton("Mehrspieler");
-        start.addActionListener(new ActionListener() {
+        button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 
@@ -74,7 +74,7 @@ public class Menu extends JFrame{
         });
         
         JButton button2 = new JButton("Einstellungen");
-        start.addActionListener(new ActionListener() {
+        button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 

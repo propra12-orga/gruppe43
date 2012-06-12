@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 /**
  * Diese Klasse erzeugt Objekte, welche als Bomben interpretiert werden.
+ * @author Georgiadis
  **/
 public class Bomben {
 
@@ -95,6 +96,7 @@ public class Bomben {
                 radiusdown++;
                 radiusleft++;
                 radiusright++;
+                	bLevel.addFireByPixel(posX, posY);
                 for (int i=1; i<=radiusup ; i++) {
                 	bLevel.addFireByPixel(posX, posY - i * height);
                 	if (bLevel.getTileByPixel(posX, posY-i*height)==2){
@@ -135,6 +137,7 @@ public class Bomben {
         	}else if (radiusDelayCounter > 0)radiusDelayCounter--;
         	else {
         		state = EXPLODED;
+        			bLevel.removeFireByPixel(posX, posY);
 		        for (int i=1; i<=radiusup;i++) {
 			    	 bLevel.removeFireByPixel(posX, posY - i * height);
 			     }
@@ -152,6 +155,7 @@ public class Bomben {
 			     breakleft=0;
 			     breakup=0;
 			     breakdown=0;
+			     
         	}
 	}
     
@@ -219,8 +223,10 @@ public class Bomben {
                     
                     if (i == radiusright ) break;
                 }
-                if (bLevel.getTileByPixel(posX + i * width, posY)==1) break;
-                Texture.EXPLHOR.draw(posX + i * width, posY, width, height, g);
+                if (bLevel.getTileByPixel(posX + i * width, posY)==1) 
+                	break;
+                Texture.EXPLHOR.draw(posX + i * width, posY, width, height, g); 
+                
               if (radius == 0) {
             	  Texture.EXPLRIG.draw(posX + radiusright * width, posY, width, height, g);
             	  bLevel.markForUpdateByPixel(posX + radiusright * width, posY);
