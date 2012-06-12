@@ -33,15 +33,17 @@ public class BombiGui extends JComponent implements Runnable {
     // Liste für die Bomben
     private List<Bomben> bombs;
     
-    boolean multiplayer;
     Player player1,player2;
+    BombermansBomben Bombe1;
     BombermanLevel bLevel;
     Robot robot;
     
+    int x = 0;
+    int y = 0;
+    int radius = 36;
     int fps = 0; // wird durch den main-loop gesetzt
 
-
-    public BombiGui(boolean multiplayer) {
+    public BombiGui() {
         super();
         // erzeuge die Objekte für Doublebuffering
         dbImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -54,19 +56,11 @@ public class BombiGui extends JComponent implements Runnable {
         setFocusable(true);
         this.setSize(WIDTH, HEIGHT);
         bLevel = new BombermanLevel(15,11,WIDTH, HEIGHT);
-        bombs = new ArrayList<Bomben>();
         player1 = new Player(bLevel);
-        this.multiplayer = multiplayer;
-        if(!multiplayer){            
-            robot = new Robot(bLevel);
-        }
-        else{
-            player2 = new Player(bLevel, WIDTH - bLevel.getTileDim(), HEIGHT - bLevel.getTileDim());
-        }
-    }
-    
-    public BombiGui(){
-        this(false);
+        player2 = new Player(bLevel,520,360);
+        bombs = new ArrayList<Bomben>();
+        robot = new Robot(bLevel);
+        System.out.println(KeyEvent.VK_LEFT + " " + KeyEvent.VK_A);
     }
 
     /**
@@ -74,7 +68,7 @@ public class BombiGui extends JComponent implements Runnable {
      */
     public void paintBuffer() {
     	
-    	if(player1.exit() || player2.exit()) {
+    	if(player1.exit()||player2.exit()) {
     		//s.playSound("Exit");
     		if(player1.exit()==true)
     		dbg.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
@@ -100,10 +94,10 @@ public class BombiGui extends JComponent implements Runnable {
 
         // zeichne zuletzt den Spieler
         player1.draw(dbg);
-        if(player2 != null) player2.draw1(dbg);
+        player2.draw1(dbg);
 
         // robot zeichnen
-        if(robot != null) robot.draw(dbg);
+       // robot.draw(dbg);
         // zeige fps an
         dbg.setColor(Color.ORANGE);
         dbg.drawString(fps + "FPS", this.getWidth() - 50, 20);
@@ -228,27 +222,26 @@ public class BombiGui extends JComponent implements Runnable {
             //bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2, bLevel));
         }
         
-        if(multiplayer){
-            if (keyPoller.isKeyDown(KeyEvent.VK_S)) {
-                player2.Direction(-40,0);
-                stepCount++;
-            } else if (keyPoller.isKeyDown(KeyEvent.VK_D)) {
-                player2.Direction(+40,0);
-                stepCount++;
-            }
-            if (keyPoller.isKeyDown(KeyEvent.VK_E)) {
-                player2.Direction(0,-40);
-                stepCount++;
-            } else if (keyPoller.isKeyDown(KeyEvent.VK_X)) {
-        	    player2.Direction(0,+40);
-        	    stepCount++;
-            } else if (keyPoller.isKeyDown(KeyEvent.VK_A)) {
-        	    playAudio.playSound("Put");
-        	    int posX = player2.getPosX();
-                int posY = player2.getPosY();
-                if (!bLevel.hasBombByPixel(posX,posY)){
-                    bombs.add(new Bomben(posX, posY, 2, bLevel)); }
-            }
+        if (keyPoller.isKeyDown(KeyEvent.VK_S)) {
+            player2.Direction(-40,0);
+            stepCount++;
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_D)) {
+            player2.Direction(+40,0);
+            stepCount++;
+        }
+        if (keyPoller.isKeyDown(KeyEvent.VK_E)) {
+            player2.Direction(0,-40);
+            stepCount++;
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_X)) {
+        	player2.Direction(0,+40);
+        	stepCount++;
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_A)) {
+        	playAudio.playSound("Put");
+        	int posX = player2.getPosX();
+            int posY = player2.getPosY();
+            if (!bLevel.hasBombByPixel(posX,posY)){
+            bombs.add(new Bomben(posX, posY, 2, bLevel)); }
+           
         }
 
         if (keyPoller.isKeyDown(KeyEvent.VK_ESCAPE)) {
