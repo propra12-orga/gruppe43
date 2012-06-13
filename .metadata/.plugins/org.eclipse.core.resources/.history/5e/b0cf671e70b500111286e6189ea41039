@@ -16,7 +16,7 @@ public class Menu extends JFrame{
  
     //Konstruktor
     public Menu(){
-        super("Bomberman");
+        super("Name");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         add(createMenuPanel());
         pack();
@@ -33,25 +33,6 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //start das Spiel
-
-                    JFrame frame = new JFrame();
-                    
-                    frame.setTitle("Bombi");
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    
-                    BombiGui bGui = new BombiGui();
-                    
-                    frame.add(bGui);
-                    frame.pack(); // passt die Gr��e dem Inhalt an
-
-                    // zentriert das Fenster
-                    frame.setLocationRelativeTo(null);
-
-                    frame.setVisible(true);
-                    
-                    new Thread(bGui).start();
-                    
-                    setVisible(false);
             }
         });
         

@@ -117,6 +117,31 @@ public class BombiGui extends JComponent implements Runnable {
         return new Dimension(WIDTH, HEIGHT);
     }
   
+    /**
+     * Startet das Programm ;-)
+     * 
+     * @param args Bisher werden alle Parameter ignoriert.
+     */
+    public static void main(String[] args) {
+        // Fenster erstellen
+        JFrame frame = new JFrame();
+        
+        frame.setTitle("Bombi");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        BombiGui bGui = new BombiGui();
+        
+        frame.add(bGui);
+        frame.pack(); // passt die Gr��e dem Inhalt an
+
+        // zentriert das Fenster
+        frame.setLocationRelativeTo(null);
+
+        frame.setVisible(true);
+        
+        new Thread(bGui).start();
+              
+    }
   
     //SoundManager instanz (Audios einlesen)
     SoundManager s = new SoundManager() {

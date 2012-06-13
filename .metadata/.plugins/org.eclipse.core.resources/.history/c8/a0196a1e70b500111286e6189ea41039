@@ -8,16 +8,16 @@ import java.util.List;
 
 
 /**
- * Diese Klasse erstellt den Computer als Gegner, wenn er denn ausgewï¿½hlt wurde,dar.
+ * Diese Klasse erstellt den Computer als Gegner, wenn er denn ausgewŠhlt wurde,dar.
  * Funktioniert wie die Spieler-Klasse mit Ausnahme der  RobotDirection Methode die 
- * zufï¿½llig die Bewegung simulieren soll.
+ * zufŠllig die Bewegung simulieren soll.
  * Es kommt noch eine Methode dazu die die Bomben nach einem Schema ablegen soll.
  * @author abuubaida
  */
 public class Robot{
 	/**
 	 * TODO 
-	 * ï¿½ber Menu eine Abfrage implementieren (ob Computergegner ausgewï¿½hlt) die in der BombiGui-Klasse
+	 * Ÿber Menu eine Abfrage implementieren (ob Computergegner ausgewŠhlt) die in der BombiGui-Klasse
 	 * abgefragt wird.Diese erzeugt dann den Robot oder auch nicht:).
 	 * 
 	 */
@@ -26,7 +26,7 @@ public class Robot{
 	Texture t;
 	BombermanLevel l;
 	Graphics g;
-    private int health = 1; // Zustand fï¿½r abfrage ob Spieler verloren(=0)hat
+    private int health = 1; // Zustand fŸr abfrage ob Spieler verloren(=0)hat
     private int posX, posY, width, height;
   
 
@@ -36,15 +36,15 @@ public class Robot{
      */
     public Robot(BombermanLevel l) {
     	this.l=l;
-        posX = 520;
-        posY = 360;
+        posX = 560;
+        posY = 400;
         width = height = 40;
     }
     /**
      * 
      * @param posX
      * @param posY
-     * Spieler Konstructor Positions-Koordinaten fï¿½r den Spieler
+     * Spieler Konstructor Positions-Koordinaten fŸr den Spieler
      */
     public Robot(int posX,int posY){
     	this.posX = posX;
@@ -53,7 +53,7 @@ public class Robot{
 	/**
 	 * 
 	 * @return
-	 * Getter fï¿½r x-Position
+	 * Getter fŸr x-Position
 	 */
     public int getPosX() {
 		return posX;
@@ -61,7 +61,7 @@ public class Robot{
 	/**
 	 *     
 	 * @return
-	 * Getter fï¿½r y-Position
+	 * Getter fŸr y-Position
 	 */
 	public int getPosY() {
 		return posY;
@@ -81,7 +81,7 @@ public class Robot{
 		this.posY = posY;
 	}
 	/**
-	 * Konstructor um Bomben-Koordinaten fï¿½r Kollision zu bekommen 
+	 * Konstructor um Bomben-Koordinaten fŸr Kollision zu bekommen 
 	 * @param b
 	 */
 	public Robot(Bomben b) {
@@ -110,7 +110,7 @@ public class Robot{
     /**
      * 
      * @return
-     * Die Methode spielEnde() ï¿½berprï¿½ft die Position des Spielers mit
+     * Die Methode spielEnde() †berprŸft die Position des Spielers mit
      * getTileByPixel und EXIT auf Gleichheit
      */
     public boolean spielEnde(){
@@ -120,15 +120,15 @@ public class Robot{
 /**
  * TODO
  * 
- * Diese Methode bewegt den Robot zufï¿½llig, ist aber noch abhï¿½ngig vom Spieler ebenso die Bombenablage
+ * Diese Methode bewegt den Robot zufŠllig, ist aber noch abhŠngig vom Spieler ebenso die Bombenablage
  * 
  */
     public void robotDirection() {
-     	int r = (int)( Math.random()*4); //Zufï¿½llig eine Zahl 0,1,2 oder 3  
+     	int r = (int)( Math.random()*4); //ZufŠllig eine Zahl 0,1,2 oder 3  
      	
-      	int wert1 = 40;  	// fï¿½r Bewegung nach +
-     	int wert2 = -40;	// fï¿½r Bewegung nach -
-     	int wert3 = 0;		// fï¿½r Bewegung 0
+      	int wert1 = 40;  	// fŸr Bewegung nach +
+     	int wert2 = -40;	// fŸr Bewegung nach -
+     	int wert3 = 0;		// fŸr Bewegung 0
      	
      	if(r==3){
      		if((l.getTileByPixel(getPosX()+wert1,getPosY()+wert3)==2)||(l.getTileByPixel(getPosX()+wert1,getPosY()+wert3)==1)){
