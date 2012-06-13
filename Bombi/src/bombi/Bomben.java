@@ -30,6 +30,10 @@ public class Bomben {
     private int radiusDelayCounter = RADIUSDELAY;
     private int animFrame = 0;
     private BombermanLevel bLevel;
+    int breakup=0;
+    int breakdown=0;
+    int breakright=0;
+    int breakleft=0;
 
     
     /**
@@ -91,21 +95,41 @@ public class Bomben {
                 radiusdown++;
                 radiusleft++;
                 radiusright++;
-                for (int i=1; i<=radiusup && !bLevel.isSolidByPixel(posX, posY - i * height) ; i++) {
-                	bLevel.destroyBlockByPixel(posX, posY - i * height);
+                for (int i=1; i<=radiusup ; i++) {
                 	bLevel.addFireByPixel(posX, posY - i * height);
+                	if (bLevel.getTileByPixel(posX, posY-i*height)==2){
+                		break;
+                	}
+                	if (bLevel.getTileByPixel(posX, posY-i*height)==1 && breakup==0) { 
+                    	bLevel.destroyBlockByPixel(posX, posY - i * height);
+                	}
                 }
-                for (int i=1; i<=radiusdown && !bLevel.isSolidByPixel(posX, posY + i * height); i++) {
-                	bLevel.destroyBlockByPixel(posX, posY + i * height);
+                for (int i=1; i<=radiusdown; i++) {
                 	bLevel.addFireByPixel(posX, posY + i * height);
+                	if (bLevel.getTileByPixel(posX, posY + i*height)==2) {
+                		break;
+                	}
+                	if (bLevel.getTileByPixel(posX, posY + i*height)==1 && breakdown==0) { 
+                    	bLevel.destroyBlockByPixel(posX, posY + i * height);
+                	    breakdown=1; }
                 }
-                for (int i=1; i<=radiusright && !bLevel.isSolidByPixel(posX + i * width, posY); i++) {
-                	bLevel.destroyBlockByPixel(posX + i * width, posY);
+                for (int i=1; i<=radiusright; i++) {
                 	bLevel.addFireByPixel(posX + i * width, posY);
+                	if (bLevel.getTileByPixel(posX+i*width, posY)==2) {
+                		break;
+                	}
+                	if (bLevel.getTileByPixel(posX+i*width, posY)==1 && breakright==0) {
+                    	bLevel.destroyBlockByPixel(posX + i * width, posY);
+                		breakright=1; }
                 }
-                for (int i=1; i<=radiusleft && !bLevel.isSolidByPixel(posX - i * width, posY); i++) {
-                	bLevel.destroyBlockByPixel(posX - i * width, posY);
+                for (int i=1; i<=radiusleft; i++) {
                 	bLevel.addFireByPixel(posX - i * width, posY);
+                	if (bLevel.getTileByPixel(posX-i*width, posY)==2) {
+                		break;
+                	}
+                	if (bLevel.getTileByPixel(posX-i*width, posY)==1 && breakleft==0) { 
+                    	bLevel.destroyBlockByPixel(posX - i * width, posY);
+                	    breakleft=1; }
                 }
         	}else if (radiusDelayCounter > 0)radiusDelayCounter--;
         	else {
@@ -123,6 +147,10 @@ public class Bomben {
 			    	 bLevel.removeFireByPixel(posX - i * width, posY);
 			     }
 			     bLevel.removeBombByPixel(posX,posY);
+			     breakright=0;
+			     breakleft=0;
+			     breakup=0;
+			     breakdown=0;
         	}
 	}
     
@@ -145,50 +173,54 @@ public class Bomben {
         } else if (state == EXPLODING) {
             Texture.EXPLMID.draw(posX, posY, width, height, g);
             
-            for (int i = 1; i < radiusup && !bLevel.isSolidByPixel(posX, posY - i * height); i++) {
+            for (int i = 1; i < radiusup && bLevel.getTileByPixel(posX, posY - i * height)!=2; i++) {
                 if (radius == 0) {
                     bLevel.markForUpdateByPixel(posX, posY - i * height);
                     if (i == radiusup) break;
                 }
+                if (bLevel.getTileByPixel(posX, posY - i * height)==1) break;
                 Texture.EXPLVER.draw(posX, posY - i * height, width, height, g);
-                if (radius == 0 && bLevel.isSolidByPixel(posX * width, posY*width)) {
+                if (radius == 0 ) {
                 	Texture.EXPLBOT.draw(posX, posY + radiusup * height, width, height, g);
                 	bLevel.markForUpdateByPixel(posX, posY - radiusup * height);
                 }
             }
             
-            for (int i = 1; i < radiusdown && !bLevel.isSolidByPixel(posX, posY + i * height); i++) {
+            for (int i = 1; i < radiusdown && bLevel.getTileByPixel(posX, posY + i * height)!=2; i++) {
                 if (radius == 0) {
                     bLevel.markForUpdateByPixel(posX, posY + i * height);
                     if (i == radiusdown) break;
                 }
+                if (bLevel.getTileByPixel(posX, posY + i * height)==1) break;
                 Texture.EXPLVER.draw(posX, posY + i * height, width, height, g);
-                if (radius == 0 && bLevel.isSolidByPixel(posX * width, posY*width)) {
+                if (radius == 0 ) {
                 	Texture.EXPLTOP.draw(posX, posY - radiusdown * height, width, height, g);
                 	bLevel.markForUpdateByPixel(posX, posY + radiusdown * height);
                 }
             }
             
-            for (int i = 1; i < radiusleft && !bLevel.isSolidByPixel(posX - i * width, posY); i++) {
+            for (int i = 1; i < radiusleft && bLevel.getTileByPixel(posX - i * width, posY)!=2; i++) {
                 if (radius == 0) {
                     bLevel.markForUpdateByPixel(posX - i * width, posY);
                     if (i == radiusleft) break;
                 }
+                if(bLevel.getTileByPixel(posX - i * width, posY)==1) break;
                 Texture.EXPLHOR.draw(posX - i * width, posY, width, height, g);
-                if (radius == 0 && bLevel.isSolidByPixel(posX * width, posY*width)) {
+                if (radius == 0 ) {
                 	Texture.EXPLLEF.draw(posX - radiusleft * width, posY, width, height, g);
                 	bLevel.markForUpdateByPixel(posX - radiusleft * width, posY);
                 }
             }
             
-            for (int i = 1; i < radiusright && !bLevel.isSolidByPixel(posX + i * width, posY); i++) {
-                if (radius == 0) {
+            for (int i = 1; i < radiusright && bLevel.getTileByPixel(posX + i * width, posY)!=2; i++) {
+                if (radius ==0) {
                     bLevel.markForUpdateByPixel(posX + i * width, posY);
                     
-                    if (i == radiusright) break;
+                    if (i == radiusright ) break;
                 }
+                if (bLevel.getTileByPixel(posX + i * width, posY)==1) break;
                 Texture.EXPLHOR.draw(posX + i * width, posY, width, height, g);
-              if (radius == 0 && bLevel.isSolidByPixel(posX * width, posY*width)) {
+              if (radius == 0) {
             	  Texture.EXPLRIG.draw(posX + radiusright * width, posY, width, height, g);
             	  bLevel.markForUpdateByPixel(posX + radiusright * width, posY);
               }
@@ -199,6 +231,4 @@ public class Bomben {
     }
 }
         
-
-
 
