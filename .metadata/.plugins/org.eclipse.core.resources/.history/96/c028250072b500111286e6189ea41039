@@ -17,9 +17,9 @@ public class Einstellungen {
 		frame.setSize(250,200);
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4, 1));
-		JButton label1 = new JButton("Lautstärke");
-		JButton label2 = new JButton("Steurung");
-		JButton label3 = new JButton("Schwierigkeitsgrad");
+		JButton label1 = new JButton("Schwierigkeitsgrad");
+		JButton label2 = new JButton("Sound");
+		JButton label3 = new JButton("Tastatur");
         JButton label4 = new JButton("Zurück");
 		panel.add(label1);
 		panel.add(label2);
