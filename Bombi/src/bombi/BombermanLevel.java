@@ -369,7 +369,7 @@ public class BombermanLevel {
             return;
         if ((tiles[posX][posY] & TILE) == STONE) {
             tiles[posX][posY] &= ~TILE;
-            tiles[posX][posY] |= STONE;
+            tiles[posX][posY] |= GRASS;
             markForUpdate(posX, posY); // moechten Aenderung sehen
         } else if ((tiles[posX][posY] & TILE) == HIDDENEXIT) {
             tiles[posX][posY] &= ~TILE;
