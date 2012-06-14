@@ -111,7 +111,8 @@ public class Player{
      * @param g Grafik erzeugen durch laden aus Texture Klasse
      */
     public void draw(Graphics2D g) {
-		if(health==1){Texture.SPIELER1.draw(posX, posY, width, height, g);
+    	int dim = l.getTileDim();
+		if(health==1){Texture.SPIELER1.draw(posX, posY-dim/2, width, (height*3)/2, g);
 			
 		}
         

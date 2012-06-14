@@ -69,6 +69,25 @@ public class Menu extends JFrame{
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame();
+                
+                frame.setTitle("Bombi");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new BombiGui(true);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                setVisible(false);
                 
             }
         });
