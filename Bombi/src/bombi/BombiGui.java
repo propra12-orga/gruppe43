@@ -33,13 +33,15 @@ public class BombiGui extends JComponent implements Runnable {
     // Liste für die Bomben
     private List<Bomben> bombs;
     
+    boolean multiplayer;
     Player player1,player2;
     BombermanLevel bLevel;
     Robot robot;
-  \
+    
     int fps = 0; // wird durch den main-loop gesetzt
 
-    public BombiGui() {
+
+    public BombiGui(boolean multiplayer) {
         super();
         // erzeuge die Objekte für Doublebuffering
         dbImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -54,12 +56,17 @@ public class BombiGui extends JComponent implements Runnable {
         bLevel = new BombermanLevel(15,11,WIDTH, HEIGHT);
         bombs = new ArrayList<Bomben>();
         player1 = new Player(bLevel);
+        this.multiplayer = multiplayer;
         if(!multiplayer){            
             robot = new Robot(bLevel);
         }
         else{
             player2 = new Player(bLevel, WIDTH - bLevel.getTileDim(), HEIGHT - bLevel.getTileDim());
         }
+    }
+    
+    public BombiGui(){
+        this(false);
     }
 
     /**
