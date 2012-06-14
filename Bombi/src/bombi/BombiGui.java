@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 public class BombiGui extends JComponent implements Runnable {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 440;
+    private static final int STEPSIZE = 10;
 
     private static final long SECOND = 1000000000; // eine Sekunde in Nanosekunden
     private static final long SLEEPTIME = SECOND / 60; // 60 FPS
@@ -216,17 +217,17 @@ public class BombiGui extends JComponent implements Runnable {
     private void handleKeyboard(){
         // �berpr�fe Tastatureingaben player 1
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            player1.Direction(-bLevel.getTileDim(),0);
+            player1.Direction(-bLevel.getTileDim()/STEPSIZE,0);
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            player1.Direction(bLevel.getTileDim(),0);
+            player1.Direction(bLevel.getTileDim()/STEPSIZE,0);
             stepCount++;
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            player1.Direction(0,-bLevel.getTileDim());
+            player1.Direction(0,-bLevel.getTileDim()/STEPSIZE);
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-        	player1.Direction(0,bLevel.getTileDim());
+        	player1.Direction(0,bLevel.getTileDim()/STEPSIZE);
         	stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
         	playAudio.playSound("Put");
@@ -241,17 +242,17 @@ public class BombiGui extends JComponent implements Runnable {
         if(multiplayer && player2 != null){
 	        
 	        if (keyPoller.isKeyDown(KeyEvent.VK_A)) {
-	            player2.Direction(-bLevel.getTileDim(),0);
+	            player2.Direction(-bLevel.getTileDim()/STEPSIZE,0);
 	            stepCount++;
 	        } else if (keyPoller.isKeyDown(KeyEvent.VK_D)) {
-	            player2.Direction(bLevel.getTileDim(),0);
+	            player2.Direction(bLevel.getTileDim()/STEPSIZE,0);
 	            stepCount++;
 	        }
 	        if (keyPoller.isKeyDown(KeyEvent.VK_W)) {
-	            player2.Direction(0,-bLevel.getTileDim());
+	            player2.Direction(0,-bLevel.getTileDim()/STEPSIZE);
 	            stepCount++;
 	        } else if (keyPoller.isKeyDown(KeyEvent.VK_S)) {
-	        	player2.Direction(0,bLevel.getTileDim());
+	        	player2.Direction(0,bLevel.getTileDim()/STEPSIZE);
 	        	stepCount++;
 	        } else if (keyPoller.isKeyDown(KeyEvent.VK_CONTROL)) {
 	        	playAudio.playSound("Put");
