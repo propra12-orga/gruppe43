@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +54,15 @@ public class BombiGui extends JComponent implements Runnable {
 
         setFocusable(true);
         this.setSize(WIDTH, HEIGHT);
-        bLevel = new BombermanLevel(15,11,WIDTH, HEIGHT);
-        player1 = new Player(bLevel);
+        try {
+			bLevel = new BombermanLevel(LevelParser.parseMap("/test.map"),WIDTH,HEIGHT);
+		} catch (Exception e) {
+			bLevel = new BombermanLevel(15,11,WIDTH, HEIGHT);
+		}
+        player1 = new Player(bLevel,bLevel.getTileDim(),bLevel.getTileDim());
         this.multiplayer = multiplayer;
         if(multiplayer)
-        	player2 = new Player(bLevel,520,360);
+        	player2 = new Player(bLevel,bLevel.getTileDim() * (bLevel.getWidth()-2),bLevel.getTileDim() * (bLevel.getHeight()-2));
         bombs = new ArrayList<Bomben>();
     }
     
@@ -210,17 +216,17 @@ public class BombiGui extends JComponent implements Runnable {
     private void handleKeyboard(){
         // �berpr�fe Tastatureingaben player 1
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            player1.Direction(-40,0);
+            player1.Direction(-bLevel.getTileDim(),0);
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            player1.Direction(+40,0);
+            player1.Direction(bLevel.getTileDim(),0);
             stepCount++;
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            player1.Direction(0,-40);
+            player1.Direction(0,-bLevel.getTileDim());
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-        	player1.Direction(0,+40);
+        	player1.Direction(0,bLevel.getTileDim());
         	stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
         	playAudio.playSound("Put");
@@ -235,17 +241,17 @@ public class BombiGui extends JComponent implements Runnable {
         if(multiplayer && player2 != null){
 	        
 	        if (keyPoller.isKeyDown(KeyEvent.VK_A)) {
-	            player2.Direction(-40,0);
+	            player2.Direction(-bLevel.getTileDim(),0);
 	            stepCount++;
 	        } else if (keyPoller.isKeyDown(KeyEvent.VK_D)) {
-	            player2.Direction(+40,0);
+	            player2.Direction(bLevel.getTileDim(),0);
 	            stepCount++;
 	        }
 	        if (keyPoller.isKeyDown(KeyEvent.VK_W)) {
-	            player2.Direction(0,-40);
+	            player2.Direction(0,-bLevel.getTileDim());
 	            stepCount++;
 	        } else if (keyPoller.isKeyDown(KeyEvent.VK_S)) {
-	        	player2.Direction(0,+40);
+	        	player2.Direction(0,bLevel.getTileDim());
 	        	stepCount++;
 	        } else if (keyPoller.isKeyDown(KeyEvent.VK_CONTROL)) {
 	        	playAudio.playSound("Put");
