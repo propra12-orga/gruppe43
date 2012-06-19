@@ -49,6 +49,21 @@ public class BombermanLevel {
      */
     public static final short HIDDENEXIT = 4;
 
+    /**
+     * Diese Methode ueberprueft lediglich, ob es sich bei einem Wert um einen
+     * gueltigen Block handelt. Dabei werden nur die niedrigsten 6 Bit
+     * betrachtet.
+     * 
+     * @param tile Der Wert, welcher auf seine Gueltigkeit ueberprueft werden
+     * soll.
+     * @return Ist true, falls die niedrigsten 6 Bit von tile einen gueltigen
+     * Block darstellen.
+     */
+    public static final boolean isValidTile(short tile) {
+        tile &= TILE;
+        return (tile >= GRASS && tile <= HIDDENEXIT);
+    }
+
     // Konstanten fuer die Flags
     private static final short DRAW = (short) (1 << 15);
     private static final short BOMB = (short) (1 << 14);
@@ -208,7 +223,6 @@ public class BombermanLevel {
             // erstelle ein leeres Spielfeld
             tiles = new short[this.width][this.height];
             fillRandomly();
-            return;
         }
         // Dimensionen sind in Ordnung, normales Prozedere
         this.tiles = tiles;
@@ -440,7 +454,7 @@ public class BombermanLevel {
     }
 
     // //////////////////////////////////////////////////////////////////////
-    // es folgen Methoden zum Setzen der D, B und F Flags
+    // es folgen Methoden zum Setzen/Entfernen/Ueberpruefen der D, B und F Flags
     // //////////////////////////////////////////////////////////////////////
     // D Flag (d.h. Aufforderung, die entsprechende Kachel zu zeichnen)
     // //////////////////////////////////////////////////////////////////////
@@ -569,7 +583,7 @@ public class BombermanLevel {
      * Liefert true, wenn das D-Flag einer Kachel gesetzt ist.
      */
     private boolean markedForUpdate(short tile) {
-        return (tile &= DRAW) != 0;
+        return (tile & DRAW) != 0;
     }
 
     // //////////////////////////////////////////////////////////////////////
@@ -704,4 +718,8 @@ public class BombermanLevel {
             return false;
         return (tiles[posX][posY] & FIRE) != 0;
     }
+
+    // //////////////////////////////////////////////////////////////////////
+    // Ende der Methoden zum Setzen/Entfernen/Ueberpruefen der D, B und F Flags
+    // //////////////////////////////////////////////////////////////////////
 }// Ende der Klasse BombermanLevel
