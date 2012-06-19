@@ -88,9 +88,10 @@ public class LevelParser {
         boolean dim = false; // signalisiert, ob zuvor [DIM] eingelesen wurde
         while ((temp = fileIn.readLine()) != null) {
             lineCounter++;
-            temp = removeComment(temp.trim()); // entferne zeilenweise blanks
+            temp = removeComment(temp).trim(); // entferne zeilenweise blanks
                                                // und comments
             if (!temp.equals("")) { // ueberspringe leere Zeilen
+                System.out.println(temp);
                 if (dim) {// in dieser Zeile muss die Dimension folgen
                     // , und ; sind die einzigen Trennzeichen hier
                     int comma = temp.indexOf(',');
@@ -101,12 +102,12 @@ public class LevelParser {
                     if (semicolon < 0) // kein ; --> ungueltiges Format
                         throw new IllegalFormatException(errorMsg(lineCounter,
                                 DIM_ERROR));
-                    int w = Integer.parseInt(temp.substring(0, comma));
+                    int w = Integer.parseInt(temp.substring(0, comma).trim());
                     int h = Integer.parseInt(temp.substring(comma + 1,
-                            semicolon));
+                            semicolon).trim());
                     return new Dimension(w, h);
                 }
-                if (temp.equals(DIM)) // signalisiert, B,H; folgt
+                if (temp.equals(DIM)) // signalisiert: B,H; folgt
                     dim = true;
             }
         }
@@ -129,7 +130,7 @@ public class LevelParser {
         // suche zunaecht nach [LEVEL]
         while ((temp = fileIn.readLine()) != null) {
             lineCounter++;
-            temp = removeComment(temp.trim());
+            temp = removeComment(temp).trim();
             if (temp.equals(LEVEL)) {
                 level = true;
                 break;
@@ -140,7 +141,7 @@ public class LevelParser {
         for (int i = 0; i < dim.height; i++) {
             while ((temp = fileIn.readLine()) != null) {
                 lineCounter++;
-                temp = removeComment(temp.trim());
+                temp = removeComment(temp).trim();
                 if (!temp.equals("")) // suche naechste nichtleere Zeile
                     break;
             }
@@ -156,7 +157,8 @@ public class LevelParser {
                 if (endIndex < 0)
                     throw new IllegalFormatException(errorMsg(lineCounter,
                             LEVEL_ERROR));
-                tile = Short.parseShort(temp.substring(beginIndex, endIndex));
+                tile = Short.parseShort(temp.substring(beginIndex, endIndex)
+                        .trim());
                 if (!BombermanLevel.isValidTile(tile))
                     throw new IllegalFormatException(tileErrorMsg(lineCounter,
                             tile));
@@ -168,7 +170,8 @@ public class LevelParser {
             if (endIndex < 0)
                 throw new IllegalFormatException(errorMsg(lineCounter,
                         LEVEL_ERROR));
-            tile = Short.parseShort(temp.substring(beginIndex, endIndex));
+            tile = Short
+                    .parseShort(temp.substring(beginIndex, endIndex).trim());
             if (!BombermanLevel.isValidTile(tile))
                 throw new IllegalFormatException(
                         tileErrorMsg(lineCounter, tile));
