@@ -27,6 +27,8 @@ public class Texture {
     private static final int HOUSECOLOR1_SHADOW = 0xffaaaaaa; // dunkelgrau
     private static final int HOUSECOLOR2 = 0xffcccc00; // gelb
     private static final int HOUSECOLOR2_SHADOW = 0xffaaaa00; // dunkelgelb
+    private static final int[] HOUSECOLORS = { HOUSECOLOR1, HOUSECOLOR1_SHADOW,
+            HOUSECOLOR2, HOUSECOLOR2_SHADOW };
 
     /*
      * Statische Methode zum Einlesen eines Bildes, welches durch IMGURL gegeben
@@ -147,7 +149,12 @@ public class Texture {
         return new Texture(texture);
     }
 
-    private Texture replaceColor(int fromColor, int toColor) {
+    // private Texture replaceColor(int fromColor, int toColor) {
+    // return replaceColors(new int[] { fromColor }, new int[] { toColor });
+    // }
+
+    private Texture replaceColors(int[] fromColors, int[] toColors) {
+        int length = Math.min(fromColors.length, toColors.length);
         int width = this.texture.getWidth();
         int height = this.texture.getHeight();
         BufferedImage temp = new BufferedImage(width, height,
@@ -156,8 +163,12 @@ public class Texture {
         int[] rgb = new int[width * height];
         temp.getRGB(0, 0, width, height, rgb, 0, width);
         for (int i = 0; i < rgb.length; i++) {
-            if (rgb[i] == fromColor)
-                rgb[i] = toColor;
+            for (int j = 0; j < length; j++) {
+                if (rgb[i] == fromColors[j]) {
+                    rgb[i] = toColors[j];
+                    break;
+                }
+            }
         }
         temp.setRGB(0, 0, width, height, rgb, 0, width);
         BufferedImage texture = new BufferedImage(width, height,
@@ -166,6 +177,26 @@ public class Texture {
         Graphics2D g = (Graphics2D) texture.getGraphics();
         g.drawImage(temp, 0, 0, width, height, null);
         return new Texture(texture);
+    }
+
+    public static Texture[] replaceColors(Texture[] textures, int[] fromColors,
+            int[] toColors) {
+        Texture[] newTextures = new Texture[textures.length];
+        for (int i = 0; i < textures.length; i++)
+            newTextures[i] = textures[i].replaceColors(fromColors, toColors);
+        return newTextures;
+    }
+
+    public static Texture[][] replaceColors(Texture[][] textures,
+            int[] fromColors, int[] toColors) {
+        if (textures.length == 0)
+            return null;
+        Texture[][] newTextures = new Texture[textures.length][textures[1].length];
+        for (int i = 0; i < textures.length; i++)
+            for (int j = 0; j < textures[1].length; j++)
+                newTextures[i][j] = textures[i][j].replaceColors(fromColors,
+                        toColors);
+        return newTextures;
     }
 
     /*************************************************************************
@@ -207,12 +238,10 @@ public class Texture {
     public static Texture PLAYER_MOVE_RIGHT2 = PLAYER_MOVE_LEFT2
             .mirrorHorizontally();
 
-    public static Texture PLAYER_IDLE_FRONTlll = new Texture(192, 0, 32, 48);
-    public static Texture PLAYER_IDLE_FRONT = PLAYER_IDLE_FRONTlll
-            .replaceColor(HOUSECOLOR1, 0xffff0000)
-            .replaceColor(HOUSECOLOR1_SHADOW, 0xffbb0000)
-            .replaceColor(HOUSECOLOR2, 0xff0000ff)
-            .replaceColor(HOUSECOLOR2_SHADOW, 0xff0000bb);
+    public static Texture PLAYER_IDLE_FRONT = new Texture(192, 0, 32, 48);
+    public static Texture PLAYER_IDLE_FRONT_RED = PLAYER_IDLE_FRONT
+            .replaceColors(HOUSECOLORS, new int[] { 0xffff0000, 0xffbb0000,
+                    0xff0000ff, 0xff0000bb });
 
     public static Texture PLAYER_IDLE_BACK = new Texture(192, 48, 32, 48);
     public static Texture PLAYER_IDLE_LEFT1 = new Texture(256, 0, 32, 48);
