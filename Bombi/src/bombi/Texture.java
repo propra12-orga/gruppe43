@@ -247,6 +247,12 @@ public class Texture {
     public static Texture EXPLBOT = new Texture(96, 96, 32, 32);
     public static Texture EXPLTOP = EXPLBOT.mirrorVertically();
     public static Texture EXPLLEF = EXPLRIG.mirrorHorizontally();
+    
+    public static Texture ITEMFIRE1 = new Texture(96, 0, 32, 32);
+    public static Texture ITEMFIRE2 = new Texture(128, 0, 32, 32);
+    public static Texture ITEMBOMBUP1 = new Texture(32, 32, 32, 32);
+    public static Texture ITEMBOMBUP2 = new Texture(64, 32, 32, 32);
+    
 
     // Abwaertskompatibilitaet
     public static Texture SPIELER1 = PLAYER_IDLE_FRONT;
