@@ -37,7 +37,8 @@ public class BombiGui extends JComponent implements Runnable {
     private KeyPoller keyPoller;
 
     // Liste für die Bomben
-    private List<Bomben> bombs;
+    private List<Bomben> bombsP1;
+    private List<Bomben> bombsP2;
 
     private boolean multiplayer;
     Player player1, player2;
@@ -62,7 +63,8 @@ public class BombiGui extends JComponent implements Runnable {
             player2 = new Player(bLevel, bLevel.getTileDim()
                     * (bLevel.getWidth() - 2), bLevel.getTileDim()
                     * (bLevel.getHeight() - 2));
-        bombs = new ArrayList<Bomben>();
+        bombsP1 = new ArrayList<Bomben>();
+        bombsP2 = new ArrayList<Bomben>();
         setFocusable(true);
         this.setSize(width, height);
         playAudio.playSound("Fight");
@@ -120,9 +122,13 @@ public class BombiGui extends JComponent implements Runnable {
         // zeichne das Lvel
         bLevel.draw(gameG);
 
-        // zeichne die Bombe
-        for (int i = 0; i < bombs.size(); i++) {
-            bombs.get(i).draw(gameG);
+        // zeichne die Bombe für Spieler 1
+        for (int i = 0; i < bombsP1.size(); i++) {
+            bombsP1.get(i).draw(gameG);
+        }
+     // zeichne die Bombe für Spieler 2
+        for (int i = 0; i < bombsP2.size(); i++) {
+            bombsP2.get(i).draw(gameG);
         }
 
         // zeichne zuletzt den Spieler
@@ -279,8 +285,9 @@ public class BombiGui extends JComponent implements Runnable {
             playAudio.playSound("Put");
             int posX = player1.getPosX();
             int posY = player1.getPosY();
-            if (!bLevel.hasBombByPixel(posX, posY)) {
-                bombs.add(new Bomben(posX, posY, 2, bLevel));
+            if (!bLevel.hasBombByPixel(posX, posY) && player1.bombplantable()) {
+                bombsP1.add(new Bomben(posX, posY, player1.maxradius(), bLevel));
+                player1.addcurrentbombs();
             }
             // bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2,
             // bLevel));
@@ -305,8 +312,9 @@ public class BombiGui extends JComponent implements Runnable {
                 playAudio.playSound("Put");
                 int posX = player2.getPosX();
                 int posY = player2.getPosY();
-                if (!bLevel.hasBombByPixel(posX, posY)) {
-                    bombs.add(new Bomben(posX, posY, 2, bLevel));
+                if (!bLevel.hasBombByPixel(posX, posY) && player2.bombplantable()) {
+                    bombsP2.add(new Bomben(posX, posY, player2.maxradius(), bLevel));
+                    player2.addcurrentbombs();
                 }
 
             }
@@ -327,10 +335,19 @@ public class BombiGui extends JComponent implements Runnable {
     }
 
     private void updateBombs() {
-        for (int i = 0; i < bombs.size(); i++) {
-            bombs.get(i).update();
-            if (bombs.get(i).isExploded())
-                bombs.remove(i);
-        }
+        for (int i = 0; i < bombsP1.size(); i++) {
+            bombsP1.get(i).update();
+            if (bombsP1.get(i).isExploded()){
+                bombsP1.remove(i);
+                player1.removecurrentbombs();
+            }
+        } 
+        for (int i = 0; i < bombsP2.size(); i++) {
+            bombsP2.get(i).update();
+            if (bombsP2.get(i).isExploded()){
+                bombsP2.remove(i);
+                player2.removecurrentbombs();
+            }
+        } 
     }
 }

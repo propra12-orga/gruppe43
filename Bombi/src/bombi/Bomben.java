@@ -31,6 +31,7 @@ public class Bomben {
     private int radiusDelayCounter = RADIUSDELAY;
     private int animFrame = 0;
     private BombermanLevel bLevel;
+    Player player1, player2;
     int breakup = 0;
     int breakdown = 0;
     int breakright = 0;
