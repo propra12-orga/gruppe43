@@ -18,7 +18,9 @@ public class Player{
 	Graphics g;
     private int health = 1; // Zustand fuer abfrage ob Spieler verloren(=0)hat
     private int posX, posY, width, height;
-    
+    private int maxradius=2;
+    private int maxbomb=4;
+    private int currentbombs=1;
     /**
      * 
      * @param l erzeugte BombermanLevel mit festen x,y Koordinaten werten
@@ -44,6 +46,49 @@ public class Player{
     }
     public Player(){
     	
+    }
+    /**
+     * Die Methode gibt den aktuellen Radius den Explosion zurück.
+     * @return
+     */
+    public int maxradius() {
+    	return maxradius;
+    }
+    /**
+     * Diese Methode erhöht den aktuellen Radius permanent um 1.
+     */
+    public void addradius() {
+    	maxradius++;
+    }
+    /**
+     * Diese Methode gibt zurück, wie hoch die Anzahl der maximal legbaren Bomben ist
+     * @return
+     */
+    public int maxbomb() {
+    	return maxbomb;
+    }
+    /** 
+     * Diese Methode erhöht die aktuelle Anzahl an maximal legbaren Bomben permanent um 1.
+     */
+    public void addmaxbomb() {
+    	maxbomb++;
+    }
+    /**
+     * Diese Methode erhöht die Variable currentbombs um 1. In currentbombs wird gezählt, wieviele Bomben auf dem Spielfeld liegen.
+     */
+    public void addcurrentbombs() {
+    	currentbombs++;
+    }
+    /**
+     * Diese Methode verringert die Variable currentbombs um 1.
+     */
+    public void removecurrentbombs() {
+    	currentbombs--;
+    }
+    public boolean bombplantable() {
+    	if (currentbombs<=maxbomb) {
+    		return true;}
+    	else return false;
     }
     /**
      * 
@@ -152,8 +197,8 @@ public class Player{
   
     public void Direction(int xdir,int ydir) {
     
-    	if((l.isSolidByPixel(getPosX()+xdir,getPosY()+ydir)))
-    	return;
+    	//if((l.isSolidByPixel(getPosX()+xdir,getPosY()+ydir)))
+    	//return;
     	posX+=xdir;
 		posY+=ydir;
 	
