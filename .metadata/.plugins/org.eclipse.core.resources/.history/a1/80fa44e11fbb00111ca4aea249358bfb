@@ -4,13 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
@@ -246,6 +244,9 @@ public class BombiGui extends JComponent implements Runnable {
         }
         if (player1.exit() || player1.dead())
         	if(true){ playAudio.playSound("End");
+        	setVisible(false);
+        	dispose();
+        	new Menu();
         	try{
         			
         			Thread.sleep(100000);
@@ -262,6 +263,11 @@ public class BombiGui extends JComponent implements Runnable {
         updateBombs();
         bLevel.update();
     }
+
+    private static void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private void rescale() {
         width = getWidth();

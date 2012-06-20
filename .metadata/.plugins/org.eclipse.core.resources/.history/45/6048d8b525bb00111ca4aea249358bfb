@@ -3,6 +3,7 @@ package bombi;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.MediaTracker;
@@ -35,6 +36,13 @@ public class Menu extends JFrame{
         setVisible(true);
         setSize(900,700);
         setLayout(null);
+        
+/*
+ * Hier wird das Menü erstellt.
+ * Das Menü formt sich wie ein Gitter durch GridLayout
+ */ 
+
+     
         
  /*
   * Ab hier fangen die Buttons an.

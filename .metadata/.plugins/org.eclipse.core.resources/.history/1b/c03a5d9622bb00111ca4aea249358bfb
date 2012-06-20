@@ -246,6 +246,9 @@ public class BombiGui extends JComponent implements Runnable {
         }
         if (player1.exit() || player1.dead())
         	if(true){ playAudio.playSound("End");
+            setVisible(false);
+            System.exit(0);
+        new Menu();
         	try{
         			
         			Thread.sleep(100000);

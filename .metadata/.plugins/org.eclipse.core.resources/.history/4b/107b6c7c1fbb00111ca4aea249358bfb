@@ -4,13 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
@@ -244,26 +242,26 @@ public class BombiGui extends JComponent implements Runnable {
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit() || player1.dead())
-        	if(true){ playAudio.playSound("End");
-        	try{
-        			
-        			Thread.sleep(100000);
-        		}catch (Exception e) {
-        			e.printStackTrace();
-        		}
-            return;
-        	}
-        if (multiplayer && player2 != null)
-            if (player2.exit() || player2.dead())
-                return;
+//        if (player1.exit() || player1.dead())
+//        	if(true){ playAudio.playSound("End");
+//        		try{
+//        			
+//        			Thread.sleep(100000);
+//        		}catch (Exception e) {
+//        			e.printStackTrace();
+//        		}
+//            return;
+//        	}
+//        if (multiplayer && player2 != null)
+//            if (player2.exit() || player2.dead())
+//                return;
 
         handleKeyboard();
         updateBombs();
         bLevel.update();
     }
 
-	private void rescale() {
+    private void rescale() {
         width = getWidth();
         height = getHeight();
         dbg.dispose();
