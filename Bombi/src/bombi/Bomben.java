@@ -85,9 +85,13 @@ public class Bomben {
         int width = bLevel.getTileWidth();
         int height = bLevel.getTileHeight();
 
-        if (countdown > 0 && !bLevel.hasFireByPixel(posX, posY))
+        if (countdown > 0) {
             countdown--;
-        else if (state == BOMB) {
+             if (bLevel.hasFireByPixel(posX, posY)){
+        	countdown=0;
+            }
+        }
+        else if (state == BOMB ) {
             state = EXPLODING;
         } else if (state == EXPLODING && radius > 0) {
             if (radiusDelayCounter > 0) {
