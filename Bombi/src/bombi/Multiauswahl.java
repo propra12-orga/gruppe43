@@ -10,11 +10,12 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import bombi.Einstellungen.BackGroundPane;
 
 public class Multiauswahl extends JFrame {
 	
@@ -29,12 +30,14 @@ public class Multiauswahl extends JFrame {
 		setLayout(layout);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setContentPane(new BackGroundPane("img/Bomberman.png"));
-		
-		setLocation(250,500);
+		setContentPane(new BackGroundPane("img/Bomberman.gif"));
+
 		setVisible(true);
-		setSize(900,700);
+		setSize(600,500);
+		setLocationRelativeTo(null);
 		setLayout(null);
+		
+
 		
 		JButton button1 = new JButton("Lokal");
 	    button1.addActionListener(new ActionListener() {
@@ -102,13 +105,13 @@ public class Multiauswahl extends JFrame {
 	    
         Insets insets = getInsets();
         Dimension size = button1.getPreferredSize();
-        button1.setBounds(360+ insets.left, 280 + insets.top,
+        button1.setBounds(250+ insets.left, 220 + insets.top,
         		size.width+30,size.height+5);
-        button2.setBounds(360+ insets.left, 315 + insets.top,
+        button2.setBounds(250+ insets.left, 255 + insets.top,
         		size.width+30,size.height+5);
-        button3.setBounds(360+ insets.left, 350 + insets.top,
+        button3.setBounds(250+ insets.left, 290 + insets.top,
         		size.width+30,size.height+5);
-		button4.setBounds(360+ insets.left, 385 + insets.top,
+		button4.setBounds(250+ insets.left, 325 + insets.top,
 				size.width+30,size.height+5);
         
 	}

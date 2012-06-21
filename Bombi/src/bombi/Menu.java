@@ -29,11 +29,11 @@ public class Menu extends JFrame{
         setLayout(layout);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setContentPane(new BackGroundPane("img/Bomberman.png"));
+        setContentPane(new BackGroundPane("img/Bomberman.gif"));
         
-        setLocation(250,500);
         setVisible(true);
-        setSize(900,700);
+        setSize(600,500);
+        setLocationRelativeTo(null);
         setLayout(null);
         
  /*
@@ -95,20 +95,21 @@ public class Menu extends JFrame{
             }
         });
         
-        JButton button3 = new JButton("Einstellungen");
+        JButton button3 = new JButton("Steuerung");
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame f = new JFrame();
-                
-                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
-                new Einstellungen();
-                dispose();
+            	JFrame steue= new JFrame();
             	
+            	steue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            	
+            	new Steuerung();
+                dispose();
+                
             }
         });
         
+
         JButton close = new JButton("Schließen");
         close.addActionListener(new ActionListener() {
             @Override
@@ -128,17 +129,18 @@ public class Menu extends JFrame{
         
         Insets insets = getInsets();
         Dimension size = start.getPreferredSize();
-        start.setBounds(360+ insets.left, 280 + insets.top,
+        start.setBounds(225+ insets.left, 220 + insets.top,
         		size.width+30,size.height+5);
-        button1.setBounds(360+ insets.left, 315 + insets.top,
+        button1.setBounds(225+ insets.left, 255 + insets.top,
         		size.width+30,size.height+5);
-        button2.setBounds(360+ insets.left, 350 + insets.top,
+        button2.setBounds(225+ insets.left, 290 + insets.top,
         		size.width+30,size.height+5);
-        button3.setBounds(360+ insets.left, 385 + insets.top,
+        button3.setBounds(225+ insets.left,325+ insets.top,
         		size.width+30,size.height+5);
-        close.setBounds(360+ insets.left,420 + insets.top,
+        close.setBounds(225+ insets.left, 360+ insets.top,
         		size.width+30,size.height+5);
-        
+
+
     }
 
     class BackGroundPane extends JPanel{
