@@ -100,9 +100,8 @@ public class Menu extends JFrame{
             public void actionPerformed(ActionEvent e) {
             	JFrame tut= new JFrame();
             	
-
             	tut.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
+                tut.setLocationRelativeTo(null);
             	
             	new Tutorials();
                 dispose();
@@ -114,7 +113,14 @@ public class Menu extends JFrame{
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JFrame f = new JFrame();
                 
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f.setLocationRelativeTo(null);
+                
+                new Einstellungen();
+                dispose();
+            	
             }
         });
         
