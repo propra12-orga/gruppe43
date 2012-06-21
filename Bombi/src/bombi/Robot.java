@@ -133,22 +133,22 @@ public class Robot{
      	if(r==3){
      		if((l.getTileByPixel(getPosX()+wert1,getPosY()+wert3)==2)||(l.getTileByPixel(getPosX()+wert1,getPosY()+wert3)==1)){
      	    	return;}else
-     		posX+=wert1;posY+=wert3;return;}
+     		posX+=wert1;posY+=wert3;return;}//rechts
      	
      	if(r==0){
      		if((l.getTileByPixel(getPosX()+wert2,getPosY()+wert3)==2)||(l.getTileByPixel(getPosX()+wert2,getPosY()+wert3)==1)){
      			return;}else
-     		posX+=wert2;posY+=wert3;return;}
+     		posX+=wert2;posY+=wert3;return;}//links
      
      	if(r==1){
      		if((l.getTileByPixel(getPosX()+wert3,getPosY()+wert2)==2)||(l.getTileByPixel(getPosX()+wert3,getPosY()+wert2)==1)){
      			return;}else
-     		posX+=wert3;posY+=wert2;return;}
+     		posX+=wert3;posY+=wert2;return;}//oben
      	
      	if(r==2){
      		if((l.getTileByPixel(getPosX()+wert3,getPosY()+wert1)==2)||(l.getTileByPixel(getPosX()+wert3,getPosY()+wert1)==1)){
      			return;}else
-     		posX+=wert3;posY+=wert1;return;}
+     		posX+=wert3;posY+=wert1;return;}//unten
 
     }	
 }

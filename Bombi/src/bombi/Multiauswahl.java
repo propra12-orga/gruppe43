@@ -1,28 +1,30 @@
 package bombi;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.MediaTracker;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Toolkit;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Einstellungen extends JFrame{
+import bombi.Einstellungen.BackGroundPane;
 
-	public static void main(String[] args){
-		new Einstellungen();
-	}
+public class Multiauswahl extends JFrame {
 	
-		FlowLayout layout = new FlowLayout();
-		
-		public Einstellungen(){
+	public static void main(String[] args){
+		new Multiauswahl();
+	}
+
+	FlowLayout layout = new FlowLayout();
+	
+	public Multiauswahl(){
 		super("Bomberman");
 		setLayout(layout);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,43 +36,35 @@ public class Einstellungen extends JFrame{
 		setSize(900,700);
 		setLayout(null);
 		
-		
-		JButton button1 = new JButton("Lautstärke");
+		JButton button1 = new JButton("Lokal");
 	    button1.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	                
 	            }
 	        });
-		
-		JButton button2 = new JButton("Schwierigkeitsgrad");
+	    
+		JButton button2 = new JButton("Host");
 	    button2.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	                
 	            }
 	        });
-		
-        JButton button3 = new JButton("Zurück");
-        button3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame f = new JFrame();
-                
-                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                f.setLocationRelativeTo(null);
-                
-                new Menu();
-                dispose();
-            	
-            }
-        });
-        
-        add(button1);
-        add(button2);
-        add(button3);
-        setVisible(true);
-        
+	    
+		JButton button3 = new JButton("Client");
+	    button3.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	                
+	            }
+	        });
+	    
+	    add(button1);
+	    add(button2);
+	    add(button3);
+	    setVisible(true);
+	    
         Insets insets = getInsets();
         Dimension size = button1.getPreferredSize();
         button1.setBounds(360+ insets.left, 280 + insets.top,
@@ -103,5 +97,7 @@ public class Einstellungen extends JFrame{
 	    		g.drawImage(img,0,0,this.getWidth(),this.getHeight(),this);
 	    	}
 	        
-	    }
+	    
+	}
+	
 }
