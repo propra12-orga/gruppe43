@@ -79,7 +79,7 @@ public class BombiGui extends JComponent implements Runnable {
             bLevel = new BombermanLevel(LevelParser.parseMap(pathToMap), width,
                     height);
         } catch (Exception e) {
-            bLevel = new BombermanLevel(31, 23, width, height);
+            bLevel = new BombermanLevel(15, 9, width, height);
         }
     }
 
@@ -101,24 +101,6 @@ public class BombiGui extends JComponent implements Runnable {
      * nächste Bild gemalt wird.
      */
     public void paintBuffer() {
-
-        if (player1.exit())
-            gameG.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
-        if (player1.dead()) {
-            gameG.drawString("Spieler1 wurden von einer Bombe getötet. ", 300,
-                    250);
-            return;
-        }
-        if (multiplayer && player2 != null) {
-            if (player2.exit())
-                gameG.drawString("Spieler 2 ... hat gewonnen!", 400, 300);
-            if (player2.dead()) {
-                gameG.drawString("Spieler2 wurden von einer Bombe getötet. ",
-                        300, 250);
-                return;
-            }
-        }
-
         // zeichne das Lvel
         bLevel.draw(gameG);
 
@@ -126,16 +108,29 @@ public class BombiGui extends JComponent implements Runnable {
         for (int i = 0; i < bombsP1.size(); i++) {
             bombsP1.get(i).draw(gameG);
         }
-     // zeichne die Bombe für Spieler 2
+        // zeichne die Bombe für Spieler 2
         for (int i = 0; i < bombsP2.size(); i++) {
             bombsP2.get(i).draw(gameG);
         }
 
-        // zeichne zuletzt den Spieler
+        // zeichne den Spieler
         player1.draw(gameG);
         if (multiplayer && player2 != null)
             player2.draw(gameG);
 
+        if (player1.exit())
+            gameG.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
+        if (player1.dead())
+            gameG.drawString("Spieler1 wurden von einer Bombe getötet. ", 300,
+                    250);
+        if (multiplayer && player2 != null) {
+            if (player2.exit())
+                gameG.drawString("Spieler 2 ... hat gewonnen!", 400, 300);
+            if (player2.dead())
+                gameG.drawString("Spieler2 wurden von einer Bombe getötet. ",
+                        300, 250);
+        }
+        
         dbg.setColor(Color.BLACK);
         dbg.fillRect(0, 0, width, height);
         dbg.drawImage(gameImage, (width - gameWidth) / 2,
@@ -247,22 +242,23 @@ public class BombiGui extends JComponent implements Runnable {
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit() || player1.dead())
-        	if(true){ playAudio.playSound("End");
-        		try{
-        			
-        			Thread.sleep(100000);
-        		}catch (Exception e) {
-        			e.printStackTrace();
-        		}
-            return;
-        	}
-        if (multiplayer && player2 != null)
-            if (player2.exit() || player2.dead())
-                return;
+//        if (player1.exit() || player1.dead())
+//        	if(true){ playAudio.playSound("End");
+//        		try{
+//        			
+//        			Thread.sleep(100000);
+//        		}catch (Exception e) {
+//        			e.printStackTrace();
+//        		}
+//            return;
+//        	}
+//        if (multiplayer && player2 != null)
+//            if (player2.exit() || player2.dead())
+//                return;
 
         handleKeyboard();
         updateBombs();
+        bLevel.update();
     }
 
     private void rescale() {
@@ -276,30 +272,32 @@ public class BombiGui extends JComponent implements Runnable {
 
     private void handleKeyboard() {
         // Ueberpruefe Tastatureingaben player 1
-        if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            player1.Direction(-bLevel.getTileDim() / stepsize, 0);
-            stepCount++;
-        } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            player1.Direction(bLevel.getTileDim() / stepsize, 0);
-            stepCount++;
-        }
-        if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            player1.Direction(0, -bLevel.getTileDim() / stepsize);
-            stepCount++;
-        } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-            player1.Direction(0, bLevel.getTileDim() / stepsize);
-            stepCount++;
-        } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
-            playAudio.playSound("Put");
-            int posX = player1.getPosX();
-            int posY = player1.getPosY();
-            if (!bLevel.hasBombByPixel(posX, posY) && player1.bombplantable()) {
-                bombsP1.add(new Bomben(posX, posY, player1.maxradius(), bLevel));
-                player1.addcurrentbombs();
-            }
-            // bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2,
-            // bLevel));
-        }
+	    if(!player1.dead()){
+    		if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
+	            player1.Direction(-bLevel.getTileDim() / stepsize, 0);
+	            stepCount++;
+	        } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
+	            player1.Direction(bLevel.getTileDim() / stepsize, 0);
+	            stepCount++;
+	        }
+	        if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
+	            player1.Direction(0, -bLevel.getTileDim() / stepsize);
+	            stepCount++;
+	        } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
+	            player1.Direction(0, bLevel.getTileDim() / stepsize);
+	            stepCount++;
+	        } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
+	            playAudio.playSound("Put");
+	            int posX = player1.getPosX();
+	            int posY = player1.getPosY();
+	            if (!bLevel.hasBombByPixel(posX, posY) && player1.bombplantable()) {
+	                bombsP1.add(new Bomben(posX, posY, player1.maxradius(), bLevel));
+	                player1.addcurrentbombs();
+	            }
+	            // bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2,
+	            // bLevel));
+	        }
+    	}
 
         if (multiplayer && player2 != null) {
 
