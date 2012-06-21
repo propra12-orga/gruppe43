@@ -169,7 +169,12 @@ public class Bomben {
             breakdown = 0;
 
         }
-    }
+    } // SoundManager Audios einlesen
+    SoundManager playAudio = new SoundManager() {
+        public void initSounds() {
+            sounds.add(new Sound("Bumm", Sound.getURL("/Bumm.wav")));   // Explusionssound
+        }
+    };
 
     /**
      * Diese Methode zeichnet die Bombe und die Explosion.
@@ -190,9 +195,10 @@ public class Bomben {
                 animCounter = ANIMCOUNTER;
             }
             Texture.BOMB[animFrame].draw(posX, posY, width, height, g);
+            
         } else if (state == EXPLODING) {
             Texture.EXPLMID.draw(posX, posY, width, height, g);
-
+            playAudio.playSound("Bumm"); // sound abspielen
             for (int i = 1; i < radiusup
                     && bLevel.getTileByPixel(posX, posY - i * height) != 2; i++) {
                 if (radius == 0) {

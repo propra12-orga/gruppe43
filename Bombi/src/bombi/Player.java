@@ -17,22 +17,27 @@ public class Player{
 	BombermanLevel l;
 	Graphics g;
     private int health = 1; // Zustand fuer abfrage ob Spieler verloren(=0)hat
+    private int i = 40;		// Variable um posX,posY,width und height flexibel zuinitialisieren
     private int posX, posY, width, height;
     private int maxradius=2;
     private int maxbomb=4;
     private int currentbombs=1;
+    private int stepsize = 10;
+   
     /**
      * 
      * @param l erzeugte BombermanLevel mit festen x,y Koordinaten werten
      */
     public Player(BombermanLevel l) {
     	this.l=l;
-        posX = posY = 40;
-        width = height = 40;
+        posX = i;
+        posY = i ;
+        width = i;
+        height = i;
     }
     /**
-     * Dieser Konstructor erstell Objekt f�r zweiten Spieler.
-     * Position ist variabel w�hlbar
+     * Dieser Konstructor erstell Objekt fuer zweiten Spieler.
+     * Position ist variabel waehlbar
      * @param l
      * @param x
      * @param y
@@ -41,40 +46,38 @@ public class Player{
     	this.l=l;
         posX = x;
         posY = y;
-        width = height = 40;
+        width = height = i;
 		
     }
-    public Player(){
-    	
-    }
+  
     /**
-     * Die Methode gibt den aktuellen Radius den Explosion zurück.
+     * Die Methode gibt den aktuellen Radius den Explosion zurueck.
      * @return
      */
     public int maxradius() {
     	return maxradius;
     }
     /**
-     * Diese Methode erhöht den aktuellen Radius permanent um 1.
+     * Diese Methode erhoeht den aktuellen Radius permanent um 1.
      */
     public void addradius() {
     	maxradius++;
     }
     /**
-     * Diese Methode gibt zurück, wie hoch die Anzahl der maximal legbaren Bomben ist
+     * Diese Methode gibt zurueck, wie hoch die Anzahl der maximal legbaren Bomben ist
      * @return
      */
     public int maxbomb() {
     	return maxbomb;
     }
     /** 
-     * Diese Methode erhöht die aktuelle Anzahl an maximal legbaren Bomben permanent um 1.
+     * Diese Methode erhoeht die aktuelle Anzahl an maximal legbaren Bomben permanent um 1.
      */
     public void addmaxbomb() {
     	maxbomb++;
     }
     /**
-     * Diese Methode erhöht die Variable currentbombs um 1. In currentbombs wird gezählt, wieviele Bomben auf dem Spielfeld liegen.
+     * Diese Methode erhoeht die Variable currentbombs um 1. In currentbombs wird gezaehlt, wieviele Bomben auf dem Spielfeld liegen.
      */
     public void addcurrentbombs() {
     	currentbombs++;
@@ -103,7 +106,7 @@ public class Player{
 	/**
 	 * 
 	 * @return
-	 * Getter f�r x-Position
+	 * Getter fuer x-Position
 	 */
     public int getPosX() {
 		return posX;
@@ -111,28 +114,14 @@ public class Player{
 	/**
 	 *     
 	 * @return
-	 * Getter f�r y-Position
+	 * Getter fuer y-Position
 	 */
 	public int getPosY() {
 		return posY;
 	}
 	
 	/**
-	 * Setter x-Position
-	 * @param posX
-	 */
-	public void setPosX(int posX) {
-		this.posX = posX;
-	}
-	/**
-	 * Setter y-Position
-	 * @param posY
-	 */
-	public void setPosY(int posY) {
-		this.posY = posY;
-	}
-	/**
-	 * Konstructor um Bomben-Daten f�r Kollision zu bekommen 
+	 * Konstructor um Bomben-Daten fuer Kollision zu bekommen 
 	 * @param b
 	 */
 	public boolean bombPos() {
@@ -144,8 +133,6 @@ public class Player{
 	 * TODO
 	 */
     public boolean dead(){
-    	if(l.hasFireByPixel(posX, posY))
-		return true;
     	return l.hasFireByPixel(posX, posY);
     	
     }
@@ -156,7 +143,7 @@ public class Player{
      * @param g Grafik erzeugen durch laden aus Texture Klasse
      */
     public void draw(Graphics2D g) {
-    	int dim = l.getTileDim();
+    	int dim = l.getTileDim(); 
 		if(health==1){Texture.SPIELER1.draw(posX, posY-dim/2, width, (height*3)/2, g);
 			
 		}
@@ -165,7 +152,7 @@ public class Player{
   
     
     /**
-     * Grafik erzeugen um anhand �bergebener Werte zu laden
+     * Grafik erzeugen um anhand uebergebener Werte zu laden
      * @param g
      */
     public void draw1(Graphics2D g) {
@@ -183,7 +170,7 @@ public class Player{
     	return ((l.getTileByPixel(posX, posY)==BombermanLevel.EXIT));
     	
     }
-  
+    
     /**
      * Diese Methode bekommt bei Tastendruck dazugeh�rige x und y Werte und aktualisiert
      * die momentane Position.Beispiel: Pfeiltaste Links wird bet�tigt die Werte die �bergeben werden
@@ -196,9 +183,12 @@ public class Player{
      */
   
     public void Direction(int xdir,int ydir) {
-    
-    	//if((l.isSolidByPixel(getPosX()+xdir,getPosY()+ydir)))
-    	//return;
+    	int dim = l.getTileDim(); 
+    	if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+((dim*stepsize)/100)+ydir))
+    	return;
+    	if(l.isSolidByPixel(posX+dim+((xdir*width)/32),posY+dim+((ydir*height)/32)))
+        return;
+    	
     	posX+=xdir;
 		posY+=ydir;
 	
