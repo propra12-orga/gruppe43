@@ -20,6 +20,8 @@ import javax.swing.JRadioButton;
 
 public class Lautstärke extends JFrame {
 	
+	Sound sound;
+	
 	public static void main(String[] args){
 		new Lautstärke();
 	}
@@ -78,10 +80,10 @@ public class Lautstärke extends JFrame {
 	public class itemHandler implements ItemListener{
 
 		public void itemStateChanged(ItemEvent e) {
-			//if(b1.isSelected())
-				//Hier kommt die Funktion
-				//else if(b2.isSelected())
-					//Hier kommt die Funktion
+			if (b1.isSelected())
+				sound.soundOn();
+				else if(b2.isSelected())
+					sound.soundOff();
 		}
 	}
 	
