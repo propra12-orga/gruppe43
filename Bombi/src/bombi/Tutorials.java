@@ -29,7 +29,8 @@ public class Tutorials extends JFrame {
 		
 		setContentPane(new BackGroundPane("img/Bomberman.png"));
 		
-		setLocationRelativeTo(null);
+		setLocation
+		(250,500);
 		setSize(900,700);
 		setVisible(true);
 		setLayout(null);

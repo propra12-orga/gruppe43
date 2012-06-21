@@ -29,7 +29,7 @@ public class Einstellungen extends JFrame{
 		
 		setContentPane(new BackGroundPane("img/Bomberman.png"));
 		
-		setLocationRelativeTo(null);
+		setLocation(250,500);
 		setVisible(true);
 		setSize(900,700);
 		setLayout(null);
