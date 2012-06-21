@@ -60,9 +60,25 @@ public class Multiauswahl extends JFrame {
 	            }
 	        });
 	    
+        JButton button4 = new JButton("Zurück");
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame f = new JFrame();
+                
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f.setLocationRelativeTo(null);
+                
+                new Menu();
+                dispose();
+            	
+            }
+        });
+	    
 	    add(button1);
 	    add(button2);
 	    add(button3);
+	    add(button4);
 	    setVisible(true);
 	    
         Insets insets = getInsets();
@@ -73,7 +89,9 @@ public class Multiauswahl extends JFrame {
         		size.width+30,size.height+5);
         button3.setBounds(360+ insets.left, 350 + insets.top,
         		size.width+30,size.height+5);
-		
+		button4.setBounds(360+ insets.left, 385 + insets.top,
+				size.width+30,size.height+5);
+        
 	}
 		
 	    class BackGroundPane extends JPanel{
