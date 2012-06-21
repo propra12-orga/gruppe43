@@ -25,17 +25,38 @@ public class Steuerung extends JFrame {
 
 	FlowLayout layout = new FlowLayout();
 	
+	/**
+	 * Hier haben wir den Konstruktor
+	 * 
+	 */
+	
 	public Steuerung(){
 		super("Bomberman");
 		setLayout(layout);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setContentPane(new BackGroundPane("img/Bomberman.gif"));
+		setContentPane(new BackGroundPane("img/Bombermannnnn.jpg"));
 		
 		setVisible(true);
 		setSize(600,500);
+		//das fenster wird zentriert
 		setLocationRelativeTo(null);
+		
+		/**
+         * Indem man setLayout(null); eingibt kann 
+         * man den button eine bestimmte position
+         * das mit der funktion insets später
+         * ausgeführt wird
+         */
 		setLayout(null);
+		
+        /**
+         * Ab hier fangen die Buttons an.
+         * Die Buttons werden ausgeführt von der funktion
+         * ActionEvent.
+         * ActionListener implementiert das Interface und
+         * bekommt die Events(ActionEvent) übergeben.
+         */
 		
         JButton button2 = new JButton("Zurück");
         button2.addActionListener(new ActionListener() {
@@ -52,12 +73,23 @@ public class Steuerung extends JFrame {
             }
         });
         
+        /*
+         * Hier werden die Buttons auf dem fenster eingefügt.
+         */       
+        
         add(button2);
         setVisible(true);
         
+        /**
+         * Mit insets kann man den buttons eine bestimmte
+         * position geben.
+         * In zusammenhang mit Dimension size kann man die
+         * breite und höhe der buttons ändern.
+         */
+        
         Insets insets = getInsets();
         Dimension size = button2.getPreferredSize();
-        button2.setBounds(245+ insets.left, 300 + insets.top,
+        button2.setBounds(245+ insets.left, 360 + insets.top,
         		size.width+30,size.height+5);
 
 	}
@@ -69,6 +101,7 @@ public class Steuerung extends JFrame {
 		BackGroundPane(String imagefile) {
     		if (imagefile != null) {
     			MediaTracker mt = new MediaTracker(this);
+    			//Liefert das aktuelle Toolkit zurück
     			img = Toolkit.getDefaultToolkit().getImage(imagefile);
     			mt.addImage(img, 0);
     			try{
@@ -78,6 +111,12 @@ public class Steuerung extends JFrame {
     			}
     		}
     	}
+		
+		/**
+		 * Mit protected kann keine andere Klasse in der Klasse
+		 * zugreifen,doch die Klasse selber kann mit einer
+		 * Unterklasse auf andere Klassen zugreifen.
+		 */
     	protected void paintComponent(Graphics g){
     		super.paintComponent(g);
     		g.drawImage(img,0,0,this.getWidth(),this.getHeight(),this);
