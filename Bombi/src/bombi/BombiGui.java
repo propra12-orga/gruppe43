@@ -171,7 +171,7 @@ public class BombiGui extends JComponent implements Runnable {
     // SoundManager instanz (Audios einlesen)
     SoundManager playAudio = new SoundManager() {
         public void initSounds() {
-            sounds.add(new Sound("Exit", Sound.getURL("/Exit.wav")));
+            sounds.add(new Sound("End", Sound.getURL("/End.wav")));
             sounds.add(new Sound("Bumm", Sound.getURL("/Bumm.wav")));
             sounds.add(new Sound("Put", Sound.getURL("/Put.wav")));
             sounds.add(new Sound("Step", Sound.getURL("/Step.wav")));
@@ -248,7 +248,15 @@ public class BombiGui extends JComponent implements Runnable {
             stepCount = 0;
         }
         if (player1.exit() || player1.dead())
+        	if(true){ playAudio.playSound("End");
+        		try{
+        			
+        			Thread.sleep(100000);
+        		}catch (Exception e) {
+        			e.printStackTrace();
+        		}
             return;
+        	}
         if (multiplayer && player2 != null)
             if (player2.exit() || player2.dead())
                 return;
