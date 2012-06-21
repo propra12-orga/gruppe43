@@ -115,6 +115,8 @@ public class Tutorials extends JFrame {
 	            }
 	        });
 	    
+
+	    
 		JButton button4 = new JButton("Tutorial4");
 	    button4.addActionListener(new ActionListener() {
 	        @Override
@@ -123,7 +125,7 @@ public class Tutorials extends JFrame {
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(false,4,frame);
+                BombiGui bGui = new BombiGui(false,5,frame);
                 frame.add(bGui);
                 frame.pack();
                 // passt die Gr��e dem Inhalt an
@@ -144,27 +146,6 @@ public class Tutorials extends JFrame {
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(false,5,frame);
-                frame.add(bGui);
-                frame.pack();
-                // passt die Gr��e dem Inhalt an
-
-                // zentriert das Fenster
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-                new Thread(bGui).start();
-                dispose();
-	            }
-	        });
-	    
-		JButton button6 = new JButton("Tutorial6");
-	    button6.addActionListener(new ActionListener() {
-	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	JFrame frame = new JFrame();
-                frame.setTitle("Bombi");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
                 BombiGui bGui = new BombiGui(false,6,frame);
                 frame.add(bGui);
                 frame.pack();
@@ -178,8 +159,8 @@ public class Tutorials extends JFrame {
 	            }
 	        });
 	    
-		JButton button7 = new JButton("Zurück");
-	    button7.addActionListener(new ActionListener() {
+		JButton button6 = new JButton("Zurück");
+	    button6.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
             	JFrame menu= new JFrame();
@@ -196,7 +177,6 @@ public class Tutorials extends JFrame {
 	    add(button4);
 	    add(button5);
 	    add(button6);
-	    add(button7);
 	    setVisible(true);
 	    
         //Mit insets kann man den buttons eine bestimmte
@@ -213,11 +193,9 @@ public class Tutorials extends JFrame {
         		size.width+30,size.height+5);
         button4.setBounds(305+ insets.left, 240 + insets.top,
         		size.width+30,size.height+5);
-        button5.setBounds(165+ insets.left, 280 + insets.top,
+        button5.setBounds(235+ insets.left, 280 + insets.top,
         		size.width+30,size.height+5);
-        button6.setBounds(305+ insets.left, 280 + insets.top,
-        		size.width+30,size.height+5);
-        button7.setBounds(235+ insets.left, 320 + insets.top,
+        button6.setBounds(235+ insets.left, 320 + insets.top,
         		size.width+30,size.height+5);
 		
 	}
