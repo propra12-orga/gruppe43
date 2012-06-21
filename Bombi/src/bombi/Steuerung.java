@@ -22,14 +22,15 @@ public class Steuerung extends JFrame {
 	public static void main(String[] args){
 		new Steuerung();
 	}
-
 	FlowLayout layout = new FlowLayout();
 	
 	/**
 	 * Hier haben wir den Konstruktor
-	 * 
+	 * Hier wird das Fenster erstellt,
+	 * die button hinzugefügt und mittels
+	 * ActionEvent wird eine Funktion
+	 * eingegeben.
 	 */
-	
 	public Steuerung(){
 		super("Bomberman");
 		setLayout(layout);
@@ -41,63 +42,48 @@ public class Steuerung extends JFrame {
 		setSize(600,500);
 		//das fenster wird zentriert
 		setLocationRelativeTo(null);
-		
-		/**
-         * Indem man setLayout(null); eingibt kann 
-         * man den button eine bestimmte position
-         * das mit der funktion insets später
-         * ausgeführt wird
-         */
+	
+		//Indem man setLayout(null); eingibt kann
+		//man den button eine bestimmte position
+		//das mit der funktion insets später
+		//ausgeführt wird
 		setLayout(null);
 		
-        /**
-         * Ab hier fangen die Buttons an.
-         * Die Buttons werden ausgeführt von der funktion
-         * ActionEvent.
-         * ActionListener implementiert das Interface und
-         * bekommt die Events(ActionEvent) übergeben.
-         */
-		
-        JButton button2 = new JButton("Zurück");
-        button2.addActionListener(new ActionListener() {
+		//Ab hier fangen die Buttons an.
+		//Die Buttons werden ausgeführt von der Funktion
+		//ActionEvent.
+		//ActionListener implementiert das Interface und
+		//bekommt die Events(AtionEvent) übergeben.
+        JButton button = new JButton("Zurück");
+        button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame f = new JFrame();
-                
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 f.setLocationRelativeTo(null);
-                
                 new Menu();
-                dispose();
-            	
+                dispose();            	
             }
         });
-        
-        /*
-         * Hier werden die Buttons auf dem fenster eingefügt.
-         */       
-        
-        add(button2);
+
+        //Hier werden die Buttons auf dem Fenster eingefügt.
+        add(button);
         setVisible(true);
         
-        /**
-         * Mit insets kann man den buttons eine bestimmte
-         * position geben.
-         * In zusammenhang mit Dimension size kann man die
-         * breite und höhe der buttons ändern.
-         */
-        
+        //Mit insets kann man den buttons eine bestimmte
+        //position geben.
+        //In zusammenhang mit Dimension size kan man die
+        //breite und höhe der buttons ändern.
         Insets insets = getInsets();
-        Dimension size = button2.getPreferredSize();
-        button2.setBounds(245+ insets.left, 360 + insets.top,
+        Dimension size = button.getPreferredSize();
+        button.setBounds(245+ insets.left, 360 + insets.top,
         		size.width+30,size.height+5);
 
 	}
 	
     class BackGroundPane extends JPanel{
     	Image img = null;
-    	
-		
+    		
 		BackGroundPane(String imagefile) {
     		if (imagefile != null) {
     			MediaTracker mt = new MediaTracker(this);
@@ -121,7 +107,5 @@ public class Steuerung extends JFrame {
     		super.paintComponent(g);
     		g.drawImage(img,0,0,this.getWidth(),this.getHeight(),this);
     	}
-        
-    
     }
 }

@@ -21,10 +21,13 @@ public class Menu extends JFrame{
     }
  
     FlowLayout layout = new FlowLayout();  
-/**
- * Hier haben wir den Konstruktor
- * 
- */
+	/**
+	 * Hier haben wir den Konstruktor
+	 * Hier wird das Fenster erstellt,
+	 * die button hinzugefügt und mittels
+	 * ActionEvent wird eine Funktion
+	 * eingegeben.
+	 */
     public Menu(){
         super("Bomberman");
         setLayout(layout);
@@ -36,44 +39,35 @@ public class Menu extends JFrame{
         setSize(600,500);
         //das fenster wird zentriert
         setLocationRelativeTo(null);
-        /**
-         * Indem man setLayout(null); eingibt kann 
-         * man den button eine bestimmte position
-         * das mit der funktion insets später
-         * ausgeführt wird
-         */
+        
+		//Indem man setLayout(null); eingibt kann
+		//man den button eine bestimmte position
+		//das mit der funktion insets später
+		//ausgeführt wird
         setLayout(null);
-        /**
-         * Ab hier fangen die Buttons an.
-         * Die Buttons werden ausgeführt von der funktion
-         * ActionEvent.
-         * ActionListener implementiert das Interface und
-         * bekommt die Events(ActionEvent) übergeben.
-         */
-
+        
+		//Ab hier fangen die Buttons an.
+		//Die Buttons werden ausgeführt von der Funktion
+		//ActionEvent.
+		//ActionListener implementiert das Interface und
+		//bekommt die Events(AtionEvent) übergeben.
         JButton start = new JButton("Einzelspieler");
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                     JFrame frame = new JFrame();
-                    
                     frame.setTitle("Bombi");
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     
                     BombiGui bGui = new BombiGui(frame);
-                    
                     frame.add(bGui);
                     frame.pack();
                     // passt die Gr��e dem Inhalt an
 
                     // zentriert das Fenster
                     frame.setLocationRelativeTo(null);
-
                     frame.setVisible(true);
-                    
                     new Thread(bGui).start();
-                    
                     dispose();
             }
         });
@@ -83,12 +77,9 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame f = new JFrame();
-                
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
                 new Multiauswahl();
                 dispose();
-                
             }
         });
         
@@ -97,12 +88,9 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
             	JFrame tut= new JFrame();
-            	
             	tut.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            	
             	new Tutorials();
                 dispose();
-                
             }
         });
         
@@ -111,15 +99,11 @@ public class Menu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
             	JFrame steue= new JFrame();
-            	
             	steue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            	
             	new Steuerung();
                 dispose();
-                
             }
         });
-        
 
         JButton close = new JButton("Schließen");
         close.addActionListener(new ActionListener() {
@@ -128,9 +112,8 @@ public class Menu extends JFrame{
                 System.exit(0);
             }
         });
- /*
-  * Hier werden die Buttons auf dem fenster eingefügt.
-  */
+        
+        //Hier werden die Buttons auf dem Fenster eingefügt.
         add(start);
         add(button1);
         add(button2);
@@ -138,33 +121,27 @@ public class Menu extends JFrame{
         add(close);
         setVisible(true);
 
-        /**
-         * Mit insets kann man den buttons eine bestimmte
-         * position geben.
-         * In zusammenhang mit Dimension size kann man die
-         * breite und höhe der buttons ändern.
-         */
-        
+        //Mit insets kann man den buttons eine bestimmte
+        //position geben.
+        //In zusammenhang mit Dimension size kan man die
+        //breite und höhe der buttons ändern.
         Insets insets = getInsets();
         Dimension size = start.getPreferredSize();
-        start.setBounds(225+ insets.left, 220 + insets.top,
+        start.setBounds(220+ insets.left, 200 + insets.top,
         		size.width+30,size.height+5);
-        button1.setBounds(225+ insets.left, 255 + insets.top,
+        button1.setBounds(220+ insets.left, 235 + insets.top,
         		size.width+30,size.height+5);
-        button2.setBounds(225+ insets.left, 290 + insets.top,
+        button2.setBounds(220+ insets.left, 270 + insets.top,
         		size.width+30,size.height+5);
-        button3.setBounds(225+ insets.left,325+ insets.top,
+        button3.setBounds(220+ insets.left,305+ insets.top,
         		size.width+30,size.height+5);
-        close.setBounds(225+ insets.left, 360+ insets.top,
+        close.setBounds(220+ insets.left, 340+ insets.top,
         		size.width+30,size.height+5);
-
-
     }
 
     class BackGroundPane extends JPanel{
     	Image img = null;
     	
-		
 		BackGroundPane(String imagefile) {
     		if (imagefile != null) {
     			MediaTracker mt = new MediaTracker(this);

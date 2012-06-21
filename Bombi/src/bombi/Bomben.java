@@ -181,7 +181,7 @@ public class Bomben {
                     breakleft = 1;
                     player.addpoints();
                 }
-            } player.playAudio.playSound("Bumm"); // sound abspielen
+             } player.playAudio.playSound("Bumm"); // sound abspielen
         } else if (radiusDelayCounter > 0)
             radiusDelayCounter--;
         else {
