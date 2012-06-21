@@ -279,8 +279,11 @@ public class Texture {
     
     public static Texture ITEMFIRE1 = new Texture(96, 0, 32, 32);
     public static Texture ITEMFIRE2 = new Texture(128, 0, 32, 32);
+    public static Texture[] ITEMFIRE = {ITEMFIRE1, ITEMFIRE2};
+    
     public static Texture ITEMBOMBUP1 = new Texture(32, 32, 32, 32);
     public static Texture ITEMBOMBUP2 = new Texture(64, 32, 32, 32);
+    public static Texture[] ITEMBOMBUP = {ITEMBOMBUP1, ITEMBOMBUP2};
     
 
     // Abwaertskompatibilitaet

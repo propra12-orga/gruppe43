@@ -48,7 +48,29 @@ public class BombermanLevel {
      * Mauer liegender Ausgang interpretiert wird.
      */
     public static final short HIDDENEXIT = 4;
-
+    /**
+     * Wert (ohne D, B oder F Flag), welcher als Powerup interpretiert wird,
+     * welches die maximale Anzahl an legbaren Bomben um eins erhoeht.
+     */
+    public static final short BOMBPLUS = 5;
+    private static final float BOPLPROB = 0.2f;
+    /**
+     * Wert (ohne D, B oder F Flag), welcher als Powerup interpretiert wird,
+     * welches die Reichweite der Bomben erhoeht.
+     */
+    public static final short FIREPLUS = 6;
+    private static final float FIPLPROB = 0.2f;
+    /**
+     * Wert (ohne D, B oder F Flag), welcher als Powerup interpretiert wird,
+     * welches den Spieler in Chuck Norris verwandelt.
+     */
+    public static final short CHUCKNORRIS = 7;
+    private static final float NORRISPROB = 0.01f;
+    
+    private static final byte ANIMDURATION = 20;
+    private static int animCounter = ANIMDURATION;
+    private static int animFrame = 0;
+    
     /**
      * Diese Methode ueberprueft lediglich, ob es sich bei einem Wert um einen
      * gueltigen Block handelt. Dabei werden nur die niedrigsten 6 Bit
@@ -381,16 +403,51 @@ public class BombermanLevel {
     private void destroyBlock(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height)
             return;
-        if ((tiles[posX][posY] & TILE) == STONE) {
+        short tile = getTile(posX, posY);
+        if (tile == STONE) {
             tiles[posX][posY] &= ~TILE;
-            tiles[posX][posY] |= GRASS;
+            // tiles[posX][posY] |= GRASS;
+            tiles[posX][posY] |= spawnPowerup();
             markForUpdate(posX, posY); // moechten Aenderung sehen
-        } else if ((tiles[posX][posY] & TILE) == HIDDENEXIT) {
+        } else if (tile == HIDDENEXIT) {
             tiles[posX][posY] &= ~TILE;
             tiles[posX][posY] |= EXIT;
             markForUpdate(posX, posY);
         }
+        else if (tile == BOMBPLUS || tile == FIREPLUS){
+            tiles[posX][posY] &= ~TILE;
+            tiles[posX][posY] |= GRASS;
+            markForUpdate(posX, posY);
+        }
         // addFire(posX, posY);
+    }
+    
+    /*
+     * Kleine Hilfsmethode, welche zufaellig ein Powerup (oder eben nicht)
+     * zurueck gibt. Rueckgabewert ist entweder ein Powerup oder ein
+     * Gras-Block.
+     */
+    private static final short spawnPowerup(){
+    	if(Math.random() <= BOPLPROB)
+    		return BOMBPLUS;
+    	if(Math.random() <= FIPLPROB)
+    		return FIREPLUS;
+    	//if(Math.random() <= NORRISPROB)
+    	//	return CHUCKNORRIS;
+    	return GRASS;
+    }
+    
+    /**
+     * Diese Methode updatet das BombermanLevel. Im Moment beschraenkt
+     * sich dieses Update darauf, die Animationen fuer Powerups zu
+     * aktualisieren.
+     */
+    public void update(){
+    	animCounter--;
+    	if(animCounter <= 0){
+    		animCounter = ANIMDURATION;
+    		animFrame = (animFrame + 1) % Texture.ITEMBOMBUP.length;
+    	}
     }
 
     /**
@@ -427,6 +484,12 @@ public class BombermanLevel {
 
                     else if (currentTile == EXIT)
                         drawExit(i, j, g);
+                    
+                    else if (currentTile == BOMBPLUS)
+                    	drawBombPlus(i, j, g);
+                    
+                    else if (currentTile == FIREPLUS)
+                    	drawFirePlus(i, j, g);
                 }
             }
         }
@@ -451,6 +514,14 @@ public class BombermanLevel {
 
     private void drawExit(int posX, int posY, Graphics g) {
         Texture.EXIT.draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
+    }
+    
+    private void drawBombPlus(int posX, int posY, Graphics g) {
+        Texture.ITEMBOMBUP[animFrame].draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
+    }
+    
+    private void drawFirePlus(int posX, int posY, Graphics g) {
+        Texture.ITEMFIRE[animFrame].draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
     }
 
     // //////////////////////////////////////////////////////////////////////
