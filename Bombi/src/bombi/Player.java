@@ -188,7 +188,8 @@ public class Player{
     	return;
     	if(l.isSolidByPixel(posX+dim+((xdir*width)/32),posY+dim+((ydir*height)/32)))
         return;
-    	
+    	if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+dim+((ydir*height)/32)))
+            return;
     	posX+=xdir;
 		posY+=ydir;
 	
