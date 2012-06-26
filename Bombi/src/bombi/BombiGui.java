@@ -4,13 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
@@ -43,10 +41,9 @@ public class BombiGui extends JComponent implements Runnable {
     private List<Bomben> bombsP2;
 
     private boolean multiplayer;
-    Player player1, player2;
+    Player player1,player2;
     BombermanLevel bLevel;
     Robot robot;
-
     int fps = 0; // wird durch den main-loop gesetzt
 
     public BombiGui(boolean multiplayer) {
@@ -59,12 +56,11 @@ public class BombiGui extends JComponent implements Runnable {
         addKeyListener(keyPoller);
 
         // erzeuge immer den ersten Spieler
-        player1 = new Player(bLevel, bLevel.getTileDim(), bLevel.getTileDim());
+        player1 = new Player(bLevel, bLevel.getTileDim(), bLevel.getTileDim()-2);
         this.multiplayer = multiplayer;
         if (multiplayer)// den Zweiten nur fuer MP
-            player2 = new Player(bLevel, bLevel.getTileDim()
-                    * (bLevel.getWidth() - 2), bLevel.getTileDim()
-                    * (bLevel.getHeight() - 2));
+            player2 = new Player(bLevel, 554, 257);
+        
         bombsP1 = new ArrayList<Bomben>();
         bombsP2 = new ArrayList<Bomben>();
         setFocusable(true);
@@ -81,7 +77,7 @@ public class BombiGui extends JComponent implements Runnable {
             bLevel = new BombermanLevel(LevelParser.parseMap(pathToMap), width,
                     height);
         } catch (Exception e) {
-            bLevel = new BombermanLevel(15, 9, width, height);
+            bLevel = new BombermanLevel(31, 23, width, height);
         }
     }
 
@@ -103,6 +99,24 @@ public class BombiGui extends JComponent implements Runnable {
      * nächste Bild gemalt wird.
      */
     public void paintBuffer() {
+
+        if (player1.exit())
+            gameG.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
+        if (player1.dead()) {
+            gameG.drawString("Spieler1 wurden von einer Bombe getötet. ", 300,
+                    250);
+            return;
+        }
+        if (multiplayer && player2 != null) {
+            if (player2.exit())
+                gameG.drawString("Spieler 2 ... hat gewonnen!", 400, 300);
+            if (player2.dead()) {
+                gameG.drawString("Spieler2 wurden von einer Bombe getötet. ",
+                        300, 250);
+                return;
+            }
+        }
+
         // zeichne das Lvel
         bLevel.draw(gameG);
 
@@ -110,29 +124,17 @@ public class BombiGui extends JComponent implements Runnable {
         for (int i = 0; i < bombsP1.size(); i++) {
             bombsP1.get(i).draw(gameG);
         }
-        // zeichne die Bombe für Spieler 2
+     // zeichne die Bombe für Spieler 2
         for (int i = 0; i < bombsP2.size(); i++) {
             bombsP2.get(i).draw(gameG);
         }
 
-        // zeichne den Spieler
+        // zeichne zuletzt den Spieler
         player1.draw(gameG);
+        
         if (multiplayer && player2 != null)
             player2.draw(gameG);
 
-        if (player1.exit())
-            gameG.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
-        if (player1.dead())
-            gameG.drawString("Spieler1 wurden von einer Bombe getötet. ", 300,
-                    250);
-        if (multiplayer && player2 != null) {
-            if (player2.exit())
-                gameG.drawString("Spieler 2 ... hat gewonnen!", 400, 300);
-            if (player2.dead())
-                gameG.drawString("Spieler2 wurden von einer Bombe getötet. ",
-                        300, 250);
-        }
-        
         dbg.setColor(Color.BLACK);
         dbg.fillRect(0, 0, width, height);
         dbg.drawImage(gameImage, (width - gameWidth) / 2,
@@ -173,6 +175,8 @@ public class BombiGui extends JComponent implements Runnable {
             sounds.add(new Sound("Put", Sound.getURL("/Put.wav")));
             sounds.add(new Sound("Step", Sound.getURL("/Step.wav")));
             sounds.add(new Sound("Fight", Sound.getURL("/Fight.wav")));
+            sounds.add(new Sound("Pickup", Sound.getURL("/Pickup.wav")));
+            
         }
     };
 
@@ -246,7 +250,7 @@ public class BombiGui extends JComponent implements Runnable {
         }
         if (player1.exit() || player1.dead())
         	if(true){ playAudio.playSound("End");
-        	try{
+        		try{
         			
         			Thread.sleep(100000);
         		}catch (Exception e) {
@@ -260,10 +264,9 @@ public class BombiGui extends JComponent implements Runnable {
 
         handleKeyboard();
         updateBombs();
-        bLevel.update();
     }
 
-	private void rescale() {
+    private void rescale() {
         width = getWidth();
         height = getHeight();
         dbg.dispose();
@@ -274,35 +277,34 @@ public class BombiGui extends JComponent implements Runnable {
 
     private void handleKeyboard() {
         // Ueberpruefe Tastatureingaben player 1
-	    if(!player1.dead()){
-    		if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-	            player1.Direction(-bLevel.getTileDim() / stepsize, 0);
-	            stepCount++;
-	        } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-	            player1.Direction(bLevel.getTileDim() / stepsize, 0);
-	            stepCount++;
-	        }
-	        if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-	            player1.Direction(0, -bLevel.getTileDim() / stepsize);
-	            stepCount++;
-	        } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-	            player1.Direction(0, bLevel.getTileDim() / stepsize);
-	            stepCount++;
-	        } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
-	            playAudio.playSound("Put");
-	            int posX = player1.getPosX();
-	            int posY = player1.getPosY();
-	            if (!bLevel.hasBombByPixel(posX, posY) && player1.bombplantable()) {
-	                bombsP1.add(new Bomben(posX, posY, player1.maxradius(), bLevel));
-	                player1.addcurrentbombs();
-	            }
-	            // bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2,
-	            // bLevel));
-	        }
-    	}
+        if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
+            player1.Direction(-bLevel.getTileDim() / stepsize, 0);
+            stepCount++;
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
+            player1.Direction(bLevel.getTileDim() / stepsize, 0);
+            stepCount++;
+        }
+        if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
+            player1.Direction(0, -bLevel.getTileDim() / stepsize);
+            stepCount++;
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
+            player1.Direction(0, bLevel.getTileDim() / stepsize);
+            stepCount++;
+        } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
+            playAudio.playSound("Put");
+            int posX = player1.getPosX();
+            int posY = player1.getPosY();
+            if (!bLevel.hasBombByPixel(posX, posY) && player1.bombplantable()) {
+                bombsP1.add(new Bomben(posX, posY, player1.maxradius(), bLevel));
+                player1.addcurrentbombs();
+            }
+            // bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2,
+            // bLevel));
+        }
 
         if (multiplayer && player2 != null) {
-
+        	if((player1.getPosX()==player2.getPosX())&&(player1.getPosY()==player2.getPosY()))
+        		return;
             if (keyPoller.isKeyDown(KeyEvent.VK_A)) {
                 player2.Direction(-bLevel.getTileDim() / stepsize, 0);
                 stepCount++;
