@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="17" version="2.0">
+<workbench progressCount="15" version="2.0">
 <workbenchAdvisor/>
 <window height="744" maximized="true" width="768" x="357" y="24">
 <fastViewData fastViewLocation="1024"/>
@@ -31,21 +31,36 @@
 <part id="0"/>
 <part id="1"/>
 <part id="2"/>
+<part id="3"/>
+<part id="4"/>
+<part id="5"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Menu.java" partName="Menu.java" path="/home/tsilvi/gruppe43/Bombi/src/bombi/Menu.java" title="Menu.java" tooltip="Bombi/src/bombi/Menu.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Menu.java" partName="Menu.java" path="/home/harry/GruppeCG/Bombi/src/bombi/Menu.java" title="Menu.java" tooltip="Bombi/src/bombi/Menu.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Menu.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="40" selectionTopPixel="34"/>
+<editorState selectionHorizontalPixel="0" selectionLength="593" selectionOffset="2073" selectionTopPixel="730"/>
 </editor>
 <editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Einstellungen.java" partName="Einstellungen.java" path="/home/tsilvi/gruppe43/Bombi/src/bombi/Einstellungen.java" title="Einstellungen.java" tooltip="Bombi/src/bombi/Einstellungen.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Einstellungen.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="158" selectionTopPixel="119"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Tutorials.java" partName="Tutorials.java" path="/home/tsilvi/gruppe43/Bombi/src/bombi/Tutorials.java" title="Tutorials.java" tooltip="Bombi/src/bombi/Tutorials.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Tutorials.java" partName="Tutorials.java" path="/home/harry/GruppeCG/Bombi/src/bombi/Tutorials.java" title="Tutorials.java" tooltip="Bombi/src/bombi/Tutorials.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Tutorials.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3234" selectionTopPixel="1572"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5347" selectionTopPixel="2924"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" partName="BombiGui.java" path="/home/harry/GruppeCG/Bombi/src/bombi/BombiGui.java" title="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/BombiGui.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="38" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Player.java" partName="Player.java" path="/home/harry/GruppeCG/Bombi/src/bombi/Player.java" title="Player.java" tooltip="Bombi/src/bombi/Player.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/Player.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermanLevel.java" partName="BombermanLevel.java" path="/home/harry/GruppeCG/Bombi/src/bombi/BombermanLevel.java" title="BombermanLevel.java" tooltip="Bombi/src/bombi/BombermanLevel.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Bombi/src/bombi/BombermanLevel.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="612"/>
 </editor>
 </editors>
 <views>
@@ -56,7 +71,7 @@
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
 <category IMemento.internal.id="Errors"/>
-<category IMemento.internal.id="Warnings"/>
+<category IMemento.internal.id="Warnings (18 items)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="105" org.eclipse.ui.ide.markerType="105" org.eclipse.ui.ide.pathField="140" org.eclipse.ui.ide.resourceField="105" org.eclipse.ui.ide.severityAndDescriptionField="350"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -234,8 +249,13 @@
 <view id="org.eclipse.jdt.ui.JavadocView"/>
 <view id="org.eclipse.jdt.ui.SourceView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
-<view id="org.eclipse.ui.views.ContentOutline"/>
-<fastViewBars/>
+<fastViewBars>
+<fastViewBar fastViewLocation="131072" id="right" orientation="512" selectedTabId="org.eclipse.ui.views.ContentOutline" style="0">
+<fastViews>
+<view id="org.eclipse.ui.views.ContentOutline" ratio="0.3"/>
+</fastViews>
+</fastViewBar>
+</fastViewBars>
 <layout>
 <mainWindow>
 <info folder="true" part="left">
@@ -276,13 +296,11 @@
 </folder>
 </info>
 <info folder="true" part="right" ratio="0.8081448" ratioLeft="893" ratioRight="212" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<folder appearance="2" expanded="0">
+<page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </mainWindow>
@@ -292,159 +310,165 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Menu.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Tutorials.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Einstellungen.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Menu.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombiGui.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/Player.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/Bombi/map/tut4.map"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/Bombi/map/tut5.map"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Bombi/src/bombi/BombermanLevel.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/Bombi/map/tut6.map"/>
 </editors>
-<item historyLabel="Menu.java" index="0">
-<position info="not_deleted" x="4852" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Menu.java" index="0">
-<position info="not_deleted" x="40" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3946" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="414" y="6"/>
-</item>
-<item historyLabel="Einstellungen.java" index="2">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3950" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="455" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3946" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3946" y="0"/>
-</item>
-<item historyLabel="Einstellungen.java" index="2">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3946" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3946" y="0"/>
-</item>
-<item historyLabel="Einstellungen.java" index="2">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3946" y="0"/>
-</item>
-<item historyLabel="Einstellungen.java" index="2">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3941" y="0"/>
-</item>
-<item historyLabel="Einstellungen.java" index="2">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="3941" y="0"/>
-</item>
-<item historyLabel="Einstellungen.java" index="2">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="702" y="0"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
-<position info="not_deleted" x="4" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
-<position info="not_deleted" x="702" y="0"/>
-</item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="3941" y="0"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
+<item historyLabel="Einstellungen.java" index="1">
 <position info="not_deleted" x="792" y="219"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="3941" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="2503" y="0"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
+<item historyLabel="Einstellungen.java" index="1">
 <position info="not_deleted" x="1830" y="1100"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="2503" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="645" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="82" y="0"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
+<item historyLabel="Einstellungen.java" index="1">
 <position info="not_deleted" x="580" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="14" y="0"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
+<item historyLabel="Einstellungen.java" index="1">
 <position info="not_deleted" x="14" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="14" y="0"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
+<item historyLabel="Einstellungen.java" index="1">
 <position info="not_deleted" x="14" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="14" y="0"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
+<item historyLabel="Einstellungen.java" index="1">
 <position info="not_deleted" x="14" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="14" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="463" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="667" y="14"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
+<item historyLabel="Einstellungen.java" index="1">
 <position info="not_deleted" x="2631" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="667" y="14"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="3316" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="3325" y="14"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="299" y="0"/>
 </item>
-<item historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="667" y="14"/>
 </item>
-<item historyLabel="Einstellungen.java" index="2">
+<item historyLabel="Einstellungen.java" index="1">
 <position info="not_deleted" x="158" y="0"/>
 </item>
-<item active="true" historyLabel="Tutorials.java" index="1">
+<item historyLabel="Tutorials.java" index="0">
 <position info="not_deleted" x="667" y="14"/>
+</item>
+<item historyLabel="Menu.java" index="2">
+<position info="not_deleted" x="3129" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="3">
+<position info="not_deleted" x="3025" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="2">
+<position info="not_deleted" x="3129" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="2">
+<position info="not_deleted" x="2073" y="593"/>
+</item>
+<item historyLabel="Tutorials.java" index="0">
+<position info="not_deleted" x="1179" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="2">
+<position info="not_deleted" x="2073" y="593"/>
+</item>
+<item historyLabel="Tutorials.java" index="0">
+<position info="not_deleted" x="5347" y="0"/>
+</item>
+<item historyLabel="Menu.java" index="2">
+<position info="not_deleted" x="2073" y="593"/>
+</item>
+<item historyLabel="BombiGui.java" index="3">
+<position info="not_deleted" x="3025" y="0"/>
+</item>
+<item historyLabel="Player.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="3">
+<position info="not_deleted" x="3025" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="3">
+<position/>
+</item>
+<item historyLabel="Player.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="3">
+<position info="not_deleted" x="6849" y="0"/>
+</item>
+<item historyLabel="tut4.map" index="5">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="tut5.map" index="6">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="tut4.map" index="5">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="3">
+<position info="not_deleted" x="7728" y="0"/>
+</item>
+<item historyLabel="BombiGui.java" index="3">
+<position info="not_deleted" x="6143" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="7">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="tut6.map" index="8">
+<position info="not_deleted" x="234" y="0"/>
+</item>
+<item historyLabel="BombermanLevel.java" index="7">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="BombiGui.java" index="3">
+<position info="not_deleted" x="6143" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -452,6 +476,9 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="right"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -463,14 +490,29 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="tut6.map" tooltip="Bombi/map/tut6.map">
+<persistable path="/Bombi/map/tut6.map"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombermanLevel.java" tooltip="Bombi/src/bombi/BombermanLevel.java">
+<persistable path="/Bombi/src/bombi/BombermanLevel.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="tut5.map" tooltip="Bombi/map/tut5.map">
+<persistable path="/Bombi/map/tut5.map"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="tut4.map" tooltip="Bombi/map/tut4.map">
+<persistable path="/Bombi/map/tut4.map"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Player.java" tooltip="Bombi/src/bombi/Player.java">
+<persistable path="/Bombi/src/bombi/Player.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java">
+<persistable path="/Bombi/src/bombi/BombiGui.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Tutorials.java" tooltip="Bombi/src/bombi/Tutorials.java">
 <persistable path="/Bombi/src/bombi/Tutorials.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Einstellungen.java" tooltip="Bombi/src/bombi/Einstellungen.java">
 <persistable path="/Bombi/src/bombi/Einstellungen.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BombiGui.java" tooltip="Bombi/src/bombi/BombiGui.java">
-<persistable path="/Bombi/src/bombi/BombiGui.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="test.map" tooltip="Bombi/map/test.map">
 <persistable path="/Bombi/map/test.map"/>

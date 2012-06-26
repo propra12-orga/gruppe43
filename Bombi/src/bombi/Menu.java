@@ -63,7 +63,7 @@ public class Menu extends JFrame{
                     
                     new Thread(bGui).start();
                     
-                    setVisible(false);
+                    dispose();
             }
         });
         
@@ -76,7 +76,7 @@ public class Menu extends JFrame{
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(true);
+                BombiGui bGui = new BombiGui(true,0);
                 
                 frame.add(bGui);
                 frame.pack();
@@ -89,7 +89,7 @@ public class Menu extends JFrame{
                 
                 new Thread(bGui).start();
                 
-                setVisible(false);
+                dispose();
                 
             }
         });
@@ -98,6 +98,14 @@ public class Menu extends JFrame{
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	JFrame tut= new JFrame();
+            	
+
+            	tut.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+            	
+            	new Tutorials();
+                dispose();
                 
             }
         });

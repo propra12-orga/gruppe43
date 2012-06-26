@@ -45,22 +45,50 @@ public class BombiGui extends JComponent implements Runnable {
     BombermanLevel bLevel;
     Robot robot;
     int fps = 0; // wird durch den main-loop gesetzt
+    int tutmsg;
 
-    public BombiGui(boolean multiplayer) {
+    public BombiGui(boolean multiplayer, int tut) {
         super();
-        initializeLevel("/test.map");
-        initializeGraphics();
+        if (tut==1){
+        	initializeLevel("/tut1.map");
+        	initializeGraphics();
+        	tutmsg=1;
+        } else if(tut==2){
+        	initializeLevel("/tut2.map");
+        	initializeGraphics();
+        	tutmsg=2;
+        }else if(tut==3){
+        	initializeLevel("/tut3.map");
+        	initializeGraphics();
+        	tutmsg=3;
+        }else if(tut==4){
+        	initializeLevel("/tut4.map");
+        	initializeGraphics();
+        	tutmsg=4;
+        }else if(tut==5){
+        	initializeLevel("/tut5.map");
+        	initializeGraphics();
+        	tutmsg=5;
+        }else if(tut==6){
+        	initializeLevel("/tut6.map");
+        	initializeGraphics();
+        	tutmsg=6;
+        } else
+        	initializeLevel("/nomap.map");
+        	initializeGraphics();
+        
 
         // erzeuge unseren KeyPoller
         keyPoller = new KeyPoller();
         addKeyListener(keyPoller);
 
         // erzeuge immer den ersten Spieler
-        player1 = new Player(bLevel, bLevel.getTileDim(), bLevel.getTileDim()-2);
+        player1 = new Player(bLevel, bLevel.getTileDim(), bLevel.getTileDim());
         this.multiplayer = multiplayer;
         if (multiplayer)// den Zweiten nur fuer MP
-            player2 = new Player(bLevel, 554, 257);
-        
+            player2 = new Player(bLevel, bLevel.getTileDim()
+                    * (bLevel.getWidth() - 2), bLevel.getTileDim()
+                    * (bLevel.getHeight() - 2));
         bombsP1 = new ArrayList<Bomben>();
         bombsP2 = new ArrayList<Bomben>();
         setFocusable(true);
@@ -68,8 +96,9 @@ public class BombiGui extends JComponent implements Runnable {
         playAudio.playSound("Fight");
     }
 
+
     public BombiGui() {
-        this(false);
+        this(false,0);
     }
 
     private void initializeLevel(String pathToMap) {
@@ -116,7 +145,8 @@ public class BombiGui extends JComponent implements Runnable {
                 return;
             }
         }
-
+       
+        	
         // zeichne das Lvel
         bLevel.draw(gameG);
 
@@ -142,6 +172,27 @@ public class BombiGui extends JComponent implements Runnable {
         // zeige fps an
         dbg.setColor(Color.ORANGE);
         dbg.drawString(fps + "FPS", this.getWidth() - 50, 20);
+       
+        // Zeichnet die Nachrichten fürs Tutorial
+        if (tutmsg==1)
+        	dbg.drawString("Bewege dich mit den Pfeiltasten und laufe zum Ausgang.", 100,this.getHeight()-50);
+        if (tutmsg==2)
+        	dbg.drawString("Die Steine die du siehst, können nicht zerstört werden. Finde einen Weg zum Ausgang.", 50,this.getHeight()-50);
+        if (tutmsg==3){
+        	dbg.drawString("Zerstörbare Blöcke versperren dir den Weg.Lege eine Bombe neben den Steinen ", 100,this.getHeight()-50);
+    	    dbg.drawString("mit der Leertasteund geh in Deckung. Laufe dann zum Ausgang.", 100,this.getHeight()-30);}
+        if (tutmsg==4){ 
+        	dbg.drawString("Vorsicht! Komme den Gegnern nicht zu nah. Sobald sie dich berühren stirbst du.", 100,this.getHeight()-50);
+	        dbg.drawString("Weiche ihnen aus zum laufe zum Ausgang.", 100,this.getHeight()-30);}
+        if (tutmsg==5){
+        	dbg.drawString("Du kannst deine Bomben mit Kettenreaktionen zum explodieren bringen. Das Explosionsfeuer", 30,this.getHeight()-50);
+            dbg.drawString("deiner Bombe bringen scharfe Bomben zur sofortigen explosion.Lege 2 Bomben gleichzeitig", 30,this.getHeight()-30);
+            dbg.drawString("hin und sprenge dir den Weg mit einer Kettenreaktion frei. Laufe dann zum Ausgang.", 30,this.getHeight()-10); }
+        if (tutmsg==6){
+        	dbg.drawString("Es gibt 3 Items im Spiel. Zusatzbombe: Erhöht die Anzahl der Bomben die du gleichzeitig legen kannst.",0,this.getHeight()-50);
+        	dbg.drawString("Sprengkraft: Erhöht den Explosionsradius deiner Bombe. Laufschuhe: Erhöhen deine", 0,this.getHeight()-30);
+            dbg.drawString("Laufgeschwindigkeit. Sammele alle Items ein und teste sie. Laufe dann zum Ausgang.", 0,this.getHeight()-10); }
+
     }
 
     private void gameDrawBuffer() {

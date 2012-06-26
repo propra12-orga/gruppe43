@@ -37,7 +37,25 @@ public class Tutorials extends JFrame {
 	    button1.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	                
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("Bombi");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new BombiGui(false,1);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
 	            }
 	        });
 	    
@@ -45,6 +63,27 @@ public class Tutorials extends JFrame {
 	    button2.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("Bombi");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new BombiGui(false,2);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
+	            
+	        	
 	                
 	            }
 	        });
@@ -53,6 +92,26 @@ public class Tutorials extends JFrame {
 	    button3.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("Bombi");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new BombiGui(false,3);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
+	        	
 	                
 	            }
 	        });
@@ -61,6 +120,25 @@ public class Tutorials extends JFrame {
 	    button4.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("Bombi");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new BombiGui(false,4);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
 	                
 	            }
 	        });
@@ -69,6 +147,25 @@ public class Tutorials extends JFrame {
 	    button5.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("Bombi");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new BombiGui(false,5);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
 	                
 	            }
 	        });
@@ -77,6 +174,25 @@ public class Tutorials extends JFrame {
 	    button6.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("Bombi");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new BombiGui(false,6);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
 	                
 	            }
 	        });
@@ -85,6 +201,14 @@ public class Tutorials extends JFrame {
 	    button7.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+            	JFrame menu= new JFrame();
+            	
+
+            	menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+            	
+            	new Menu();
+                dispose();
 	                
 	            }
 	        });
