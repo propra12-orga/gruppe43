@@ -47,7 +47,7 @@ public class Player{
     	this.l=l;
         posX = x;
         posY = y;
-        width = height = i;
+        width = height = i; 
 		
     }
   
@@ -110,7 +110,7 @@ public class Player{
 	 * Getter fuer x-Position
 	 */
     public int getPosX() {
-		return posX;
+		return posX+20;
 	}
 	/**
 	 *     
@@ -118,7 +118,7 @@ public class Player{
 	 * Getter fuer y-Position
 	 */
 	public int getPosY() {
-		return posY;
+		return posY+20;
 	}
 	
 	/**
