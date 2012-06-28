@@ -63,7 +63,14 @@ public class Einstellungen extends JFrame{
         button4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                JFrame f = new JFrame();
                 
+                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f.setLocationRelativeTo(null);
+                
+                new Menu();
+                dispose();
+            	
             }
         });
         

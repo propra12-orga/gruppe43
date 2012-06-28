@@ -74,7 +74,7 @@ public class BombiGui extends JComponent implements Runnable {
         	initializeGraphics();
         	tutmsg=6;
         } else
-        	initializeLevel("/nomap.map");
+        	initializeLevel("/test.map");
         	initializeGraphics();
         
 
@@ -346,7 +346,7 @@ public class BombiGui extends JComponent implements Runnable {
             int posX = player1.getPosX();
             int posY = player1.getPosY();
             if (!bLevel.hasBombByPixel(posX, posY) && player1.bombplantable()) {
-                bombsP1.add(new Bomben(posX, posY, player1.maxradius(), bLevel));
+                bombsP1.add(new Bomben((posX/bLevel.getTileDim())*bLevel.getTileDim(), (posY/bLevel.getTileDim())*bLevel.getTileDim(), player1.maxradius(), bLevel));
                 player1.addcurrentbombs();
             }
             // bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2,
@@ -374,7 +374,7 @@ public class BombiGui extends JComponent implements Runnable {
                 int posX = player2.getPosX();
                 int posY = player2.getPosY();
                 if (!bLevel.hasBombByPixel(posX, posY) && player2.bombplantable()) {
-                    bombsP2.add(new Bomben(posX, posY, player2.maxradius(), bLevel));
+                    bombsP2.add(new Bomben((posX/bLevel.getTileDim())*bLevel.getTileDim(), (posY/bLevel.getTileDim())*bLevel.getTileDim(), player2.maxradius(), bLevel));
                     player2.addcurrentbombs();
                 }
 
