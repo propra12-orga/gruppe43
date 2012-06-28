@@ -44,6 +44,7 @@ public class BombiGui extends JComponent implements Runnable {
     Player player1,player2;
     BombermanLevel bLevel;
     Robot robot;
+    Menu m;
     int fps = 0; // wird durch den main-loop gesetzt
     int tutmsg;
 
@@ -86,9 +87,10 @@ public class BombiGui extends JComponent implements Runnable {
         player1 = new Player(bLevel, bLevel.getTileDim(), bLevel.getTileDim());
         this.multiplayer = multiplayer;
         if (multiplayer)// den Zweiten nur fuer MP
-            player2 = new Player(bLevel, bLevel.getTileDim()
-                    * (bLevel.getWidth() - 2), bLevel.getTileDim()
-                    * (bLevel.getHeight() - 2));
+        	player2 = new Player(bLevel, bLevel.getTileDim()+520,(bLevel.getTileDim()-2)+222);
+           // player2 = new Player(bLevel, bLevel.getTileDim()
+             //       * (bLevel.getWidth() - 2), bLevel.getTileDim()
+               //     * (bLevel.getHeight() - 2));
         bombsP1 = new ArrayList<Bomben>();
         bombsP2 = new ArrayList<Bomben>();
         setFocusable(true);
@@ -106,7 +108,7 @@ public class BombiGui extends JComponent implements Runnable {
             bLevel = new BombermanLevel(LevelParser.parseMap(pathToMap), width,
                     height);
         } catch (Exception e) {
-            bLevel = new BombermanLevel(31, 23, width, height);
+            bLevel = new BombermanLevel(17, 9, width, height);
         }
     }
 
@@ -295,12 +297,35 @@ public class BombiGui extends JComponent implements Runnable {
         if (getWidth() != width || getHeight() != height)
             rescale();
 
+        if (player1.bombItem())
+        { player1.addmaxbomb();
+        	bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
+        }
+        
+        if (player1.explosionItem())
+        { player1.addradius();
+        	bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
+        }
+        
+        if (player2 != null && player2.bombItem())
+        { player2.addmaxbomb();
+        	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
+        }
+        
+        if (player2 != null && player2.explosionItem())
+        { player2.addradius();
+        	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
+        }
+        
         if (stepCount >= 10) {
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit() || player1.dead())
-        	if(true){ playAudio.playSound("End");
+        if (player1.exit() || player1.dead()) {
+        	if(true){ playAudio.playSound("End");{
+        	new Menu();
+        	}
+        	}
         		try{
         			
         			Thread.sleep(100000);
@@ -343,8 +368,8 @@ public class BombiGui extends JComponent implements Runnable {
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
             playAudio.playSound("Put");
-            int posX = player1.getPosX();
-            int posY = player1.getPosY();
+            int posX = player1.getPosXForBomb();
+            int posY = player1.getPosYForBomb();
             if (!bLevel.hasBombByPixel(posX, posY) && player1.bombplantable()) {
                 bombsP1.add(new Bomben((posX/bLevel.getTileDim())*bLevel.getTileDim(), (posY/bLevel.getTileDim())*bLevel.getTileDim(), player1.maxradius(), bLevel));
                 player1.addcurrentbombs();

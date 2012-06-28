@@ -2,20 +2,20 @@ package bombi;
 
 import java.util.ArrayList;
 /**
- * Diese Klasse Managed die Sound Dateien, indem sie in eine Liste gepackt werden kšnnen
- * Anhand des Namens kšnnen sie im 1mal-Modus, Schleifen-Modus und gestoppt werden
+ * Diese Klasse Managed die Sound Dateien, indem sie in eine Liste gepackt werden kï¿½nnen
+ * Anhand des Namens kï¿½nnen sie im 1mal-Modus, Schleifen-Modus und gestoppt werden
  * @author abuubaida
- * TODO Man muss noch Šnderungen bzgl. stoppen vornehmen
+ * TODO Man muss noch ï¿½nderungen bzgl. stoppen vornehmen
  */
 public abstract class SoundManager {
-	public ArrayList<Sound> sounds = new ArrayList();
+	public ArrayList<Sound> sounds = new ArrayList<Sound>();
 	public abstract void initSounds();
 //
 	public SoundManager() {
 		initSounds();
 	}
 /**
- * Sound zur Liste hinzufŸgen
+ * Sound zur Liste hinzufï¿½gen
  * @param sound
  */
 	public void addSound(Sound sound) {

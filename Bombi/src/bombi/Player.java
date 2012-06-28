@@ -16,14 +16,15 @@ public class Player{
 	Texture t = new Texture(192, 0, 32, 48);
 	BombermanLevel l;
 	Graphics g;
+	BombiGui bombi;
     private int health = 1; // Zustand fuer abfrage ob Spieler verloren(=0)hat
-    private int i = 40;		// Variable um posX,posY,width und height flexibel zuinitialisieren
+    private int i =40;		// Variable um posX,posY,width und height flexibel zuinitialisieren
     private int  posX, posY, width, height;
     private int maxradius=2;
-    private int maxbomb=4;
+    private int maxbomb=1;
     private int currentbombs=1;
     private int stepsize = 10;
-    BombiGui bombi;
+    
      
     /**
      * 
@@ -110,7 +111,11 @@ public class Player{
 	 * Getter fuer x-Position
 	 */
     public int getPosX() {
-		return posX+20;
+		return (posX);
+	}
+    
+    public int getPosXForBomb() {
+		return posX+l.getTileDim()/2;
 	}
 	/**
 	 *     
@@ -118,9 +123,12 @@ public class Player{
 	 * Getter fuer y-Position
 	 */
 	public int getPosY() {
-		return posY+20;
+		return (posY);
 	}
 	
+	public int getPosYForBomb() {
+		return posY+l.getTileDim()/2;
+	}
 	/**
 	 * Konstructor um Bomben-Daten fuer Kollision zu bekommen 
 	 * @param b
@@ -138,7 +146,13 @@ public class Player{
     	
     }
    
+    public boolean bombItem(){
+    	return l.getTileByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2)==5;
+    }
 	
+    public boolean explosionItem() {
+    	return l.getTileByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2)==6;
+    }
     /**
      * 
      * @param g Grafik erzeugen durch laden aus Texture Klasse
@@ -151,6 +165,9 @@ public class Player{
         
     }
   
+    public boolean playerHit(){
+    	return ((bombi.player1.getPosX()==bombi.player2.getPosX()) && (bombi.player1.getPosY()==bombi.player2.getPosY()));
+    }
     
     /**
      * Grafik erzeugen um anhand uebergebener Werte zu laden
@@ -160,11 +177,7 @@ public class Player{
 		if(health==1){t.draw(posX+11, posY, width/2, height, g);	
 		}    
     }
-    public boolean playerHit(){
-    	
-    	return ((bombi.player1.getPosX() == bombi.player2.getPosX())   && (bombi.player1.getPosY()==bombi.player2.getPosY()));
-    		
-    }
+    
     /**
      * 
      * @return
@@ -172,7 +185,7 @@ public class Player{
      * getTileByPixel und EXIT auf Gleichheit
      */
     public boolean exit(){
-    	return ((l.getTileByPixel(posX, posY)==BombermanLevel.EXIT));
+    	return ((l.getTileByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2)==BombermanLevel.EXIT));
     	
     }
     
@@ -190,7 +203,6 @@ public class Player{
     public void Direction(int xdir,int ydir) {
     	
         int dim = l.getTileDim();
-        
         if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+((dim*stepsize)/100)+ydir))
         return;
         if(l.isSolidByPixel(posX+  dim+((xdir*width)/32)   ,posY+  dim+((ydir*height)/32)))

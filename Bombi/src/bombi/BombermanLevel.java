@@ -378,8 +378,8 @@ public class BombermanLevel {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height)
             return true;
         short tile = getTile(posX, posY);
-        return (tile == INDESTRUCTIBLE || tile == STONE || tile == HIDDENEXIT || hasBomb(
-                posX, posY));
+        return (tile == INDESTRUCTIBLE || tile == STONE || tile == HIDDENEXIT); //|| hasBomb(
+                //posX, posY));
     }
 
     /**
