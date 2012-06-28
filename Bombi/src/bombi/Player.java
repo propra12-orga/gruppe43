@@ -18,12 +18,13 @@ public class Player{
 	Graphics g;
     private int health = 1; // Zustand fuer abfrage ob Spieler verloren(=0)hat
     private int i = 40;		// Variable um posX,posY,width und height flexibel zuinitialisieren
-    private int posX, posY, width, height;
+    private int  posX, posY, width, height;
     private int maxradius=2;
     private int maxbomb=4;
     private int currentbombs=1;
     private int stepsize = 10;
-   
+    
+     
     /**
      * 
      * @param l erzeugte BombermanLevel mit festen x,y Koordinaten werten
@@ -156,7 +157,7 @@ public class Player{
      * @param g
      */
     public void draw1(Graphics2D g) {
-		if(health==1){t.draw(posX, posY, width, height, g);	
+		if(health==1){t.draw(posX+11, posY, width/2, height, g);	
 		}    
     }
     
@@ -183,20 +184,35 @@ public class Player{
      */
   
     public void Direction(int xdir,int ydir) {
-    	int dim = l.getTileDim(); 
-    	if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+((dim*stepsize)/100)+ydir))
-    	return;
-    	if(l.isSolidByPixel(posX+dim+((xdir*width)/32),posY+dim+((ydir*height)/32)))
+    	
+        int dim = l.getTileDim();
+        System.out.println(dim);
+        if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+((dim*stepsize)/100)+ydir))
         return;
-    	if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+dim+((ydir*height)/32)))
-            return;
-    	posX+=xdir;
-		posY+=ydir;
+        if(l.isSolidByPixel(posX+  dim+((xdir*width)/32)   ,posY+  dim+((ydir*height)/32)))
+        return;
+        if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+  dim+((ydir*height)/32)))
+        return;
+        if(l.isSolidByPixel(posX+  dim+((xdir*width)/32)   ,posY+((dim*stepsize)/100)+ydir))
+        return;
+        posX+=xdir;
+        posY+=ydir;
+
+       
+       }
 	
-    
+    public void iconPosition(){
+    	if(l.getTileByPixel(posX, posY)==BombermanLevel.BOMBPLUS)
+    	playAudio.playSound("Pickup");
     }
-	
-    
+    // SoundManager instanz (Audios einlesen)
+    SoundManager playAudio = new SoundManager() {
+        public void initSounds() {
+            sounds.add(new Sound("Pickup", Sound.getURL("/Pickup.wav")));
+          
+        }
+    };
+
     
 	
 }
