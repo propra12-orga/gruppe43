@@ -11,7 +11,7 @@ import java.awt.Graphics2D;
  *
  */
 public class Player{
-	Player p;
+	Player p,p2;
 	Bomben b;
 	Texture t = new Texture(192, 0, 32, 48);
 	BombermanLevel l;
@@ -23,7 +23,7 @@ public class Player{
     private int maxbomb=4;
     private int currentbombs=1;
     private int stepsize = 10;
-    
+    BombiGui bombi;
      
     /**
      * 
@@ -145,7 +145,7 @@ public class Player{
      */
     public void draw(Graphics2D g) {
     	int dim = l.getTileDim(); 
-		if(health==1){Texture.SPIELER1.draw(posX, posY-dim/2, width, (height*3)/2, g);
+		if(health==1){Texture.PLAYER_IDLE_FRONT.draw(posX, posY-dim/2, width, (height*3)/2, g);
 			
 		}
         
@@ -160,7 +160,11 @@ public class Player{
 		if(health==1){t.draw(posX+11, posY, width/2, height, g);	
 		}    
     }
-    
+    public boolean playerHit(){
+    	
+    	return ((bombi.player1.getPosX() == bombi.player2.getPosX())   && (bombi.player1.getPosY()==bombi.player2.getPosY()));
+    		
+    }
     /**
      * 
      * @return
@@ -186,7 +190,7 @@ public class Player{
     public void Direction(int xdir,int ydir) {
     	
         int dim = l.getTileDim();
-        System.out.println(dim);
+        
         if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+((dim*stepsize)/100)+ydir))
         return;
         if(l.isSolidByPixel(posX+  dim+((xdir*width)/32)   ,posY+  dim+((ydir*height)/32)))
