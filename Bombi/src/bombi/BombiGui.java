@@ -292,6 +292,7 @@ public class BombiGui extends JComponent implements Runnable {
             sounds.add(new Sound("Step", Sound.getURL("/Step.wav")));
             sounds.add(new Sound("Fight", Sound.getURL("/Fight.wav")));
             sounds.add(new Sound("Pickup", Sound.getURL("/Pickup.wav")));
+            sounds.add(new Sound("Exit", Sound.getURL("/Exit.wav")));
             
         }
     };
@@ -384,11 +385,14 @@ public class BombiGui extends JComponent implements Runnable {
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit() || player1.dead()) {
-        	if(true){ playAudio.playSound("End");{
+        if (player1.exit()||player1.dead()) {
+        	{
+        	if(player1.exit()) playAudio.playSound("Exit");
+        	if(player1.dead()) playAudio.playSound("End");
+        	
         	new Menu();
         	}
-        	}
+        	
         		try{
         			
         			Thread.sleep(100000);
@@ -397,10 +401,15 @@ public class BombiGui extends JComponent implements Runnable {
         		}
             return;
         	}
-        if (multiplayer && player2 != null)
-            if (player2.exit() || player2.dead())
+        if (multiplayer && player2 != null){
+            if (player2.exit() ){
+            	playAudio.playSound("Exit");
+            }
+            if (player2.dead() ){
+            	playAudio.playSound("End");
+            }
                 return;
-
+        }
         handleKeyboard();
         updateBombs();
     }

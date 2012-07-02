@@ -32,10 +32,10 @@ public class Player{
      */
     public Player(BombermanLevel l) {
     	this.l=l;
-        posX = i;
-        posY = i ;
-        width = i;
-        height = i;
+        posX = l.getTileDim();
+        posY = l.getTileDim();
+        width = l.getWidth();
+        height = l.getHeight();
     }
     /**
      * Dieser Konstructor erstell Objekt fuer zweiten Spieler.
@@ -48,7 +48,8 @@ public class Player{
     	this.l=l;
         posX = x;
         posY = y;
-        width = height = i; 
+        width  = l.getTileDim(); 
+        height = l.getTileDim();
 		
     }
   
@@ -141,8 +142,8 @@ public class Player{
 	 * Methode wenn den Spieler die Bombe trift, Variable health auf 0 setzt
 	 * TODO
 	 */
-    public boolean dead(){
-    	return l.hasFireByPixel(posX, posY);
+    public boolean death(){
+    	return l.hasFireByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2);
     	
     }
    
