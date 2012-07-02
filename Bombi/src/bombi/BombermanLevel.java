@@ -793,4 +793,37 @@ public class BombermanLevel {
     // //////////////////////////////////////////////////////////////////////
     // Ende der Methoden zum Setzen/Entfernen/Ueberpruefen der D, B und F Flags
     // //////////////////////////////////////////////////////////////////////
+    
+    public static String createPacket(BombermanLevel level) throws Exception{
+    	if(level == null || level.tiles.length == 0 || level.tiles[0].length == 0)
+    		throw new Exception();
+    	StringBuffer packet = new StringBuffer();
+    	packet.append("// automatically created level\n");
+    	// erzeuge Dimensionsmarker
+    	packet.append("[DIM]\n");
+    	packet.append(level.tiles.length +","+ level.tiles[0].length+";\n");
+    	// erzeuge Levelmarker
+    	packet.append("[LEVEL]\n");
+    	for(int j = 0; j < level.tiles[0].length; j++) {
+    		int i;
+    		for(i = 0; i < level.tiles.length - 1; i++)
+        		packet.append(level.tiles[i][j]+",");
+        	packet.append(level.tiles[i][j]+";\n");
+    	}
+    	return packet.toString();
+    }
+    
+//    public static BombermanLevel parsePacket(String packet) throws Exception{
+//    	if(packet == null || packet.isEmpty())
+//    		throw new Exception();
+//    	int beginIndex, endIndex;
+//    	beginIndex = endIndex = 0;
+//    	String line;
+//    	boolean dim, level;
+//    	while((endIndex = packet.indexOf('\n', beginIndex)) >= 0) {
+//    		line = packet.substring(beginIndex, endIndex);
+//    		if(line.equals("[DIM]"))
+//    			
+//    	}    	
+//    }
 }// Ende der Klasse BombermanLevel

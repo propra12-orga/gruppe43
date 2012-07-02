@@ -5,6 +5,16 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +45,11 @@ public class BombiGui extends JComponent implements Runnable {
     // managet die Tastatur.. stellt im Grunde eine auf Polling basierende
     // Lösung dar (statt Interrupts)
     private KeyPoller keyPoller;
+    
+    // Netzwerk In- und Output
+    private Socket socket;
+    private BufferedReader fromSocket;
+    private BufferedWriter toSocket;
 
     // Liste für die Bomben
     private List<Bomben> bombsP1;
@@ -74,23 +89,29 @@ public class BombiGui extends JComponent implements Runnable {
         	initializeLevel("/tut6.map");
         	initializeGraphics();
         	tutmsg=6;
-        } else
-        	initializeLevel("/test.map");
-        	initializeGraphics();
+        } else{
+        	initializeLevel("tdest.map");
+        	initializeGraphics();}
         
-
         // erzeuge unseren KeyPoller
         keyPoller = new KeyPoller();
         addKeyListener(keyPoller);
 
+        try {
+			initializeNetwork(!multiplayer);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         // erzeuge immer den ersten Spieler
         player1 = new Player(bLevel, bLevel.getTileDim(), bLevel.getTileDim());
-        this.multiplayer = multiplayer;
-        if (multiplayer)// den Zweiten nur fuer MP
-        	player2 = new Player(bLevel, bLevel.getTileDim()+520,(bLevel.getTileDim()-2)+222);
-           // player2 = new Player(bLevel, bLevel.getTileDim()
-             //       * (bLevel.getWidth() - 2), bLevel.getTileDim()
-               //     * (bLevel.getHeight() - 2));
+//        this.multiplayer = multiplayer;
+//        if (multiplayer)// den Zweiten nur fuer MP
+//        	player2 = new Player(bLevel, bLevel.getTileDim()+520,(bLevel.getTileDim()-2)+222);
+//           // player2 = new Player(bLevel, bLevel.getTileDim()
+//             //       * (bLevel.getWidth() - 2), bLevel.getTileDim()
+//               //     * (bLevel.getHeight() - 2));
         bombsP1 = new ArrayList<Bomben>();
         bombsP2 = new ArrayList<Bomben>();
         setFocusable(true);
@@ -109,7 +130,49 @@ public class BombiGui extends JComponent implements Runnable {
                     height);
         } catch (Exception e) {
             bLevel = new BombermanLevel(17, 9, width, height);
-        }
+        }        
+    }
+    
+    private void initializeLevel(boolean network){    	
+        try {
+			FileWriter fw = new FileWriter("/tmp/lol.map");
+			fw.write(BombermanLevel.createPacket(bLevel));
+			fw.write("//");
+			fw.flush();
+			fw.close();		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    private void initializeNetwork(boolean server) throws Exception{
+    	if(server) {
+    		ServerSocket serverSock = new ServerSocket(1337);
+    		socket = serverSock.accept();
+    	}
+    	else
+    		socket = new Socket("localhost", 1337);
+    	toSocket = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+    	fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    	if(server) {
+    		String packet = BombermanLevel.createPacket(bLevel) + "END\n";
+    		toSocket.write(packet);
+    		toSocket.flush();
+    	}
+    	else {
+    		FileWriter fw = new FileWriter("/tmp/lol.map");
+    		while(true) {
+    			String line = fromSocket.readLine();
+    			if(line.trim().equals("END"))
+    				break;
+    			fw.write(line+"\n");
+    		}
+    		fw.flush();
+    		fw.close();
+			bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
+                    height);	
+    	}
     }
 
     private void initializeGraphics() {
