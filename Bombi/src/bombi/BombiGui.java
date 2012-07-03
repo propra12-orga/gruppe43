@@ -7,14 +7,11 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +87,7 @@ public class BombiGui extends JComponent implements Runnable {
         	initializeGraphics();
         	tutmsg=6;
         } else{
-        	initializeLevel("tdest.map");
+        	initializeLevel("/tut1.map");
         	initializeGraphics();}
         
         // erzeuge unseren KeyPoller
@@ -98,7 +95,7 @@ public class BombiGui extends JComponent implements Runnable {
         addKeyListener(keyPoller);
 
         try {
-			initializeNetwork(!multiplayer);
+		//	initializeNetwork(!multiplayer);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -106,9 +103,9 @@ public class BombiGui extends JComponent implements Runnable {
         
         // erzeuge immer den ersten Spieler
         player1 = new Player(bLevel, bLevel.getTileDim(), bLevel.getTileDim());
-//        this.multiplayer = multiplayer;
-//        if (multiplayer)// den Zweiten nur fuer MP
-//        	player2 = new Player(bLevel, bLevel.getTileDim()+520,(bLevel.getTileDim()-2)+222);
+        this.multiplayer = multiplayer;
+       if (multiplayer)// den Zweiten nur fuer MP
+        	player2 = new Player(bLevel, bLevel.getTileDim()+520,(bLevel.getTileDim()-2)+222);
 //           // player2 = new Player(bLevel, bLevel.getTileDim()
 //             //       * (bLevel.getWidth() - 2), bLevel.getTileDim()
 //               //     * (bLevel.getHeight() - 2));
@@ -196,7 +193,7 @@ public class BombiGui extends JComponent implements Runnable {
 
         if (player1.exit())
             gameG.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
-        if (player1.dead()) {
+        if (player1.death()) {
             gameG.drawString("Spieler1 wurden von einer Bombe getötet. ", 300,
                     250);
             return;
@@ -204,7 +201,7 @@ public class BombiGui extends JComponent implements Runnable {
         if (multiplayer && player2 != null) {
             if (player2.exit())
                 gameG.drawString("Spieler 2 ... hat gewonnen!", 400, 300);
-            if (player2.dead()) {
+            if (player2.death()) {
                 gameG.drawString("Spieler2 wurden von einer Bombe getötet. ",
                         300, 250);
                 return;
@@ -361,34 +358,37 @@ public class BombiGui extends JComponent implements Runnable {
         if (getWidth() != width || getHeight() != height)
             rescale();
 
-        if (player1.bombItem())
-        { player1.addmaxbomb();
+        if (player1.bombItem()) 	
+        { playAudio.playSound("Pickup");
+        	player1.addmaxbomb();
         	bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
-        }
-        
+        }       
         if (player1.explosionItem())
-        { player1.addradius();
+        { playAudio.playSound("Pickup");
+        	player1.addradius();
         	bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
         }
         
         if (player2 != null && player2.bombItem())
-        { player2.addmaxbomb();
+        { playAudio.playSound("Pickup");
+        	player2.addmaxbomb();
         	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
         }
         
         if (player2 != null && player2.explosionItem())
-        { player2.addradius();
+        { playAudio.playSound("Pickup");
+        	player2.addradius();
         	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
         }
         
-        if (stepCount >= 10) {
+        if (stepCount >= 15) {
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit()||player1.dead()) {
+        if (player1.exit()||player1.death()) {
         	{
         	if(player1.exit()) playAudio.playSound("Exit");
-        	if(player1.dead()) playAudio.playSound("End");
+        	if(player1.death()) playAudio.playSound("End");
         	
         	new Menu();
         	}
@@ -403,12 +403,12 @@ public class BombiGui extends JComponent implements Runnable {
         	}
         if (multiplayer && player2 != null){
             if (player2.exit() ){
-            	playAudio.playSound("Exit");
+            	playAudio.playSound("Exit");return;
             }
-            if (player2.dead() ){
-            	playAudio.playSound("End");
+            if (player2.death() ){
+            	playAudio.playSound("End");return;
             }
-                return;
+                
         }
         handleKeyboard();
         updateBombs();

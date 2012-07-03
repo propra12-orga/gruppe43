@@ -24,8 +24,7 @@ public class Player{
     private int maxbomb=1;
     private int currentbombs=1;
     private int stepsize = 10;
-    
-     
+ 
     /**
      * 
      * @param l erzeugte BombermanLevel mit festen x,y Koordinaten werten
@@ -114,8 +113,17 @@ public class Player{
     public int getPosX() {
 		return (posX);
 	}
-    
-    public int getPosXForBomb() {
+    public int getPosY() {
+		return (posY);
+	}
+    public void setPosX(int posX) {
+		this.posX = posX;
+	}
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+	
+	public int getPosXForBomb() {
 		return posX+l.getTileDim()/2;
 	}
 	/**
@@ -123,9 +131,7 @@ public class Player{
 	 * @return
 	 * Getter fuer y-Position
 	 */
-	public int getPosY() {
-		return (posY);
-	}
+	
 	
 	public int getPosYForBomb() {
 		return posY+l.getTileDim()/2;
@@ -203,20 +209,55 @@ public class Player{
   
     public void Direction(int xdir,int ydir) {
     	
-        int dim = l.getTileDim();
-        if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+((dim*stepsize)/100)+ydir))
-        return;
-        if(l.isSolidByPixel(posX+  dim+((xdir*width)/32)   ,posY+  dim+((ydir*height)/32)))
-        return;
-        if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+  dim+((ydir*height)/32)))
-        return;
-        if(l.isSolidByPixel(posX+  dim+((xdir*width)/32)   ,posY+((dim*stepsize)/100)+ydir))
-        return;
-        posX+=xdir;
-        posY+=ydir;
-
+        int dim = (int)(l.getTileDim() * 0.8);
        
-       }
+	       
+      if(l.isSolidByPixel(posX, posY)){
+    	  if(xdir > 0 && !l.isSolidByPixel(posX+dim, posY))
+    		 posX += xdir;
+    	  else if(xdir <0 && !l.isSolidByPixel(posX-dim, posY))
+    		 posX += xdir;
+    		  
+    	  if(ydir > 0 && !l.isSolidByPixel(posX, posY+dim))
+    		  posY += ydir;
+    	  else if(ydir < 0 && !l.isSolidByPixel(posX, posY-dim))
+    		posY += ydir;
+    		 
+    	return;  
+      }
+      if(xdir > 0){
+    	  if(!l.isSolidByPixel(posX+dim+xdir, posY) && !l.isSolidByPixel(posX+dim+xdir, posY+dim))
+    		  posX += xdir;
+      }
+      else{
+    	  if(!l.isSolidByPixel(posX+xdir, posY) && !l.isSolidByPixel(posX+xdir, posY+dim))
+    		  posX += xdir;
+      }
+      if(ydir > 0){
+    	  if(!l.isSolidByPixel(posX+dim, posY+dim+ydir) && !l.isSolidByPixel(posX, posY+dim+ydir))
+    		  posY += ydir;
+      }
+      else{
+    	  if(!l.isSolidByPixel(posX+dim, posY+ydir) && !l.isSolidByPixel(posX, posY+ydir))
+    		  posY += ydir;
+      }
+//      if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+((dim*stepsize)/100)+ydir))
+//	        return;
+//	        if(l.isSolidByPixel(posX+  dim+((xdir*width)/32)   ,posY+  dim+((ydir*height)/32)))
+//	        return;
+//	        if(l.isSolidByPixel(posX+((dim*stepsize )/100)+xdir,posY+  dim+((ydir*height)/32)))
+//	        return;
+//	        if(l.isSolidByPixel(posX+  dim+((xdir*width)/32)   ,posY+((dim*stepsize)/100)+ydir))
+//	        return;
+	       
+       
+//    posX+=xdir;
+//    posY+=ydir;
+}
+    public void picIcon() {
+    	if(p.bombItem()||p.explosionItem())
+    		playAudio.playSound("Pickup");
+    }
 	
     public void iconPosition(){
     	if(l.getTileByPixel(posX, posY)==BombermanLevel.BOMBPLUS)
