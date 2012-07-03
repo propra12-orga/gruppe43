@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
@@ -53,15 +54,21 @@ public class BombiGui extends JComponent implements Runnable {
     private List<Bomben> bombsP2;
 
     private boolean multiplayer;
+    private int tut;
+    private JFrame frame;
     Player player1,player2;
     BombermanLevel bLevel;
     Robot robot1;
     Menu m;
     int fps = 0; // wird durch den main-loop gesetzt
     int tutmsg;
+    int tutcounter=420;
 
-    public BombiGui(boolean multiplayer, int tut) {
+
+    public BombiGui(boolean multiplayer, int tut, JFrame frame) {
         super();
+        this.frame = frame;
+        this.tut=tut;
         if (tut==1){
          initializeLevel("/tut1.map");
          initializeGraphics();
@@ -88,7 +95,7 @@ public class BombiGui extends JComponent implements Runnable {
          initializeGraphics();
          tutmsg=6;
         } else{
-        	initializeLevel("/tut1.map");
+        	initializeLevel("/tutdd.map");
         	initializeGraphics();}
 
         
@@ -123,8 +130,8 @@ public class BombiGui extends JComponent implements Runnable {
     }
 
 
-    public BombiGui() {
-        this(false,0);
+    public BombiGui(JFrame frame) {
+        this(false,0,frame);
     }
 
     private void initializeLevel(String pathToMap) {
@@ -198,18 +205,17 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
     public void paintBuffer() {
 
         if (player1.exit())
-            gameG.drawString("Spieler 1 ... hat gewonnen!", 400, 300);
+            Texture.P1WIN.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
         if (player1.death()) {
-            gameG.drawString("Spieler1 wurden von einer Bombe getötet. ", 300,
-                    250);
+            Texture.P1DIED.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+
             return;
         }
         if (multiplayer && player2 != null) {
             if (player2.exit())
-                gameG.drawString("Spieler 2 ... hat gewonnen!", 400, 300);
+                Texture.P2WIN.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
             if (player2.death()) {
-                gameG.drawString("Spieler2 wurden von einer Bombe getötet. ",
-                        300, 250);
+                Texture.P2DIED.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
                 return;
             }
         }
@@ -257,24 +263,19 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
         }
        
         // Zeichnet die Nachrichten fürs Tutorial
-        if (tutmsg==1)
-         dbg.drawString("Bewege dich mit den Pfeiltasten und laufe zum Ausgang.", 100,this.getHeight()-50);
-        if (tutmsg==2)
-         dbg.drawString("Die Steine die du siehst, können nicht zerstört werden. Finde einen Weg zum Ausgang.", 50,this.getHeight()-50);
-        if (tutmsg==3){
-         dbg.drawString("Zerstörbare Blöcke versperren dir den Weg.Lege eine Bombe neben den Steinen ", 100,this.getHeight()-50);
-     dbg.drawString("mit der Leertasteund geh in Deckung. Laufe dann zum Ausgang.", 100,this.getHeight()-30);}
-        if (tutmsg==4){
-         dbg.drawString("Vorsicht! Komme den Gegnern nicht zu nah. Sobald sie dich berühren stirbst du.", 100,this.getHeight()-50);
-dbg.drawString("Weiche ihnen aus zum laufe zum Ausgang.", 100,this.getHeight()-30);}
-        if (tutmsg==5){
-         dbg.drawString("Du kannst deine Bomben mit Kettenreaktionen zum explodieren bringen. Das Explosionsfeuer", 30,this.getHeight()-50);
-            dbg.drawString("deiner Bombe bringen scharfe Bomben zur sofortigen explosion.Lege 2 Bomben gleichzeitig", 30,this.getHeight()-30);
-            dbg.drawString("hin und sprenge dir den Weg mit einer Kettenreaktion frei. Laufe dann zum Ausgang.", 30,this.getHeight()-10); }
-        if (tutmsg==6){
-         dbg.drawString("Es gibt 3 Items im Spiel. Zusatzbombe: Erhöht die Anzahl der Bomben die du gleichzeitig legen kannst.",0,this.getHeight()-50);
-         dbg.drawString("Sprengkraft: Erhöht den Explosionsradius deiner Bombe. Laufschuhe: Erhöhen deine", 0,this.getHeight()-30);
-            dbg.drawString("Laufgeschwindigkeit. Sammele alle Items ein und teste sie. Laufe dann zum Ausgang.", 0,this.getHeight()-10); }
+        if (tutmsg==1 && tutcounter>0)
+         Texture.TUTMSG1.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+        if (tutmsg==2 && tutcounter>0)
+            Texture.TUTMSG2.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+        if (tutmsg==3 && tutcounter>0)
+            Texture.TUTMSG3.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+        if (tutmsg==4 && tutcounter>0)
+            Texture.TUTMSG4.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+        if (tutmsg==5 && tutcounter>0)
+            Texture.TUTMSG5.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+        if (tutmsg==6 && tutcounter>0)
+            Texture.TUTMSG6.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+
 
     }
 
@@ -378,7 +379,9 @@ dbg.drawString("Weiche ihnen aus zum laufe zum Ausgang.", 100,this.getHeight()-3
         if (getWidth() != width || getHeight() != height)
             rescale();
 
-
+        if(tutcounter>0)
+        	tutcounter--;
+        
         if (player1.bombItem()) 	
         { playAudio.playSound("Pickup");
         	player1.addmaxbomb();
@@ -425,12 +428,13 @@ dbg.drawString("Weiche ihnen aus zum laufe zum Ausgang.", 100,this.getHeight()-3
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit()||player1.death()) {
+        if (player1.exit() && tut>6 ||player1.death() && tut>6) {
         	{
         	if(player1.exit()) playAudio.playSound("Exit");
         	if(player1.death()) playAudio.playSound("End");
         	
         	new Menu();
+        	frame.dispose();
         	}
         	
         		try{
@@ -441,6 +445,25 @@ dbg.drawString("Weiche ihnen aus zum laufe zum Ausgang.", 100,this.getHeight()-3
         		}
             return;
         	}
+        
+        if (player1.exit() && tut<7 ||player1.death() && tut<7) {
+        	{
+        	if(player1.exit()) playAudio.playSound("Exit");
+        	if(player1.death()) playAudio.playSound("End");
+        	
+        		new Tutorials();
+	        	frame.dispose();
+        	}
+        	
+        		try{
+        			
+        			Thread.sleep(100000);
+        		}catch (Exception e) {
+        			e.printStackTrace();
+        		}
+            return;
+        	}
+        
         if (multiplayer && player2 != null){
             if (player2.exit() ){
             	playAudio.playSound("Exit");return;

@@ -284,6 +284,16 @@ public class Texture {
     public static Texture ITEMBOMBUP1 = new Texture(32, 32, 32, 32);
     public static Texture ITEMBOMBUP2 = new Texture(64, 32, 32, 32);
     public static Texture[] ITEMBOMBUP = {ITEMBOMBUP1, ITEMBOMBUP2};
+    public static Texture TUTMSG1 = new Texture(0,129,320,128);
+    public static Texture TUTMSG2 = new Texture(0,257,320,128);
+    public static Texture TUTMSG3 = new Texture(0,385,320,128);
+    public static Texture TUTMSG4 = new Texture(0,513,320,128);
+    public static Texture TUTMSG5 = new Texture(0,641,320,128);
+    public static Texture TUTMSG6 = new Texture(0,769,320,128);
+    public static Texture P1WIN = new Texture(0,897,320,128);
+    public static Texture P2WIN = new Texture(0,1025,320,128);
+    public static Texture P1DIED = new Texture(0,1153,320,128);
+    public static Texture P2DIED = new Texture(0,1281,320,128);
     
 
     // Abwaertskompatibilitaet
