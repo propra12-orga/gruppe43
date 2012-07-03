@@ -30,25 +30,19 @@ public class Robot{
     private int posX, posY, width, height;
   
 
-    /**
-     * 
-     * @param l erzeugte BombermanLevel mit seinen x,y werten
-     */
-    public Robot(BombermanLevel l) {
-    	this.l=l;
-        posX = 520;
-        posY = 360;
-        width = height = 40;
-    }
+
     /**
      * 
      * @param posX
      * @param posY
      * Spieler Konstructor Positions-Koordinaten f�r den Spieler
      */
-    public Robot(int posX,int posY){
+    public Robot(BombermanLevel l,int posX,int posY){
+    	this.l=l;
     	this.posX = posX;
     	this.posY = posY;
+    	width =  l.getWidth();
+    	height = l.getHeight();
     }
 	/**
 	 * 

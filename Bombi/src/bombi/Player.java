@@ -24,7 +24,10 @@ public class Player{
     private int maxbomb=1;
     private int currentbombs=1;
     private int stepsize = 10;
- 
+
+    private int punkte=0;
+     
+
     /**
      * 
      * @param l erzeugte BombermanLevel mit festen x,y Koordinaten werten
@@ -51,7 +54,19 @@ public class Player{
         height = l.getTileDim();
 		
     }
-  
+  /**
+   * Die Methode erhöht die Punktezahl des Spielers um 100
+   */
+    public void addpoints() {
+    	punkte=punkte+100;
+    }
+    /**
+     * Diese Methode gibt den aktuellen Punktestand des Spielers zurück.
+     * @return
+     */
+    public int points() {
+    	return punkte;
+    }
     /**
      * Die Methode gibt den aktuellen Radius den Explosion zurueck.
      * @return
