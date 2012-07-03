@@ -285,6 +285,8 @@ public class Texture {
     public static Texture ITEMBOMBUP2 = new Texture(64, 32, 32, 32);
     public static Texture[] ITEMBOMBUP = {ITEMBOMBUP1, ITEMBOMBUP2};
     
+    public static Texture SPEED1 = new Texture(0, 96, 32, 32);
+    public static Texture SPEED2 = new Texture(32, 96, 32, 32);
 
     // Abwaertskompatibilitaet
     public static Texture SPIELER1 = PLAYER_IDLE_FRONT;
