@@ -13,7 +13,7 @@ public class Sound {
 	public AudioClip sound;
 	private static Sound staticSound = new Sound();
 /**	
- * Konstruktor Dateinamen und Dateiort werden Ÿbergeben 
+ * Konstruktor Dateinamen und Dateiort werden ï¿½bergeben 
  * @param name
  * @param url
  */
@@ -55,7 +55,7 @@ public class Sound {
 		if(sound!=null) sound.stop();
 	}
 /**	
- * Der Ort der Datei wird anhand des Dateinamens zurŸckgegeben 
+ * Der Ort der Datei wird anhand des Dateinamens zurï¿½ckgegeben 
  * @param filName
  * @return
  */
