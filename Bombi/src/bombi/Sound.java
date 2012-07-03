@@ -11,12 +11,23 @@ import java.net.URL;
 public class Sound {
 	public String name;
 	public AudioClip sound;
+	int i;
 	private static Sound staticSound = new Sound();
 /**	
  * Konstruktor Dateinamen und Dateiort werden �bergeben 
  * @param name
  * @param url
  */
+	public void soundOn(){
+		i = 0;
+	}
+	public void soundOff(){
+		i = 2;
+	}
+	public int checkSound(){
+		return i;
+	}
+	
 	public Sound(String name, URL url){
 		this.name = name;
 		
@@ -36,7 +47,7 @@ public class Sound {
 		new Thread(new Runnable(){
 			@Override
 			public void run() {
-				int i=0;
+				
 				if(i==0) sound.play();i++;
 			}
 		}).start();

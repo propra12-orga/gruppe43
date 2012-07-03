@@ -29,7 +29,7 @@ public class Einstellungen extends JFrame{
 		
 		setContentPane(new BackGroundPane("img/Bomberman.png"));
 		
-		setLocationRelativeTo(null);
+		setLocation(250,500);
 		setVisible(true);
 		setSize(900,700);
 		setLayout(null);
@@ -39,7 +39,13 @@ public class Einstellungen extends JFrame{
 	    button1.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	                
+            	JFrame laut= new JFrame();
+            	
+            	laut.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            	
+            	new Lautstärke();
+                dispose();
+	        	
 	            }
 	        });
 		
@@ -47,7 +53,13 @@ public class Einstellungen extends JFrame{
 	    button2.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	                
+            	JFrame schwer = new JFrame();
+            	
+            	schwer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            	
+            	new Schwierigkeitsgrad();
+                dispose();
+                
 	            }
 	        });
 		
