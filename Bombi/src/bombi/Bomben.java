@@ -31,15 +31,15 @@ public class Bomben {
     private int radiusDelayCounter = RADIUSDELAY;
     private int animFrame = 0;
     private BombermanLevel bLevel;
-    Player player1, player2;
-    int breakup = 0;
-    int breakdown = 0;
-    int breakright = 0;
-    int breakleft = 0;
-    int fireu=0;
-    int fired=0;
-    int firel=0;
-    int firer=0;
+    Player player;
+    private int breakup = 0;
+    private int breakdown = 0;
+    private int breakright = 0;
+    private int breakleft = 0;
+    private int fireu=0;
+    private int fired=0;
+    private int firel=0;
+    private int firer=0;
 
     /**
      * Diese Methode erstellt die Bomben.
@@ -47,13 +47,15 @@ public class Bomben {
      * @param posX Position des Spielers auf der X-Achse
      * @param posY Position des Spielers auf der Y-Achse
      * @param radius Explosionsradius der Bombe
+     * @param player Der Spieler der die Bombe gelegt hat
      * @param bLevel Level in dem die Bombe gezeichnet wird
      */
-    public Bomben(int posX, int posY, int radius, BombermanLevel bLevel) {
+    public Bomben(int posX, int posY, int radius,Player player, BombermanLevel bLevel) {
         this.posX = posX;
         this.posY = posY;
         this.radius = radius;
         this.bLevel = bLevel;
+        this.player = player;
         bLevel.putBombByPixel(posX, posY);
     }
 
@@ -116,10 +118,14 @@ public class Bomben {
             		bLevel.addFireByPixel(posX, posY - i * height);
             		fireu=1;
             	}
-
+            	else if (bLevel.getTileByPixel(posX, posY - i * height)==2 && fireu==0)
+            		fireu=1;
+            	if (bLevel.getTileByPixel(posX, posY - i * height) == 2 && breakup == 0)
+            		breakup=1;
                 if (bLevel.getTileByPixel(posX, posY - i * height) == 1 && breakup == 0) {
                     bLevel.destroyBlockByPixel(posX, posY - i * height);
                     breakup = 1;
+                    player.addpoints();
                 }
             }
             for (int i = 1; i <= radiusdown; i++) {
@@ -130,9 +136,14 @@ public class Bomben {
                 	bLevel.addFireByPixel(posX, posY + i * height);
                 	fired=1;
                 }
+                else if (bLevel.getTileByPixel(posX, posY + i*height)==2 && fired==0)
+                	fired=1;
+                if (bLevel.getTileByPixel(posX, posY + i * height) == 2 && breakdown == 0) 
+                	breakdown=1;
                 if (bLevel.getTileByPixel(posX, posY + i * height) == 1 && breakdown == 0) {
                     bLevel.destroyBlockByPixel(posX, posY + i * height);
                     breakdown = 1;
+                    player.addpoints();
                 }
             }
             for (int i = 1; i <= radiusright; i++) {
@@ -143,10 +154,14 @@ public class Bomben {
                 	bLevel.addFireByPixel(posX + i * width, posY);
                 	firer=1;
                 }
-                if (bLevel.getTileByPixel(posX + i * width, posY) == 1
-                        && breakright == 0) {
+                else if(bLevel.getTileByPixel(posX + i * width, posY)==2 && firer==0)
+                	firer=1;
+                if (bLevel.getTileByPixel(posX + i * width, posY) == 2 && breakright == 0)
+                	breakright=1;
+                if (bLevel.getTileByPixel(posX + i * width, posY) == 1 && breakright == 0) {
                     bLevel.destroyBlockByPixel(posX + i * width, posY);
                     breakright = 1;
+                	player.addpoints();
                 }
             }
             for (int i = 1; i <= radiusleft; i++) {
@@ -157,10 +172,14 @@ public class Bomben {
                 	bLevel.addFireByPixel(posX - i * width, posY);
                 	firel=1;
                 }
-                if (bLevel.getTileByPixel(posX - i * width, posY) == 1
-                        && breakleft == 0) {
+                else if (bLevel.getTileByPixel(posX - i * width, posY)==2 && firel==0)
+                	firel=1;
+                if (bLevel.getTileByPixel(posX - i * width, posY) == 2 && breakleft == 0) 
+                	breakleft=1;
+                if (bLevel.getTileByPixel(posX - i * width, posY) == 1 && breakleft == 0) {
                     bLevel.destroyBlockByPixel(posX - i * width, posY);
                     breakleft = 1;
+                    player.addpoints();
                 }
             }
         } else if (radiusDelayCounter > 0)

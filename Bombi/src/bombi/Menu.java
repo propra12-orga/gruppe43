@@ -50,7 +50,7 @@ public class Menu extends JFrame{
                     frame.setTitle("Bombi");
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     
-                    BombiGui bGui = new BombiGui();
+                    BombiGui bGui = new BombiGui(frame);
                     
                     frame.add(bGui);
                     frame.pack();

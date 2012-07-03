@@ -40,6 +40,25 @@ public class Multiauswahl extends JFrame {
 	    button1.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("Bombi");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new BombiGui(true,0,frame);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
 	                
 	            }
 	        });

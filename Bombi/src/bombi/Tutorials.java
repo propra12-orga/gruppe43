@@ -44,7 +44,7 @@ public class Tutorials extends JFrame {
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(false,1);
+                BombiGui bGui = new BombiGui(false,1,frame);
                 
                 frame.add(bGui);
                 frame.pack();
@@ -70,7 +70,7 @@ public class Tutorials extends JFrame {
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(false,2);
+                BombiGui bGui = new BombiGui(false,2,frame);
                 
                 frame.add(bGui);
                 frame.pack();
@@ -99,7 +99,7 @@ public class Tutorials extends JFrame {
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(false,3);
+                BombiGui bGui = new BombiGui(false,3,frame);
                 
                 frame.add(bGui);
                 frame.pack();
@@ -127,7 +127,7 @@ public class Tutorials extends JFrame {
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(false,4);
+                BombiGui bGui = new BombiGui(false,4,frame);
                 
                 frame.add(bGui);
                 frame.pack();
@@ -154,7 +154,7 @@ public class Tutorials extends JFrame {
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(false,5);
+                BombiGui bGui = new BombiGui(false,5,frame);
                 
                 frame.add(bGui);
                 frame.pack();
@@ -181,7 +181,7 @@ public class Tutorials extends JFrame {
                 frame.setTitle("Bombi");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 
-                BombiGui bGui = new BombiGui(false,6);
+                BombiGui bGui = new BombiGui(false,6,frame);
                 
                 frame.add(bGui);
                 frame.pack();
