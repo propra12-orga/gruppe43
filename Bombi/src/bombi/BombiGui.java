@@ -20,8 +20,6 @@ public class BombiGui extends JComponent implements Runnable {
     protected int height = 480;
     private int gameWidth, gameHeight;
 
-    protected int stepsize = 10;
-
     private static final long SECOND = 1000000000; // eine Sekunde in
                                                    // Nanosekunden
     private static final long SLEEPTIME = SECOND / 60; // 60 FPS
@@ -318,7 +316,13 @@ public class BombiGui extends JComponent implements Runnable {
 
         if (tutcounter > 0)
             tutcounter--;
-
+        
+        if(player1.hitByFire()){
+        	player1.removeLife();}
+        
+        if(player2 != null && player2.hitByFire()){
+        	player2.removeLife();}
+        
         if (player1.bombItem()) {
             playAudio.playSound("Pickup");
             player1.addmaxbomb();
@@ -330,6 +334,16 @@ public class BombiGui extends JComponent implements Runnable {
             player1.addradius();
             bLevel.destroyBlockByPixel(player1.getPosX() + bLevel.getTileDim()
                     / 2, player1.getPosY() + bLevel.getTileDim() / 2);
+        }
+        if (player1.heartItem()) 	
+        { playAudio.playSound("Pickup");
+        	player1.addLife();
+        	bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
+        }   
+        if (player1.boostItem())
+        { playAudio.playSound("Pickup");
+        	player1.removeStepsize();
+        	bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
         }
 
         if (player2 != null && player2.bombItem()) {
@@ -344,6 +358,16 @@ public class BombiGui extends JComponent implements Runnable {
             player2.addradius();
             bLevel.destroyBlockByPixel(player2.getPosX() + bLevel.getTileDim()
                     / 2, player2.getPosY() + bLevel.getTileDim() / 2);
+        }
+        if (player2 != null && player2.heartItem())
+        { playAudio.playSound("Pickup");
+        	player2.addLife();
+        	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
+        }
+        if (player2 != null && player2.boostItem())
+        { playAudio.playSound("Pickup");
+        	player2.removeStepsize();
+        	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
         }
 
         if (stepCount >= 15) {
@@ -419,17 +443,17 @@ public class BombiGui extends JComponent implements Runnable {
     protected void handleKeyboard() {
         // Ueberpruefe Tastatureingaben player 1
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            player1.Direction(-bLevel.getTileDim() / stepsize, 0);
+            player1.Direction(-bLevel.getTileDim() / player1.getStepsize(), 0);
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            player1.Direction(bLevel.getTileDim() / stepsize, 0);
+            player1.Direction(bLevel.getTileDim() / player1.getStepsize(), 0);
             stepCount++;
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            player1.Direction(0, -bLevel.getTileDim() / stepsize);
+            player1.Direction(0, -bLevel.getTileDim() / player1.getStepsize());
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-            player1.Direction(0, bLevel.getTileDim() / stepsize);
+            player1.Direction(0, bLevel.getTileDim() / player1.getStepsize());
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_SPACE)) {
             playAudio.playSound("Put");
@@ -451,17 +475,17 @@ public class BombiGui extends JComponent implements Runnable {
                     && (player1.getPosY() == player2.getPosY()))
                 return;
             if (keyPoller.isKeyDown(KeyEvent.VK_A)) {
-                player2.Direction(-bLevel.getTileDim() / stepsize, 0);
+                player2.Direction(-bLevel.getTileDim() / player2.getStepsize(), 0);
                 stepCount++;
             } else if (keyPoller.isKeyDown(KeyEvent.VK_D)) {
-                player2.Direction(bLevel.getTileDim() / stepsize, 0);
+                player2.Direction(bLevel.getTileDim() / player2.getStepsize(), 0);
                 stepCount++;
             }
             if (keyPoller.isKeyDown(KeyEvent.VK_W)) {
-                player2.Direction(0, -bLevel.getTileDim() / stepsize);
+                player2.Direction(0, -bLevel.getTileDim() / player2.getStepsize());
                 stepCount++;
             } else if (keyPoller.isKeyDown(KeyEvent.VK_S)) {
-                player2.Direction(0, bLevel.getTileDim() / stepsize);
+                player2.Direction(0, bLevel.getTileDim() / player2.getStepsize());
                 stepCount++;
             } else if (keyPoller.isKeyDown(KeyEvent.VK_CONTROL)) {
                 playAudio.playSound("Put");

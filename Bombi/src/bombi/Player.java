@@ -54,6 +54,20 @@ public class Player{
         height = l.getTileDim();
 		
     }
+    /**
+     * Gibt den Wert von der Variablem stepsize zurück.
+     * @return
+     */
+    public int getStepsize(){
+    	return stepsize;
+    }
+    /**
+     * Verringert die Variable stepsize um 1, damit der Spieler
+     * schneller laufen kann.
+     */
+    public void removeStepsize(){
+    	stepsize--;
+    }
   /**
    * Die Methode erhöht die Punktezahl des Spielers um 100
    */
@@ -105,6 +119,23 @@ public class Player{
     public void removecurrentbombs() {
     	currentbombs--;
     }
+    /**
+     * Diese Methode verringer die Variable die für das Leben steht um 1.
+     */
+    public void removeLife() {
+    	health--;
+    }
+    /**
+     * Diese Methode erhöht die Variable die für das Leben steht um 1.
+     */
+    public void addLife() {
+    	health++;
+    }
+    /**
+     * Überprüft ob der Spieler die maximale Anzahl an legbaren Bomben erreicht hat
+     * und gibt false zurück, falls er sie erreicht hat.
+     * @return
+     */
     public boolean bombplantable() {
     	if (currentbombs<=maxbomb) {
     		return true;}
@@ -128,26 +159,37 @@ public class Player{
     public int getPosX() {
 		return (posX);
 	}
+	/**
+	 *     
+	 * @return
+	 * Getter fuer y-Position
+	 */
     public int getPosY() {
 		return (posY);
 	}
+    
     public void setPosX(int posX) {
 		this.posX = posX;
 	}
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
-	
+	/**
+	 * Gibt die Position des Spieler auf der X-Achse wieder.
+	 * Der X-Punkt befindes sich auf halber Breite des Spielers.
+	 * Wird für das Bombenlegen gebraucht.
+	 * @return
+	 */
 	public int getPosXForBomb() {
 		return posX+width/2;
 	}
+	
 	/**
-	 *     
+	 * Gibt die Position des Spieler auf der Y-Achse wieder.
+	 * Der Y-Punkt befindes sich auf halber Höhe des Spielers.
+	 * Wird für das Bombenlegen gebraucht.
 	 * @return
-	 * Getter fuer y-Position
 	 */
-	
-	
 	public int getPosYForBomb() {
 		return posY+height/2;
 	}
@@ -164,14 +206,40 @@ public class Player{
 	 * TODO
 	 */
     public boolean death(){
-    	return l.hasFireByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2);
-    	
+    	return health==0;
     }
-   
+    /**
+     * Diese Methode gibt true zurück falls der Spieler von der Explosion getroffen wurde.
+     * @return
+     */
+    public boolean hitByFire(){
+    	return l.hasFireByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2);
+    }
+    /**
+     *  Methode gibt true zurück falls auf dem abgefragten Feld ein Zusatzleben Item existiert.
+     * @return
+     */
+    public boolean heartItem() {
+    	return l.getTileByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2)==9;
+    }
+    /**
+     * Methode gibt true zurück falls auf dem abgefragten Feld ein Laufschuh Item existiert.
+     * @return
+     */
+   public boolean boostItem() {
+	   return l.getTileByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2)==8;
+   }
+   /**
+    * Methode gibt true zurück falls auf dem abgefragten Feld ein Zusatzbomben Item existiert.
+    * @return
+    */
     public boolean bombItem(){
     	return l.getTileByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2)==5;
     }
-	
+	/**
+	 * Methode gibt true zurück falls auf dem abgefragten Feld ein Explosionskraft Item existiert.
+	 * @return
+	 */
     public boolean explosionItem() {
     	return l.getTileByPixel(posX+l.getTileDim()/2, posY+l.getTileDim()/2)==6;
     }
@@ -181,11 +249,9 @@ public class Player{
      */
     public void draw(Graphics2D g) {
     	int dim = l.getTileDim(); 
-		if(health==1){Texture.PLAYER_IDLE_FRONT.draw(posX, posY-dim/2, dim, (dim*3)/2, g);
-			
+		if(health>0){Texture.PLAYER_IDLE_FRONT.draw(posX, posY-dim/2, dim, (dim*3)/2, g);
+			}
 		}
-        
-    }
   
     public boolean playerHit(){
     	return ((bombi.player1.getPosX()==bombi.player2.getPosX()) && (bombi.player1.getPosY()==bombi.player2.getPosY()));
@@ -196,7 +262,7 @@ public class Player{
      * @param g
      */
     public void draw1(Graphics2D g) {
-		if(health==1){t.draw(posX+11, posY, width/2, height, g);	
+		if(health>0){t.draw(posX+11, posY, width/2, height, g);	
 		}    
     }
     
