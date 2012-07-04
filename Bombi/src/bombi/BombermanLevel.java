@@ -91,6 +91,7 @@ public class BombermanLevel {
     private static final short DRAW = (short) (1 << 15);
     private static final short BOMB = (short) (1 << 14);
     private static final short FIRE = (short) (1 << 13);
+    private static final short TRANSMIT = (short) (1 << 12);
     private static final short TILE = 127; // 0...0111111
 
     // Mindestgroesse des Feldes
@@ -112,8 +113,11 @@ public class BombermanLevel {
                                     // setzen. ATM auf true, da partielles
                                     // Updaten noch nicht von den anderen
                                     // Klassen unterstuetzt ist
+    private boolean destroyBlocks = true; // setze dies auf false fuer Clients
 
-    private double seed = Math.random();
+    public void setDestroyBlocks(boolean destroyBlocks) {
+        this.destroyBlocks = destroyBlocks;
+    }
 
     /**
      * Liefert die aktuelle Kantenlaenge aller Kacheln in Pixeln zurueck. Der
@@ -381,9 +385,8 @@ public class BombermanLevel {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height)
             return true;
         short tile = getTile(posX, posY);
-        return (tile == INDESTRUCTIBLE || tile == STONE || tile == HIDDENEXIT); // ||
-                                                                                // hasBomb(
-        // posX, posY));
+        return (tile == INDESTRUCTIBLE || tile == STONE || tile == HIDDENEXIT || hasBomb(
+                posX, posY));
     }
 
     /**
@@ -403,23 +406,15 @@ public class BombermanLevel {
         destroyBlock(pixelX / tileDim, pixelY / tileDim);
     }
 
-    public double getSeed() {
-        return seed;
-    }
-
-    public void setSeed(double seed) {
-        this.seed = seed;
-    }
-
     /* Innere Methode. Von Aussen wird destroyBlockByPixel genutzt. */
     private void destroyBlock(int posX, int posY) {
-        if (posX < 0 || posX >= width || posY < 0 || posY >= height)
+        if (!destroyBlocks || posX < 0 || posX >= width || posY < 0
+                || posY >= height)
             return;
         short tile = getTile(posX, posY);
         if (tile == STONE) {
             tiles[posX][posY] &= ~TILE;
-            // tiles[posX][posY] |= GRASS;
-            tiles[posX][posY] |= spawnPowerup(seed);
+            tiles[posX][posY] |= spawnPowerup();
             markForUpdate(posX, posY); // moechten Aenderung sehen
         } else if (tile == HIDDENEXIT) {
             tiles[posX][posY] &= ~TILE;
@@ -430,17 +425,17 @@ public class BombermanLevel {
             tiles[posX][posY] |= GRASS;
             markForUpdate(posX, posY);
         }
-        // addFire(posX, posY);
+        markForTransmit(posX, posY);
     }
 
     /*
      * Kleine Hilfsmethode, welche zufaellig ein Powerup (oder eben nicht)
      * zurueck gibt. Rueckgabewert ist entweder ein Powerup oder ein Gras-Block.
      */
-    private static final short spawnPowerup(double seed) {
-        if (seed <= BOPLPROB)
+    private static final short spawnPowerup() {
+        if (Math.random() <= BOPLPROB)
             return BOMBPLUS;
-        if (seed <= FIPLPROB)
+        if (Math.random() <= FIPLPROB)
             return FIREPLUS;
         // if(Math.random() <= NORRISPROB)
         // return CHUCKNORRIS;
@@ -805,6 +800,25 @@ public class BombermanLevel {
     // Ende der Methoden zum Setzen/Entfernen/Ueberpruefen der D, B und F Flags
     // //////////////////////////////////////////////////////////////////////
 
+    private boolean markedForTransmit(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height)
+            return false;
+        return (tiles[posX][posY] & TRANSMIT) != 0;
+    }
+
+    private void markForTransmit(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height)
+            return;
+        tiles[posX][posY] |= TRANSMIT;
+
+    }
+
+    private void unmarkForTransmit(int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height)
+            return;
+        tiles[posX][posY] &= ~TRANSMIT;
+    }
+
     public static String createPacket(BombermanLevel level)
             throws NoSuchElementException {
         if (level == null || level.tiles.length == 0
@@ -827,17 +841,25 @@ public class BombermanLevel {
         return packet.toString();
     }
 
-    // public static BombermanLevel parsePacket(String packet) throws Exception{
-    // if(packet == null || packet.isEmpty())
-    // throw new Exception();
-    // int beginIndex, endIndex;
-    // beginIndex = endIndex = 0;
-    // String line;
-    // boolean dim, level;
-    // while((endIndex = packet.indexOf('\n', beginIndex)) >= 0) {
-    // line = packet.substring(beginIndex, endIndex);
-    // if(line.equals("[DIM]"))
-    //
-    // }
-    // }
+    public String createNewTilePacket() {
+        String packet = "";
+        short tile;
+        for (int i = 0; i < width; i++)
+            for (int j = 0; j < height; j++)
+                if (markedForTransmit(i, j)) {
+                    unmarkForTransmit(i, j);
+                    tile = getTile(i, j);
+                    packet += ServerBombiGui.TILE + tile + ServerBombiGui.POSX
+                            + i + ServerBombiGui.POSY + j + "\n";
+                }
+        return packet;
+    }
+
+    public void setTile(short tile, int posX, int posY) {
+        if (posX < 0 || posX >= width || posY < 0 || posY >= height
+                || !isValidTile(tile))
+            return;
+        tiles[posX][posY] &= ~TILE;
+        tiles[posX][posY] |= tile;
+    }
 }// Ende der Klasse BombermanLevel

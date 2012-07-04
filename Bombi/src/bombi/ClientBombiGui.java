@@ -184,7 +184,7 @@ public class ClientBombiGui extends BombiGui {
                         // lese nun aus der temporaeren Datei das Level
                         bLevel = new BombermanLevel(LevelParser.parseMap("temp"
                                 + this.hashCode(), false), width, height);
-                        bLevel.setSpawnPowerups(false);
+                        bLevel.setDestroyBlocks(false);
                         player1.setBombermanLevel(bLevel);
                         player2.setBombermanLevel(bLevel);
                         // und loesche die Datei
@@ -308,13 +308,16 @@ public class ClientBombiGui extends BombiGui {
     }
 
     public static void main(String[] args) {
+        ClientBombiGui clientBGui;
         JFrame clientFrame = new JFrame("Client");
-        ClientBombiGui clientBGui = new ClientBombiGui(clientFrame,
-                "localhost", 1337);
+        if (args.length < 2)
+            clientBGui = new ClientBombiGui(clientFrame, "localhost", 1337);
+        else clientBGui = new ClientBombiGui(clientFrame, args[0],
+                Integer.parseInt(args[1]));
         clientFrame.add(clientBGui);
         clientFrame.pack();
+        clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         clientFrame.setVisible(true);
         new Thread(clientBGui).start();
     }
-
 }
