@@ -428,12 +428,12 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit() && tut>6 ||player1.death() && tut>6) {
+        if (player1.exit() && tut>0 ||player1.death() && tut>0) {
         	{
         	if(player1.exit()) playAudio.playSound("Exit");
         	if(player1.death()) playAudio.playSound("End");
         	
-        	new Menu();
+        	new Tutorials();
         	frame.dispose();
         	}
         	
@@ -446,12 +446,12 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
             return;
         	}
         
-        if (player1.exit() && tut<7 ||player1.death() && tut<7) {
+        if (player1.exit() && tut==0 ||player1.death() && tut==0) {
         	{
         	if(player1.exit()) playAudio.playSound("Exit");
         	if(player1.death()) playAudio.playSound("End");
         	
-        		new Tutorials();
+        		new Menu();
 	        	frame.dispose();
         	}
         	
