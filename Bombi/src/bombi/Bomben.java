@@ -122,7 +122,7 @@ public class Bomben {
             		fireu=1;
             	if (bLevel.getTileByPixel(posX, posY - i * height) == 2 && breakup == 0)
             		breakup=1;
-                if (bLevel.getTileByPixel(posX, posY - i * height) == 1 && breakup == 0) {
+                if (bLevel.getTileByPixel(posX, posY - i * height) == 1 && breakup == 0 || bLevel.getTileByPixel(posX, posY - i * height) == 4 && breakup == 0) {
                     bLevel.destroyBlockByPixel(posX, posY - i * height);
                     breakup = 1;
                     player.addpoints();
@@ -140,7 +140,7 @@ public class Bomben {
                 	fired=1;
                 if (bLevel.getTileByPixel(posX, posY + i * height) == 2 && breakdown == 0) 
                 	breakdown=1;
-                if (bLevel.getTileByPixel(posX, posY + i * height) == 1 && breakdown == 0) {
+                if (bLevel.getTileByPixel(posX, posY + i * height) == 1 && breakdown == 0 || bLevel.getTileByPixel(posX, posY + i * height) == 4 && breakdown == 0) {
                     bLevel.destroyBlockByPixel(posX, posY + i * height);
                     breakdown = 1;
                     player.addpoints();
@@ -158,7 +158,7 @@ public class Bomben {
                 	firer=1;
                 if (bLevel.getTileByPixel(posX + i * width, posY) == 2 && breakright == 0)
                 	breakright=1;
-                if (bLevel.getTileByPixel(posX + i * width, posY) == 1 && breakright == 0) {
+                if (bLevel.getTileByPixel(posX + i * width, posY) == 1 && breakright == 0 || bLevel.getTileByPixel(posX + i * width, posY) == 4 && breakright == 0) {
                     bLevel.destroyBlockByPixel(posX + i * width, posY);
                     breakright = 1;
                 	player.addpoints();
@@ -176,7 +176,7 @@ public class Bomben {
                 	firel=1;
                 if (bLevel.getTileByPixel(posX - i * width, posY) == 2 && breakleft == 0) 
                 	breakleft=1;
-                if (bLevel.getTileByPixel(posX - i * width, posY) == 1 && breakleft == 0) {
+                if (bLevel.getTileByPixel(posX - i * width, posY) == 1 && breakleft == 0 || bLevel.getTileByPixel(posX - i * width, posY) == 4 && breakleft == 0) {
                     bLevel.destroyBlockByPixel(posX - i * width, posY);
                     breakleft = 1;
                     player.addpoints();
