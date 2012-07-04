@@ -22,18 +22,38 @@ public class Tutorials extends JFrame {
 	
 	FlowLayout layout = new FlowLayout();
 	
+	/**
+	 * Hier haben wir den Konstruktor
+	 * 
+	 */
+	
 	public Tutorials(){
 		super("Bomberman");
 		setLayout(layout);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		setContentPane(new BackGroundPane("img/Bomberman.png"));
+		setContentPane(new BackGroundPane("img/Bomberman.gif"));
 		
-		setLocation
-		(250,500);
-		setSize(900,700);
+		setSize(600,500);
 		setVisible(true);
+		//das fenster wird zentriert
+		setLocationRelativeTo(null);
+
+		/**
+         * Indem man setLayout(null); eingibt kann 
+         * man den button eine bestimmte position
+         * das mit der funktion insets später
+         * ausgeführt wird
+         */
 		setLayout(null);
+		
+        /**
+         * Ab hier fangen die Buttons an.
+         * Die Buttons werden ausgeführt von der funktion
+         * ActionEvent.
+         * ActionListener implementiert das Interface und
+         * bekommt die Events(ActionEvent) übergeben.
+         */
 		
 		JButton button1 = new JButton("Tutorial1");
 	    button1.addActionListener(new ActionListener() {
@@ -215,6 +235,10 @@ public class Tutorials extends JFrame {
 	            }
 	        });
 	    
+/*
+ * Hier werden die Buttons auf dem fenster eingefügt.
+ */
+	    
 	    add(button1);
 	    add(button2);
 	    add(button3);
@@ -224,21 +248,28 @@ public class Tutorials extends JFrame {
 	    add(button7);
 	    setVisible(true);
 	    
+        /**
+         * Mit insets kann man den buttons eine bestimmte
+         * position geben.
+         * In zusammenhang mit Dimension size kann man die
+         * breite und höhe der buttons ändern.
+         */
+	    
         Insets insets = getInsets();
         Dimension size = button1.getPreferredSize();
-        button1.setBounds(380+ insets.left, 280 + insets.top,
+        button1.setBounds(165+ insets.left, 200 + insets.top,
         		size.width+30,size.height+5);
-        button2.setBounds(380+ insets.left, 315 + insets.top,
+        button2.setBounds(305+ insets.left, 200 + insets.top,
         		size.width+30,size.height+5);
-        button3.setBounds(380+ insets.left, 350 + insets.top,
+        button3.setBounds(165+ insets.left, 240 + insets.top,
         		size.width+30,size.height+5);
-        button4.setBounds(380+ insets.left, 385 + insets.top,
+        button4.setBounds(305+ insets.left, 240 + insets.top,
         		size.width+30,size.height+5);
-        button5.setBounds(380+ insets.left, 420 + insets.top,
+        button5.setBounds(165+ insets.left, 280 + insets.top,
         		size.width+30,size.height+5);
-        button6.setBounds(380+ insets.left, 455 + insets.top,
+        button6.setBounds(305+ insets.left, 280 + insets.top,
         		size.width+30,size.height+5);
-        button7.setBounds(380+ insets.left, 490 + insets.top,
+        button7.setBounds(235+ insets.left, 320 + insets.top,
         		size.width+30,size.height+5);
 		
 	}
@@ -250,6 +281,7 @@ public class Tutorials extends JFrame {
 			BackGroundPane(String imagefile) {
 	    		if (imagefile != null) {
 	    			MediaTracker mt = new MediaTracker(this);
+	    			//Liefert das aktuelle Toolkit zurück
 	    			img = Toolkit.getDefaultToolkit().getImage(imagefile);
 	    			mt.addImage(img, 0);
 	    			try{
@@ -260,16 +292,15 @@ public class Tutorials extends JFrame {
 	    			}
 	    		}
 	    	}
+/**
+ * Mit protected kann keine andere Klasse in der Klasse
+ * zugreifen,doch die Klasse selber kann mit einer
+ * Unterklasse auf andere Klassen zugreifen.
+ */
 	    	protected void paintComponent(Graphics g){
 	    		super.paintComponent(g);
 	    		g.drawImage(img,0,0,this.getWidth(),this.getHeight(),this);
 	    	}
-	        
-	    
-	    
-	    
-	    
 	}
-	
 }
 

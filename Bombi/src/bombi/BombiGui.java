@@ -404,63 +404,45 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
         	player2.addradius();
         	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
         }
-        if (player1.bombItem())
-        { player1.addmaxbomb();
-         bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
-        }
-        
-        if (player1.explosionItem())
-        { player1.addradius();
-         bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
-        }
-        
-        if (player2 != null && player2.bombItem())
-        { player2.addmaxbomb();
-         bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
-        }
-        
-        if (player2 != null && player2.explosionItem())
-        { player2.addradius();
-         bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
-        }
         
         if (stepCount >= 15) {
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit() && tut>6 ||player1.death() && tut>6) {
+        if (player1.exit() && tut>0 ||player1.death() && tut>0) {
         	{
         	if(player1.exit()) playAudio.playSound("Exit");
         	if(player1.death()) playAudio.playSound("End");
         	
-        	new Menu();
-        	frame.dispose();
         	}
         	
         		try{
         			
-        			Thread.sleep(100000);
+        			Thread.sleep(5000);
         		}catch (Exception e) {
         			e.printStackTrace();
         		}
+        		running=false;
+            	new Tutorials();
+	        	frame.dispose();
             return;
         	}
         
-        if (player1.exit() && tut<7 ||player1.death() && tut<7) {
+        if (player1.exit() && tut==0 ||player1.death() && tut==0) {
         	{
         	if(player1.exit()) playAudio.playSound("Exit");
         	if(player1.death()) playAudio.playSound("End");
-        	
-        		new Tutorials();
-	        	frame.dispose();
         	}
         	
         		try{
         			
-        			Thread.sleep(100000);
+        			Thread.sleep(5000);
         		}catch (Exception e) {
         			e.printStackTrace();
         		}
+        		running=false;
+        		new Menu();
+	        	frame.dispose();
             return;
         	}
         
@@ -473,22 +455,6 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
             }
                 
         }
-        if (player1.exit() || player1.death()) {
-         if(true){ playAudio.playSound("End");{
-         new Menu();
-         }
-         }
-         try{
-        
-         Thread.sleep(100000);
-         }catch (Exception e) {
-         e.printStackTrace();
-         }
-            return;
-         }
-        if (multiplayer && player2 != null)
-            if (player2.exit() || player2.death())
-                return;
 
         handleKeyboard();
         updateBombs();

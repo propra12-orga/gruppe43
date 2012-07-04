@@ -21,25 +21,36 @@ public class Menu extends JFrame{
     }
  
     FlowLayout layout = new FlowLayout();  
-/*
- * Der Konstruktor.
+/**
+ * Hier haben wir den Konstruktor
+ * 
  */
     public Menu(){
         super("Bomberman");
         setLayout(layout);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setContentPane(new BackGroundPane("img/Bomberman.png"));
+        setContentPane(new BackGroundPane("img/Bomberman.gif"));
         
-        setLocation(250,500);
         setVisible(true);
-        setSize(900,700);
+        setSize(600,500);
+        //das fenster wird zentriert
+        setLocationRelativeTo(null);
+        /**
+         * Indem man setLayout(null); eingibt kann 
+         * man den button eine bestimmte position
+         * das mit der funktion insets später
+         * ausgeführt wird
+         */
         setLayout(null);
-        
- /*
-  * Ab hier fangen die Buttons an.
-  * Die Buttons werden ausgeführt von der funktion ActionListener.
-  */
+        /**
+         * Ab hier fangen die Buttons an.
+         * Die Buttons werden ausgeführt von der funktion
+         * ActionEvent.
+         * ActionListener implementiert das Interface und
+         * bekommt die Events(ActionEvent) übergeben.
+         */
+
         JButton start = new JButton("Einzelspieler");
         start.addActionListener(new ActionListener() {
             @Override
@@ -95,20 +106,21 @@ public class Menu extends JFrame{
             }
         });
         
-        JButton button3 = new JButton("Einstellungen");
+        JButton button3 = new JButton("Steuerung");
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame f = new JFrame();
-                
-                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
-                new Einstellungen();
-                dispose();
+            	JFrame steue= new JFrame();
             	
+            	steue.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            	
+            	new Steuerung();
+                dispose();
+                
             }
         });
         
+
         JButton close = new JButton("Schließen");
         close.addActionListener(new ActionListener() {
             @Override
@@ -125,20 +137,28 @@ public class Menu extends JFrame{
         add(button3);
         add(close);
         setVisible(true);
+
+        /**
+         * Mit insets kann man den buttons eine bestimmte
+         * position geben.
+         * In zusammenhang mit Dimension size kann man die
+         * breite und höhe der buttons ändern.
+         */
         
         Insets insets = getInsets();
         Dimension size = start.getPreferredSize();
-        start.setBounds(360+ insets.left, 280 + insets.top,
+        start.setBounds(225+ insets.left, 220 + insets.top,
         		size.width+30,size.height+5);
-        button1.setBounds(360+ insets.left, 315 + insets.top,
+        button1.setBounds(225+ insets.left, 255 + insets.top,
         		size.width+30,size.height+5);
-        button2.setBounds(360+ insets.left, 350 + insets.top,
+        button2.setBounds(225+ insets.left, 290 + insets.top,
         		size.width+30,size.height+5);
-        button3.setBounds(360+ insets.left, 385 + insets.top,
+        button3.setBounds(225+ insets.left,325+ insets.top,
         		size.width+30,size.height+5);
-        close.setBounds(360+ insets.left,420 + insets.top,
+        close.setBounds(225+ insets.left, 360+ insets.top,
         		size.width+30,size.height+5);
-        
+
+
     }
 
     class BackGroundPane extends JPanel{
@@ -148,6 +168,7 @@ public class Menu extends JFrame{
 		BackGroundPane(String imagefile) {
     		if (imagefile != null) {
     			MediaTracker mt = new MediaTracker(this);
+    			//Liefert das aktuelle Toolkit zurück
     			img = Toolkit.getDefaultToolkit().getImage(imagefile);
     			mt.addImage(img, 0);
     			try{
@@ -157,6 +178,11 @@ public class Menu extends JFrame{
     			}
     		}
     	}
+		/**
+		 * Mit protected kann keine andere Klasse in der Klasse
+		 * zugreifen,doch die Klasse selber kann mit einer
+		 * Unterklasse auf andere Klassen zugreifen.
+		 */
     	protected void paintComponent(Graphics g){
     		super.paintComponent(g);
     		g.drawImage(img,0,0,this.getWidth(),this.getHeight(),this);

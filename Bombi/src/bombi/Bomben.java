@@ -59,6 +59,12 @@ public class Bomben {
         bLevel.putBombByPixel(posX, posY);
     }
 
+ // SoundManager Audios einlesen
+    SoundManager playAudio = new SoundManager() {
+        public void initSounds() {
+            sounds.add(new Sound("Bumm", Sound.getURL("/Bumm.wav")));   // Explusionssound
+        }
+    };
     /**
      * 
      * @return Gibt die Position der Bombe auf der X-Achse zurück
@@ -122,7 +128,7 @@ public class Bomben {
             		fireu=1;
             	if (bLevel.getTileByPixel(posX, posY - i * height) == 2 && breakup == 0)
             		breakup=1;
-                if (bLevel.getTileByPixel(posX, posY - i * height) == 1 && breakup == 0) {
+                if (bLevel.getTileByPixel(posX, posY - i * height) == 1 && breakup == 0 || bLevel.getTileByPixel(posX, posY - i * height) == 4 && breakup == 0) {
                     bLevel.destroyBlockByPixel(posX, posY - i * height);
                     breakup = 1;
                     player.addpoints();
@@ -140,7 +146,7 @@ public class Bomben {
                 	fired=1;
                 if (bLevel.getTileByPixel(posX, posY + i * height) == 2 && breakdown == 0) 
                 	breakdown=1;
-                if (bLevel.getTileByPixel(posX, posY + i * height) == 1 && breakdown == 0) {
+                if (bLevel.getTileByPixel(posX, posY + i * height) == 1 && breakdown == 0 || bLevel.getTileByPixel(posX, posY + i * height) == 4 && breakdown == 0) {
                     bLevel.destroyBlockByPixel(posX, posY + i * height);
                     breakdown = 1;
                     player.addpoints();
@@ -158,7 +164,7 @@ public class Bomben {
                 	firer=1;
                 if (bLevel.getTileByPixel(posX + i * width, posY) == 2 && breakright == 0)
                 	breakright=1;
-                if (bLevel.getTileByPixel(posX + i * width, posY) == 1 && breakright == 0) {
+                if (bLevel.getTileByPixel(posX + i * width, posY) == 1 && breakright == 0 || bLevel.getTileByPixel(posX + i * width, posY) == 4 && breakright == 0) {
                     bLevel.destroyBlockByPixel(posX + i * width, posY);
                     breakright = 1;
                 	player.addpoints();
@@ -176,12 +182,12 @@ public class Bomben {
                 	firel=1;
                 if (bLevel.getTileByPixel(posX - i * width, posY) == 2 && breakleft == 0) 
                 	breakleft=1;
-                if (bLevel.getTileByPixel(posX - i * width, posY) == 1 && breakleft == 0) {
+                if (bLevel.getTileByPixel(posX - i * width, posY) == 1 && breakleft == 0 || bLevel.getTileByPixel(posX - i * width, posY) == 4 && breakleft == 0) {
                     bLevel.destroyBlockByPixel(posX - i * width, posY);
                     breakleft = 1;
                     player.addpoints();
                 }
-            }
+            } playAudio.playSound("Bumm"); // sound abspielen
         } else if (radiusDelayCounter > 0)
             radiusDelayCounter--;
         else {
@@ -210,12 +216,8 @@ public class Bomben {
             firer=0;
 
         }
-    } // SoundManager Audios einlesen
-    SoundManager playAudio = new SoundManager() {
-        public void initSounds() {
-            sounds.add(new Sound("Bumm", Sound.getURL("/Bumm.wav")));   // Explusionssound
-        }
-    };
+    } 
+
 
     /**
      * Diese Methode zeichnet die Bombe und in den Feldern in denen es Feuer gibt
@@ -239,7 +241,6 @@ public class Bomben {
             
         } else if (state == EXPLODING) {
             Texture.EXPLMID.draw(posX, posY, width, height, g);
-            playAudio.playSound("Bumm"); // sound abspielen
             
 
             for (int i = 1; i <= radiusup ; i++) {
@@ -265,31 +266,36 @@ public class Bomben {
             }
 
             for (int i = 1; i <= radiusleft; i++) {
-            	if(i<radiusleft && bLevel.hasFireByPixel(posX-i * height, posY)){
-                	Texture.EXPLHOR.draw(posX-i* height, posY, width, height, g);
-                	bLevel.markForUpdateByPixel(posX - radiusleft * height, posY);}
+            	if(i<radiusleft && bLevel.hasFireByPixel(posX-i * width, posY)){
+                	Texture.EXPLHOR.draw(posX-i* width, posY, width, height, g);
+                	bLevel.markForUpdateByPixel(posX - radiusleft * width, posY);}
                 	
-                	else if (i==radiusleft && bLevel.hasFireByPixel(posX - i * height, posY)){
-                		Texture.EXPLLEF.draw(posX - radiusleft * height, posY, width,height, g);
-                        bLevel.markForUpdateByPixel(posX -radiusleft * height, posY);
+                	else if (i==radiusleft && bLevel.hasFireByPixel(posX - i * width, posY)){
+                		Texture.EXPLLEF.draw(posX - radiusleft * width, posY, width,height, g);
+                        bLevel.markForUpdateByPixel(posX -radiusleft * width, posY);
                 	}
             }
 
             for (int i = 1; i <= radiusright; i++) {
-            	if(i<radiusright && bLevel.hasFireByPixel(posX+i * height, posY)){
-                	Texture.EXPLHOR.draw(posX+i* height, posY, width, height, g);
-                	bLevel.markForUpdateByPixel(posX + radiusright * height, posY);}
+
+            	if(i<radiusright && bLevel.hasFireByPixel(posX+i * width, posY)){
+                	Texture.EXPLHOR.draw(posX+i* width, posY, width, height, g);
+                	bLevel.markForUpdateByPixel(posX + radiusright * width, posY);
+}
                 	
-                	else if (i==radiusright && bLevel.hasFireByPixel(posX + i * height, posY)){
-                		Texture.EXPLRIG.draw(posX + radiusright * height, posY, width,height, g);
-                        bLevel.markForUpdateByPixel(posX +radiusright * height, posY);
+                	else if (i==radiusright && bLevel.hasFireByPixel(posX + i * width, posY)){
+                		Texture.EXPLRIG.draw(posX + radiusright * width, posY, width,height, g);
+                        bLevel.markForUpdateByPixel(posX +radiusright * width, posY);
                 	}
             }
 
         }
         bLevel.markForUpdateByPixel(posX, posY);
     }
-
+/**
+ * Diese Methode gibt an ob die Bombe explodiert ist.
+ * @return
+ */
     public boolean isExploded() {
         return state == EXPLODED;
     }
