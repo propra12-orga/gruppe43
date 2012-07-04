@@ -2,6 +2,7 @@ package bombi;
 
 import java.awt.Dimension;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class LevelParser {
             throws FileNotFoundException, IllegalFormatException, IOException {
         BufferedReader fileIn = null;
         if (!fullPath)// nur Dateiname angegeben, map soll in ./map/ liegen
-            path = "./map/" + path;
+            path = "map" + File.pathSeparator + path;
         fileIn = new BufferedReader(new FileReader(path));
         Dimension dim = parseDim(fileIn); // lese zunaechst Breite und Hoehe aus
         fileIn.close();
@@ -91,7 +92,6 @@ public class LevelParser {
             temp = removeComment(temp).trim(); // entferne zeilenweise blanks
                                                // und comments
             if (!temp.equals("")) { // ueberspringe leere Zeilen
-                System.out.println(temp);
                 if (dim) {// in dieser Zeile muss die Dimension folgen
                     // , und ; sind die einzigen Trennzeichen hier
                     int comma = temp.indexOf(',');

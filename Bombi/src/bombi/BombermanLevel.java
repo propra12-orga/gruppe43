@@ -1,6 +1,7 @@
 package bombi;
 
 import java.awt.Graphics;
+import java.util.NoSuchElementException;
 
 /**
  * Diese Klasse erzeugt Objekte, welche als Spielfeld interpretiert werden.
@@ -66,11 +67,11 @@ public class BombermanLevel {
      */
     public static final short CHUCKNORRIS = 7;
     private static final float NORRISPROB = 0.01f;
-    
+
     private static final byte ANIMDURATION = 20;
     private static int animCounter = ANIMDURATION;
     private static int animFrame = 0;
-    
+
     /**
      * Diese Methode ueberprueft lediglich, ob es sich bei einem Wert um einen
      * gueltigen Block handelt. Dabei werden nur die niedrigsten 6 Bit
@@ -111,6 +112,8 @@ public class BombermanLevel {
                                     // setzen. ATM auf true, da partielles
                                     // Updaten noch nicht von den anderen
                                     // Klassen unterstuetzt ist
+
+    private double seed = Math.random();
 
     /**
      * Liefert die aktuelle Kantenlaenge aller Kacheln in Pixeln zurueck. Der
@@ -378,8 +381,9 @@ public class BombermanLevel {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height)
             return true;
         short tile = getTile(posX, posY);
-        return (tile == INDESTRUCTIBLE || tile == STONE || tile == HIDDENEXIT); //|| hasBomb(
-                //posX, posY));
+        return (tile == INDESTRUCTIBLE || tile == STONE || tile == HIDDENEXIT); // ||
+                                                                                // hasBomb(
+        // posX, posY));
     }
 
     /**
@@ -399,6 +403,14 @@ public class BombermanLevel {
         destroyBlock(pixelX / tileDim, pixelY / tileDim);
     }
 
+    public double getSeed() {
+        return seed;
+    }
+
+    public void setSeed(double seed) {
+        this.seed = seed;
+    }
+
     /* Innere Methode. Von Aussen wird destroyBlockByPixel genutzt. */
     private void destroyBlock(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height)
@@ -407,47 +419,44 @@ public class BombermanLevel {
         if (tile == STONE) {
             tiles[posX][posY] &= ~TILE;
             // tiles[posX][posY] |= GRASS;
-            tiles[posX][posY] |= spawnPowerup();
+            tiles[posX][posY] |= spawnPowerup(seed);
             markForUpdate(posX, posY); // moechten Aenderung sehen
         } else if (tile == HIDDENEXIT) {
             tiles[posX][posY] &= ~TILE;
             tiles[posX][posY] |= EXIT;
             markForUpdate(posX, posY);
-        }
-        else if (tile == BOMBPLUS || tile == FIREPLUS){
+        } else if (tile == BOMBPLUS || tile == FIREPLUS) {
             tiles[posX][posY] &= ~TILE;
             tiles[posX][posY] |= GRASS;
             markForUpdate(posX, posY);
         }
         // addFire(posX, posY);
     }
-    
+
     /*
      * Kleine Hilfsmethode, welche zufaellig ein Powerup (oder eben nicht)
-     * zurueck gibt. Rueckgabewert ist entweder ein Powerup oder ein
-     * Gras-Block.
+     * zurueck gibt. Rueckgabewert ist entweder ein Powerup oder ein Gras-Block.
      */
-    private static final short spawnPowerup(){
-    	if(Math.random() <= BOPLPROB)
-    		return BOMBPLUS;
-    	if(Math.random() <= FIPLPROB)
-    		return FIREPLUS;
-    	//if(Math.random() <= NORRISPROB)
-    	//	return CHUCKNORRIS;
-    	return GRASS;
+    private static final short spawnPowerup(double seed) {
+        if (seed <= BOPLPROB)
+            return BOMBPLUS;
+        if (seed <= FIPLPROB)
+            return FIREPLUS;
+        // if(Math.random() <= NORRISPROB)
+        // return CHUCKNORRIS;
+        return GRASS;
     }
-    
+
     /**
-     * Diese Methode updatet das BombermanLevel. Im Moment beschraenkt
-     * sich dieses Update darauf, die Animationen fuer Powerups zu
-     * aktualisieren.
+     * Diese Methode updatet das BombermanLevel. Im Moment beschraenkt sich
+     * dieses Update darauf, die Animationen fuer Powerups zu aktualisieren.
      */
-    public void update(){
-    	animCounter--;
-    	if(animCounter <= 0){
-    		animCounter = ANIMDURATION;
-    		animFrame = (animFrame + 1) % Texture.ITEMBOMBUP.length;
-    	}
+    public void update() {
+        animCounter--;
+        if (animCounter <= 0) {
+            animCounter = ANIMDURATION;
+            animFrame = (animFrame + 1) % Texture.ITEMBOMBUP.length;
+        }
     }
 
     /**
@@ -484,12 +493,12 @@ public class BombermanLevel {
 
                     else if (currentTile == EXIT)
                         drawExit(i, j, g);
-                    
+
                     else if (currentTile == BOMBPLUS)
-                    	drawBombPlus(i, j, g);
-                    
+                        drawBombPlus(i, j, g);
+
                     else if (currentTile == FIREPLUS)
-                    	drawFirePlus(i, j, g);
+                        drawFirePlus(i, j, g);
                 }
             }
         }
@@ -515,13 +524,15 @@ public class BombermanLevel {
     private void drawExit(int posX, int posY, Graphics g) {
         Texture.EXIT.draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
     }
-    
+
     private void drawBombPlus(int posX, int posY, Graphics g) {
-        Texture.ITEMBOMBUP[animFrame].draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
+        Texture.ITEMBOMBUP[animFrame].draw(posX * tileDim, posY * tileDim,
+                tileDim, tileDim, g);
     }
-    
+
     private void drawFirePlus(int posX, int posY, Graphics g) {
-        Texture.ITEMFIRE[animFrame].draw(posX * tileDim, posY * tileDim, tileDim, tileDim, g);
+        Texture.ITEMFIRE[animFrame].draw(posX * tileDim, posY * tileDim,
+                tileDim, tileDim, g);
     }
 
     // //////////////////////////////////////////////////////////////////////
@@ -793,37 +804,40 @@ public class BombermanLevel {
     // //////////////////////////////////////////////////////////////////////
     // Ende der Methoden zum Setzen/Entfernen/Ueberpruefen der D, B und F Flags
     // //////////////////////////////////////////////////////////////////////
-    
-    public static String createPacket(BombermanLevel level) throws Exception{
-    	if(level == null || level.tiles.length == 0 || level.tiles[0].length == 0)
-    		throw new Exception();
-    	StringBuffer packet = new StringBuffer();
-    	packet.append("// automatically created level\n");
-    	// erzeuge Dimensionsmarker
-    	packet.append("[DIM]\n");
-    	packet.append(level.tiles.length +","+ level.tiles[0].length+";\n");
-    	// erzeuge Levelmarker
-    	packet.append("[LEVEL]\n");
-    	for(int j = 0; j < level.tiles[0].length; j++) {
-    		int i;
-    		for(i = 0; i < level.tiles.length - 1; i++)
-        		packet.append(level.tiles[i][j]+",");
-        	packet.append(level.tiles[i][j]+";\n");
-    	}
-    	return packet.toString();
+
+    public static String createPacket(BombermanLevel level)
+            throws NoSuchElementException {
+        if (level == null || level.tiles.length == 0
+                || level.tiles[0].length == 0)
+            throw new NoSuchElementException();
+        StringBuffer packet = new StringBuffer();
+        packet.append("// automatically created level\n\r");
+        // erzeuge Dimensionsmarker
+        packet.append("[DIM]\n");
+        packet.append(level.tiles.length + "," + level.tiles[0].length
+                + ";\n\r");
+        // erzeuge Levelmarker
+        packet.append("[LEVEL]\n\r");
+        for (int j = 0; j < level.tiles[0].length; j++) {
+            int i;
+            for (i = 0; i < level.tiles.length - 1; i++)
+                packet.append(level.tiles[i][j] + ",");
+            packet.append(level.tiles[i][j] + ";\n\r");
+        }
+        return packet.toString();
     }
-    
-//    public static BombermanLevel parsePacket(String packet) throws Exception{
-//    	if(packet == null || packet.isEmpty())
-//    		throw new Exception();
-//    	int beginIndex, endIndex;
-//    	beginIndex = endIndex = 0;
-//    	String line;
-//    	boolean dim, level;
-//    	while((endIndex = packet.indexOf('\n', beginIndex)) >= 0) {
-//    		line = packet.substring(beginIndex, endIndex);
-//    		if(line.equals("[DIM]"))
-//    			
-//    	}    	
-//    }
+
+    // public static BombermanLevel parsePacket(String packet) throws Exception{
+    // if(packet == null || packet.isEmpty())
+    // throw new Exception();
+    // int beginIndex, endIndex;
+    // beginIndex = endIndex = 0;
+    // String line;
+    // boolean dim, level;
+    // while((endIndex = packet.indexOf('\n', beginIndex)) >= 0) {
+    // line = packet.substring(beginIndex, endIndex);
+    // if(line.equals("[DIM]"))
+    //
+    // }
+    // }
 }// Ende der Klasse BombermanLevel
