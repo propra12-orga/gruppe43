@@ -418,12 +418,13 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
         	
         		try{
         			
-        			Thread.sleep(50000);
+        			Thread.sleep(5000);
         		}catch (Exception e) {
         			e.printStackTrace();
         		}
-        		new Tutorials();
-            	frame.dispose();
+        		running=false;
+            	new Tutorials();
+	        	frame.dispose();
             return;
         	}
         
@@ -431,15 +432,15 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
         	{
         	if(player1.exit()) playAudio.playSound("Exit");
         	if(player1.death()) playAudio.playSound("End");
-        	
         	}
         	
         		try{
         			
-        			Thread.sleep(50000);
+        			Thread.sleep(5000);
         		}catch (Exception e) {
         			e.printStackTrace();
         		}
+        		running=false;
         		new Menu();
 	        	frame.dispose();
             return;
@@ -454,10 +455,6 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
             }
                 
         }
-      
-        if (multiplayer && player2 != null)
-            if (player2.exit() || player2.death())
-                return;
 
         handleKeyboard();
         updateBombs();

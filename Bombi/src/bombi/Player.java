@@ -139,7 +139,7 @@ public class Player{
 	}
 	
 	public int getPosXForBomb() {
-		return posX+l.getTileDim()/2;
+		return posX+width/2;
 	}
 	/**
 	 *     
@@ -149,7 +149,7 @@ public class Player{
 	
 	
 	public int getPosYForBomb() {
-		return posY+l.getTileDim()/2;
+		return posY+height/2;
 	}
 	/**
 	 * Konstructor um Bomben-Daten fuer Kollision zu bekommen 
@@ -181,7 +181,7 @@ public class Player{
      */
     public void draw(Graphics2D g) {
     	int dim = l.getTileDim(); 
-		if(health==1){Texture.PLAYER_IDLE_FRONT.draw(posX, posY-dim/2, width, (height*3)/2, g);
+		if(health==1){Texture.PLAYER_IDLE_FRONT.draw(posX, posY-dim/2, dim, (dim*3)/2, g);
 			
 		}
         
