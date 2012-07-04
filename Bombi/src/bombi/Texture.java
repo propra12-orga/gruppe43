@@ -296,7 +296,9 @@ public class Texture {
     public static Texture P2DIED = new Texture(0,1281,320,128);
     
     public static Texture SPEED1 = new Texture(0, 1409, 32, 32);
-    public static Texture SPEED2 = new Texture(32, 1441, 32, 32);
+    public static Texture SPEED2 = new Texture(32, 1409, 32, 32);
+    public static Texture HEART1 = new Texture(64, 1409, 32, 32);
+    public static Texture HEART2 = new Texture(96, 1409, 32,32);
 
     // Abwaertskompatibilitaet
     public static Texture SPIELER1 = PLAYER_IDLE_FRONT;
