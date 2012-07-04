@@ -7,10 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +16,18 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class BombiGui extends JComponent implements Runnable {
-    private int width = 640;
-    private int height = 480;
+    protected int width = 640;
+    protected int height = 480;
     private int gameWidth, gameHeight;
 
-    private int stepsize = 10;
+    protected int stepsize = 10;
 
     private static final long SECOND = 1000000000; // eine Sekunde in
                                                    // Nanosekunden
     private static final long SLEEPTIME = SECOND / 60; // 60 FPS
 
     private boolean running = true;
-    private static int stepCount = 0;
+    protected static int stepCount = 0;
     // im Speicher gehaltenes Bild & zugehoeriges Graphics-Objekt für
     // Double-Buffering
     private BufferedImage dbImage;
@@ -42,85 +38,47 @@ public class BombiGui extends JComponent implements Runnable {
 
     // managet die Tastatur.. stellt im Grunde eine auf Polling basierende
     // Lösung dar (statt Interrupts)
-    private KeyPoller keyPoller;
-    
+    protected KeyPoller keyPoller;
+
     // Netzwerk In- und Output
     private Socket socket;
     private BufferedReader fromSocket;
     private BufferedWriter toSocket;
 
     // Liste für die Bomben
-    private List<Bomben> bombsP1;
-    private List<Bomben> bombsP2;
+    protected List<Bomben> bombsP1;
+    protected List<Bomben> bombsP2;
 
     private boolean multiplayer;
     private int tut;
     private JFrame frame;
-    Player player1,player2;
+    Player player1, player2;
     BombermanLevel bLevel;
-    Robot robot1;
     Menu m;
     int fps = 0; // wird durch den main-loop gesetzt
     int tutmsg;
-    int tutcounter=420;
-
+    int tutcounter = 420;
 
     public BombiGui(boolean multiplayer, int tut, JFrame frame) {
         super();
         this.frame = frame;
-        this.tut=tut;
-        if (tut==1){
-         initializeLevel("/tut1.map");
-         initializeGraphics();
-         tutmsg=1;
-        } else if(tut==2){
-         initializeLevel("/tut2.map");
-         initializeGraphics();
-         tutmsg=2;
-        }else if(tut==3){
-         initializeLevel("/tut3.map");
-         initializeGraphics();
-         tutmsg=3;
-        }else if(tut==4){
-         initializeLevel("/tut4.map");
-         initializeGraphics();
-         robot1 = new Robot(bLevel, 10*bLevel.getTileDim(), 4*bLevel.getTileDim());
-         tutmsg=4;
-        }else if(tut==5){
-         initializeLevel("/tut5.map");
-         initializeGraphics();
-         tutmsg=5;
-        }else if(tut==6){
-         initializeLevel("/tut6.map");
-         initializeGraphics();
-         tutmsg=6;
-        } else{
-        	initializeLevel("/tutdd.map");
-        	initializeGraphics();}
+        this.tut = tut;
+        if (tut >= 1 && tut <= 6) {
+            initializeLevel("/tut" + tut + ".map");
+            tutmsg = tut;
+        } else {
+            initializeLevel("/empty.map");
+        }
+        initializeGraphics();
+        initializeInput();
 
-        
-        // erzeuge unseren KeyPoller
-        keyPoller = new KeyPoller();
-        addKeyListener(keyPoller);
-
-        try {
-
-		//	initializeNetwork(!multiplayer);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
         // erzeuge immer den ersten Spieler
         player1 = new Player(bLevel, bLevel.getTileDim(), bLevel.getTileDim());
         this.multiplayer = multiplayer;
-       if (multiplayer)// den Zweiten nur fuer MP
-        	player2 = new Player(bLevel, bLevel.getTileDim()+520,(bLevel.getTileDim()-2)+222);
-//           // player2 = new Player(bLevel, bLevel.getTileDim()
-//             //       * (bLevel.getWidth() - 2), bLevel.getTileDim()
-//               //     * (bLevel.getHeight() - 2));
-
-       
+        if (multiplayer)// den Zweiten nur fuer MP
+            player2 = new Player(bLevel, bLevel.getTileDim()
+                    * (bLevel.getWidth() - 2), bLevel.getTileDim()
+                    * (bLevel.getHeight() - 2));
 
         bombsP1 = new ArrayList<Bomben>();
         bombsP2 = new ArrayList<Bomben>();
@@ -129,9 +87,8 @@ public class BombiGui extends JComponent implements Runnable {
         playAudio.playSound("Fight");
     }
 
-
     public BombiGui(JFrame frame) {
-        this(false,0,frame);
+        this(false, 0, frame);
     }
 
     private void initializeLevel(String pathToMap) {
@@ -142,47 +99,12 @@ public class BombiGui extends JComponent implements Runnable {
             bLevel = new BombermanLevel(17, 9, width, height);
         }
     }
-    
-    private void initializeLevel(boolean network){
-        try {
-FileWriter fw = new FileWriter("/tmp/lol.map");
-fw.write(BombermanLevel.createPacket(bLevel));
-fw.write("//");
-fw.flush();
-fw.close();
-} catch (Exception e) {
-// TODO Auto-generated catch block
-e.printStackTrace();
-}
-    }
-    
-    private void initializeNetwork(boolean server) throws Exception{
-     if(server) {
-     ServerSocket serverSock = new ServerSocket(1337);
-     socket = serverSock.accept();
-     }
-     else
-     socket = new Socket("localhost", 1337);
-     toSocket = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-     fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-     if(server) {
-     String packet = BombermanLevel.createPacket(bLevel) + "END\n";
-     toSocket.write(packet);
-     toSocket.flush();
-     }
-     else {
-     FileWriter fw = new FileWriter("/tmp/lol.map");
-     while(true) {
-     String line = fromSocket.readLine();
-     if(line.trim().equals("END"))
-     break;
-     fw.write(line+"\n");
-     }
-     fw.flush();
-     fw.close();
-bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
-                    height);
-     }
+
+    protected void initializeInput() {
+        // erzeuge unseren KeyPoller
+        keyPoller = new KeyPoller();
+        addKeyListener(keyPoller);
+
     }
 
     private void initializeGraphics() {
@@ -199,47 +121,50 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
     }
 
     /**
-* Double Buffering wobei ein Image erstellt wird und im Hintergrund das
-* nächste Bild gemalt wird.
-*/
+     * Double Buffering wobei ein Image erstellt wird und im Hintergrund das
+     * nächste Bild gemalt wird.
+     */
     public void paintBuffer() {
 
         if (player1.exit())
-            Texture.P1WIN.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+            Texture.P1WIN.draw(bLevel.getTileDim() * 3,
+                    bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                    bLevel.getTileDim() * 4, dbg);
         if (player1.death()) {
-            Texture.P1DIED.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+            Texture.P1DIED.draw(bLevel.getTileDim() * 3,
+                    bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                    bLevel.getTileDim() * 4, dbg);
 
             return;
         }
         if (multiplayer && player2 != null) {
             if (player2.exit())
-                Texture.P2WIN.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+                Texture.P2WIN.draw(bLevel.getTileDim() * 3,
+                        bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                        bLevel.getTileDim() * 4, dbg);
             if (player2.death()) {
-                Texture.P2DIED.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
+                Texture.P2DIED.draw(bLevel.getTileDim() * 3,
+                        bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                        bLevel.getTileDim() * 4, dbg);
                 return;
             }
         }
-       
-        
+
         // zeichne das Lvel
         bLevel.draw(gameG);
-        
 
         // zeichne die Bombe für Spieler 1
         for (int i = 0; i < bombsP1.size(); i++) {
             bombsP1.get(i).draw(gameG);
         }
-     // zeichne die Bombe für Spieler 2
+        // zeichne die Bombe für Spieler 2
         for (int i = 0; i < bombsP2.size(); i++) {
             bombsP2.get(i).draw(gameG);
         }
 
         // zeichne zuletzt den Spieler
         player1.draw(gameG);
-        
-        if(robot1 != null)
-        	robot1.draw(gameG);
-        
+
         if (multiplayer && player2 != null)
             player2.draw(gameG);
 
@@ -250,32 +175,44 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
         // zeige fps an
         dbg.setColor(Color.ORANGE);
         dbg.drawString(fps + "FPS", this.getWidth() - 50, 20);
-        
-      //Zeigt Punktestand für Spieler 1 an.
-        dbg.setColor(Color.ORANGE);
-        dbg.drawString("Punkte Spieler 1: "+player1.points(), this.getWidth()-19*(this.getWidth()/20), 20);
-        
-        
-        //Zeigt den Punktestand für Spieler2 an.
-        if (multiplayer && player2 != null) {
-        	dbg.setColor(Color.ORANGE);
-            dbg.drawString("Punkte Spieler 2: "+player2.points(), this.getWidth()-8*(this.getWidth()/20), 20);
-        }
-       
-        // Zeichnet die Nachrichten fürs Tutorial
-        if (tutmsg==1 && tutcounter>0)
-         Texture.TUTMSG1.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
-        if (tutmsg==2 && tutcounter>0)
-            Texture.TUTMSG2.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
-        if (tutmsg==3 && tutcounter>0)
-            Texture.TUTMSG3.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
-        if (tutmsg==4 && tutcounter>0)
-            Texture.TUTMSG4.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
-        if (tutmsg==5 && tutcounter>0)
-            Texture.TUTMSG5.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
-        if (tutmsg==6 && tutcounter>0)
-            Texture.TUTMSG6.draw(bLevel.getTileDim()*3, bLevel.getTileDim()*4, bLevel.getTileDim()*10, bLevel.getTileDim()*4, dbg);
 
+        // Zeigt Punktestand für Spieler 1 an.
+        dbg.setColor(Color.ORANGE);
+        dbg.drawString("Punkte Spieler 1: " + player1.points(), this.getWidth()
+                - 19 * (this.getWidth() / 20), 20);
+
+        // Zeigt den Punktestand für Spieler2 an.
+        if (multiplayer && player2 != null) {
+            dbg.setColor(Color.ORANGE);
+            dbg.drawString("Punkte Spieler 2: " + player2.points(),
+                    this.getWidth() - 8 * (this.getWidth() / 20), 20);
+        }
+
+        // Zeichnet die Nachrichten fürs Tutorial
+        if (tutmsg == 1 && tutcounter > 0)
+            Texture.TUTMSG1.draw(bLevel.getTileDim() * 3,
+                    bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                    bLevel.getTileDim() * 4, dbg);
+        else if (tutmsg == 2 && tutcounter > 0)
+            Texture.TUTMSG2.draw(bLevel.getTileDim() * 3,
+                    bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                    bLevel.getTileDim() * 4, dbg);
+        else if (tutmsg == 3 && tutcounter > 0)
+            Texture.TUTMSG3.draw(bLevel.getTileDim() * 3,
+                    bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                    bLevel.getTileDim() * 4, dbg);
+        else if (tutmsg == 4 && tutcounter > 0)
+            Texture.TUTMSG4.draw(bLevel.getTileDim() * 3,
+                    bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                    bLevel.getTileDim() * 4, dbg);
+        else if (tutmsg == 5 && tutcounter > 0)
+            Texture.TUTMSG5.draw(bLevel.getTileDim() * 3,
+                    bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                    bLevel.getTileDim() * 4, dbg);
+        else if (tutmsg == 6 && tutcounter > 0)
+            Texture.TUTMSG6.draw(bLevel.getTileDim() * 3,
+                    bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                    bLevel.getTileDim() * 4, dbg);
 
     }
 
@@ -294,10 +231,10 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
     }
 
     /**
-* Methode, welche die bevorzugte Groesse dieser JComponent zurueck gibt.
-*
-* @return: Dimension WIDTH x HEIGHT, welche fest codiert sind.
-*/
+     * Methode, welche die bevorzugte Groesse dieser JComponent zurueck gibt.
+     * 
+     * @return: Dimension WIDTH x HEIGHT, welche fest codiert sind.
+     */
     public Dimension getPreferredSize() {
         return new Dimension(width, height);
     }
@@ -311,13 +248,13 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
             sounds.add(new Sound("Step", Sound.getURL("/Step.wav")));
             sounds.add(new Sound("Fight", Sound.getURL("/Fight.wav")));
             sounds.add(new Sound("Pickup", Sound.getURL("/Pickup.wav")));
-            
+
         }
     };
 
     /**
-* Startet den Spieleloop.
-*/
+     * Startet den Spieleloop.
+     */
     public void run() {
         long beforeUpdate, updateTime;
 
@@ -328,11 +265,11 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
                                        // ist
 
         /*
-* while-schleife war vorher auf "running".hab die Abfrage ob ein
-* spieler das EXIT erreicht hat wenn ja m�sste die while schleife
-* abrechen und das spiel beendet werden. Gibt bestimmt eine bessere
-* m�glichkeit mit etwas wie stop()...
-*/
+         * while-schleife war vorher auf "running".hab die Abfrage ob ein
+         * spieler das EXIT erreicht hat wenn ja m�sste die while schleife
+         * abrechen und das spiel beendet werden. Gibt bestimmt eine bessere
+         * m�glichkeit mit etwas wie stop()...
+         */
         while (running) {
 
             beforeUpdate = System.nanoTime();
@@ -370,96 +307,105 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
     }
 
     /**
-* Methode, welche (atm) 60x pro Sekunde aufgerufen wird und (nicht
-* sichtbare) Updates an der Spielumgebung durchführt. Hierzu gehören das
-* Einlesen von Tastatureingaben, Bewegen des Spielerobjekts, Herunterzählen
-* des Countdowns der Bomben etc.
-*/
-    public void bombermanUpdate() {
+     * Methode, welche (atm) 60x pro Sekunde aufgerufen wird und (nicht
+     * sichtbare) Updates an der Spielumgebung durchführt. Hierzu gehören das
+     * Einlesen von Tastatureingaben, Bewegen des Spielerobjekts, Herunterzählen
+     * des Countdowns der Bomben etc.
+     */
+    protected void bombermanUpdate() {
         if (getWidth() != width || getHeight() != height)
             rescale();
 
-        if(tutcounter>0)
-        	tutcounter--;
-        
-        if (player1.bombItem()) 	
-        { playAudio.playSound("Pickup");
-        	player1.addmaxbomb();
-        	bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
-        }       
-        if (player1.explosionItem())
-        { playAudio.playSound("Pickup");
-        	player1.addradius();
-        	bLevel.destroyBlockByPixel(player1.getPosX()+bLevel.getTileDim()/2, player1.getPosY()+bLevel.getTileDim()/2);
+        if (tutcounter > 0)
+            tutcounter--;
+
+        if (player1.bombItem()) {
+            playAudio.playSound("Pickup");
+            player1.addmaxbomb();
+            bLevel.destroyBlockByPixel(player1.getPosX() + bLevel.getTileDim()
+                    / 2, player1.getPosY() + bLevel.getTileDim() / 2);
         }
-        
-        if (player2 != null && player2.bombItem())
-        { playAudio.playSound("Pickup");
-        	player2.addmaxbomb();
-        	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
+        if (player1.explosionItem()) {
+            playAudio.playSound("Pickup");
+            player1.addradius();
+            bLevel.destroyBlockByPixel(player1.getPosX() + bLevel.getTileDim()
+                    / 2, player1.getPosY() + bLevel.getTileDim() / 2);
         }
-        
-        if (player2 != null && player2.explosionItem())
-        { playAudio.playSound("Pickup");
-        	player2.addradius();
-        	bLevel.destroyBlockByPixel(player2.getPosX()+bLevel.getTileDim()/2, player2.getPosY()+bLevel.getTileDim()/2);
+
+        if (player2 != null && player2.bombItem()) {
+            playAudio.playSound("Pickup");
+            player2.addmaxbomb();
+            bLevel.destroyBlockByPixel(player2.getPosX() + bLevel.getTileDim()
+                    / 2, player2.getPosY() + bLevel.getTileDim() / 2);
         }
-        
+
+        if (player2 != null && player2.explosionItem()) {
+            playAudio.playSound("Pickup");
+            player2.addradius();
+            bLevel.destroyBlockByPixel(player2.getPosX() + bLevel.getTileDim()
+                    / 2, player2.getPosY() + bLevel.getTileDim() / 2);
+        }
+
         if (stepCount >= 15) {
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit() && tut>0 ||player1.death() && tut>0) {
-        	{
-        	if(player1.exit()) playAudio.playSound("Exit");
-        	if(player1.death()) playAudio.playSound("End");
-        	
-        	}
-        	
-        		try{
-        			
-        			Thread.sleep(5000);
-        		}catch (Exception e) {
-        			e.printStackTrace();
-        		}
-        		running=false;
-            	new Tutorials();
-	        	frame.dispose();
-            return;
-        	}
-        
-        if (player1.exit() && tut==0 ||player1.death() && tut==0) {
-        	{
-        	if(player1.exit()) playAudio.playSound("Exit");
-        	if(player1.death()) playAudio.playSound("End");
-        	}
-        	
-        		try{
-        			
-        			Thread.sleep(5000);
-        		}catch (Exception e) {
-        			e.printStackTrace();
-        		}
-        		running=false;
-        		new Menu();
-	        	frame.dispose();
-            return;
-        	}
-        
-        if (multiplayer && player2 != null){
-            if (player2.exit() ){
-            	playAudio.playSound("Exit");return;
+        if (player1.exit() && tut > 0 || player1.death() && tut > 0) {
+            {
+                if (player1.exit())
+                    playAudio.playSound("Exit");
+                if (player1.death())
+                    playAudio.playSound("End");
+
             }
-            if (player2.death() ){
-            	playAudio.playSound("End");return;
+
+            try {
+
+                Thread.sleep(5000);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-                
+            running = false;
+            new Tutorials();
+            frame.dispose();
+            return;
+        }
+
+        if (player1.exit() && tut == 0 || player1.death() && tut == 0) {
+            {
+                if (player1.exit())
+                    playAudio.playSound("Exit");
+                if (player1.death())
+                    playAudio.playSound("End");
+            }
+
+            try {
+
+                Thread.sleep(5000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            running = false;
+            new Menu();
+            frame.dispose();
+            return;
+        }
+
+        if (multiplayer && player2 != null) {
+            if (player2.exit()) {
+                playAudio.playSound("Exit");
+                return;
+            }
+            if (player2.death()) {
+                playAudio.playSound("End");
+                return;
+            }
+
         }
 
         handleKeyboard();
         updateBombs();
     }
-        
 
     private void rescale() {
         width = getWidth();
@@ -470,7 +416,7 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
         initializeGraphics();
     }
 
-    private void handleKeyboard() {
+    protected void handleKeyboard() {
         // Ueberpruefe Tastatureingaben player 1
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
             player1.Direction(-bLevel.getTileDim() / stepsize, 0);
@@ -490,7 +436,10 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
             int posX = player1.getPosXForBomb();
             int posY = player1.getPosYForBomb();
             if (!bLevel.hasBombByPixel(posX, posY) && player1.bombplantable()) {
-                bombsP1.add(new Bomben((posX/bLevel.getTileDim())*bLevel.getTileDim(), (posY/bLevel.getTileDim())*bLevel.getTileDim(), player1.maxradius(),player1, bLevel));
+                bombsP1.add(new Bomben((posX / bLevel.getTileDim())
+                        * bLevel.getTileDim(), (posY / bLevel.getTileDim())
+                        * bLevel.getTileDim(), player1.maxradius(), player1,
+                        bLevel));
                 player1.addcurrentbombs();
             }
             // bombs.add(new Bomben(robot.getPosX(),robot.getPosY(), 2,
@@ -498,8 +447,9 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
         }
 
         if (multiplayer && player2 != null) {
-         if((player1.getPosX()==player2.getPosX())&&(player1.getPosY()==player2.getPosY()))
-         return;
+            if ((player1.getPosX() == player2.getPosX())
+                    && (player1.getPosY() == player2.getPosY()))
+                return;
             if (keyPoller.isKeyDown(KeyEvent.VK_A)) {
                 player2.Direction(-bLevel.getTileDim() / stepsize, 0);
                 stepCount++;
@@ -517,8 +467,12 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
                 playAudio.playSound("Put");
                 int posX = player2.getPosX();
                 int posY = player2.getPosY();
-                if (!bLevel.hasBombByPixel(posX, posY) && player2.bombplantable()) {
-                    bombsP2.add(new Bomben((posX/bLevel.getTileDim())*bLevel.getTileDim(), (posY/bLevel.getTileDim())*bLevel.getTileDim(), player2.maxradius(),player2, bLevel));
+                if (!bLevel.hasBombByPixel(posX, posY)
+                        && player2.bombplantable()) {
+                    bombsP2.add(new Bomben((posX / bLevel.getTileDim())
+                            * bLevel.getTileDim(), (posY / bLevel.getTileDim())
+                            * bLevel.getTileDim(), player2.maxradius(),
+                            player2, bLevel));
                     player2.addcurrentbombs();
                 }
 
@@ -542,14 +496,14 @@ bLevel = new BombermanLevel(LevelParser.parseMap("/tmp/lol.map", true), width,
     private void updateBombs() {
         for (int i = 0; i < bombsP1.size(); i++) {
             bombsP1.get(i).update();
-            if (bombsP1.get(i).isExploded()){
+            if (bombsP1.get(i).isExploded()) {
                 bombsP1.remove(i);
                 player1.removecurrentbombs();
             }
         }
         for (int i = 0; i < bombsP2.size(); i++) {
             bombsP2.get(i).update();
-            if (bombsP2.get(i).isExploded()){
+            if (bombsP2.get(i).isExploded()) {
                 bombsP2.remove(i);
                 player2.removecurrentbombs();
             }

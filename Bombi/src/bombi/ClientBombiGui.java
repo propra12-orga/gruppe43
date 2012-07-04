@@ -71,7 +71,11 @@ public class ClientBombiGui extends BombiGui {
      * finden.
      */
     public static final String RELEASED = "RL";
-    public static final String RANDOM = "RA";
+    /**
+     * Informiert den Client darueber, dass die folgenden Daten aktualisierte
+     * Werte fuer eine Kachel des Levels darstellen.
+     */
+    public static final String TILE = "TI";
 
     // Netzwerk In- und Output
     private Socket socket;
@@ -85,10 +89,15 @@ public class ClientBombiGui extends BombiGui {
 
     public ClientBombiGui(JFrame frame, String host, int port) {
         super(true, -1, frame);
+        this.host = host;
+        this.port = port;
+        initializeInput();
     }
 
     @Override
     protected void initializeInput() {
+        if (host == null || port <= 0)
+            return;
         try {
             initializeNetwork();
         } catch (IOException e) {
@@ -101,7 +110,7 @@ public class ClientBombiGui extends BombiGui {
     }
 
     private void initializeNetwork() throws IOException {
-        socket = new Socket("sparrowprince.dyndns-remote.com", 1337);
+        socket = new Socket(host, port);
         fromServer = new BufferedReader(new InputStreamReader(
                 socket.getInputStream()));
         toServer = new BufferedWriter(new OutputStreamWriter(
@@ -175,6 +184,9 @@ public class ClientBombiGui extends BombiGui {
                         // lese nun aus der temporaeren Datei das Level
                         bLevel = new BombermanLevel(LevelParser.parseMap("temp"
                                 + this.hashCode(), false), width, height);
+                        bLevel.setSpawnPowerups(false);
+                        player1.setBombermanLevel(bLevel);
+                        player2.setBombermanLevel(bLevel);
                         // und loesche die Datei
                         new File(filename).delete();
                         System.out.println("... level successfully received!");
@@ -251,10 +263,27 @@ public class ClientBombiGui extends BombiGui {
                         int keyCode = Integer.parseInt(input.substring(PRESSED
                                 .length()));
                         keyReceiver.keyReleased(keyCode);
-                    } else if (input.startsWith(RANDOM)) {
-                        seed = Double.parseDouble(input.substring(RANDOM
-                                .length()));
-                        bLevel.setSeed(seed);
+                    }
+
+                    // Fall 6: Eine neue Kachel wurde verschickt
+                    else if (input.startsWith(TILE)) {
+                        // nach dem Schluesselwort folgt die Kachel
+                        int beginIndex = TILE.length();
+                        int endIndex = input.indexOf(POSX, beginIndex);
+                        short tile = Short.parseShort(input.substring(
+                                beginIndex, endIndex));
+                        // dann die X-Position
+                        beginIndex = endIndex + POSX.length();
+                        endIndex = input.indexOf(POSY, beginIndex);
+                        int posX = Integer.parseInt(input.substring(beginIndex,
+                                endIndex));
+                        // und zuletzt die Y-Position
+                        beginIndex = endIndex + POSY.length();
+                        int posY = Integer
+                                .parseInt(input.substring(beginIndex));
+                        // aktualisiere die empfangene Kachel
+                        bLevel.setTile(tile, posX, posY);
+                        System.out.println("Placed remote bomb");
                     }
                 } catch (NumberFormatException e) {
                     System.err.println("Corrupt package.");

@@ -61,7 +61,11 @@ public class ServerBombiGui extends BombiGui {
      * finden.
      */
     public static final String RELEASED = "RL";
-    public static final String RANDOM = "RA";
+    /**
+     * Informiert den Client darueber, dass die folgenden Daten aktualisierte
+     * Werte fuer eine Kachel des Levels darstellen.
+     */
+    public static final String TILE = "TI";
 
     // Netzwerk In- und Output
     private ServerSocket serverSock;
@@ -69,7 +73,6 @@ public class ServerBombiGui extends BombiGui {
     private BufferedReader fromClient;
     private BufferedWriter toClient;
     private NetworkKeyReceiver keyReceiver;
-    private boolean accepting = true;
 
     private static final int PRECISEUPDATE = 20;
     private int puCounter = PRECISEUPDATE;
@@ -96,7 +99,6 @@ public class ServerBombiGui extends BombiGui {
         serverSock = new ServerSocket(1337);
         System.out.println("Waiting for client..");
         socket = serverSock.accept();
-        accepting = false;
 
         toClient = new BufferedWriter(new OutputStreamWriter(
                 socket.getOutputStream()));
@@ -112,37 +114,6 @@ public class ServerBombiGui extends BombiGui {
         new Thread(new NetworkManager()).start();
         System.out.println("... successfully connected!");
     }
-
-    // private int[] nextSpawnPoint(int index) {
-    // int[] spawnPoint = new int[2];
-    // switch (index) {
-    // case 0:
-    // spawnPoint[0] = bLevel.getTileDim() * (bLevel.getWidth() - 2);
-    // spawnPoint[1] = bLevel.getTileDim();
-    // break;
-    // case 1:
-    // spawnPoint[0] = bLevel.getTileDim();
-    // spawnPoint[1] = bLevel.getTileDim() * (bLevel.getHeight() - 2);
-    // break;
-    // case 2:
-    // spawnPoint[0] = bLevel.getTileDim() * (bLevel.getWidth() - 2);
-    // spawnPoint[1] = bLevel.getTileDim() * (bLevel.getHeight() - 2);
-    // break;
-    // default:
-    // int loopCounter = 0;
-    // while (true) {
-    // loopCounter++;
-    // spawnPoint[0] = (int) (Math.random() * bLevel.getWidth() * bLevel
-    // .getTileDim());
-    // spawnPoint[1] = (int) (Math.random() * bLevel.getHeight() * bLevel
-    // .getTileDim());
-    // if (!bLevel.isSolidByPixel(spawnPoint[0], spawnPoint[1])
-    // || loopCounter > 100)
-    // break;
-    // }
-    // }
-    // return spawnPoint;
-    // }
 
     private void removeClient() {
         if (toClient != null) {
@@ -175,14 +146,11 @@ public class ServerBombiGui extends BombiGui {
                 socket = null;
             }
         }
-        accepting = true;
     }
 
     @Override
     protected void bombermanUpdate() {
         super.bombermanUpdate();
-        send(RANDOM + seed + "\n");
-        bLevel.setSeed(seed);
         if (puCounter >= 0)
             puCounter--;
         else {
@@ -190,7 +158,8 @@ public class ServerBombiGui extends BombiGui {
             sendPlayer(player1.getPosX(), player1.getPosY(), 1);
             sendPlayer(player2.getPosX(), player2.getPosY(), 2);
         }
-        seed = Math.random();
+        // sende dem Client neue Kacheln (idR Powerups)
+        send(bLevel.createNewTilePacket());
     }
 
     @Override
