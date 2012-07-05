@@ -44,7 +44,8 @@ public class LevelParser {
             throws FileNotFoundException, IllegalFormatException, IOException {
         BufferedReader fileIn = null;
         if (!fullPath)// nur Dateiname angegeben, map soll in ./map/ liegen
-            path = "map" + File.pathSeparator + path;
+            path = "map" + File.separatorChar + path;
+        System.out.println(path);
         fileIn = new BufferedReader(new FileReader(path));
         Dimension dim = parseDim(fileIn); // lese zunaechst Breite und Hoehe aus
         fileIn.close();
