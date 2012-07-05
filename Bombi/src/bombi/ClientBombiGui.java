@@ -122,31 +122,31 @@ public class ClientBombiGui extends BombiGui {
     protected void handleKeyboard() {
         // Ueberpruefe Tastatureingaben des Hosts
         if (keyPoller.isKeyDown(KeyEvent.VK_LEFT)) {
-            player2.Direction(-bLevel.getTileDim() / stepsize, 0);
+            player2.Direction(-bLevel.getTileDim() / player2.getStepsize(), 0);
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_RIGHT)) {
-            player2.Direction(bLevel.getTileDim() / stepsize, 0);
+            player2.Direction(bLevel.getTileDim() / player2.getStepsize(), 0);
             stepCount++;
         }
         if (keyPoller.isKeyDown(KeyEvent.VK_UP)) {
-            player2.Direction(0, -bLevel.getTileDim() / stepsize);
+            player2.Direction(0, -bLevel.getTileDim() / player2.getStepsize());
             stepCount++;
         } else if (keyPoller.isKeyDown(KeyEvent.VK_DOWN)) {
-            player2.Direction(0, bLevel.getTileDim() / stepsize);
+            player2.Direction(0, bLevel.getTileDim() / player2.getStepsize());
             stepCount++;
         }
         if (keyReceiver.isKeyDown(KeyEvent.VK_LEFT)) {
-            player1.Direction(-bLevel.getTileDim() / stepsize, 0);
+            player1.Direction(-bLevel.getTileDim() / player1.getStepsize(), 0);
             stepCount++;
         } else if (keyReceiver.isKeyDown(KeyEvent.VK_RIGHT)) {
-            player1.Direction(bLevel.getTileDim() / stepsize, 0);
+            player1.Direction(bLevel.getTileDim() / player1.getStepsize(), 0);
             stepCount++;
         }
         if (keyReceiver.isKeyDown(KeyEvent.VK_UP)) {
-            player1.Direction(0, -bLevel.getTileDim() / stepsize);
+            player1.Direction(0, -bLevel.getTileDim() / player1.getStepsize());
             stepCount++;
         } else if (keyReceiver.isKeyDown(KeyEvent.VK_DOWN)) {
-            player1.Direction(0, bLevel.getTileDim() / stepsize);
+            player1.Direction(0, bLevel.getTileDim() / player1.getStepsize());
             stepCount++;
         }
     }
@@ -160,7 +160,7 @@ public class ClientBombiGui extends BombiGui {
 
         @Override
         public void run() {
-            String input; // temporaerer Speicher fuer Pakete
+            String input; //stepsize temporaerer Speicher fuer Pakete
             while (true) {
                 try {
                     // entferne whitespaces, welche nicht vorkommen sollten
