@@ -11,22 +11,12 @@ import java.net.URL;
 public class Sound {
 	public String name;
 	public AudioClip sound;
-	int i;
 	private static Sound staticSound = new Sound();
 /**	
- * Konstruktor Dateinamen und Dateiort werden �bergeben 
+ * Konstruktor Dateinamen und Dateiort werden uebergeben 
  * @param name
  * @param url
  */
-	public void soundOn(){
-		i = 0;
-	}
-	public void soundOff(){
-		i = 2;
-	}
-	public int checkSound(){
-		return i;
-	}
 	
 	public Sound(String name, URL url){
 		this.name = name;
@@ -38,21 +28,26 @@ public class Sound {
 								e.printStackTrace(System.err);
 							  }
 	}
-//Konstruktor leer
+/**
+ * Default Konstruktor
+ */
 	private Sound() {
 		
 	}
-// Sound in einem eigenen Thread abspielen
+/**
+ * Zum Abspielen einer Audio-Datei
+ */
 	public void play() {
 		new Thread(new Runnable(){
 			@Override
 			public void run() {
-				
-				if(i==0) sound.play();i++;
+				 sound.play();
 			}
 		}).start();
 	}
-// Sound in einem eigenen Thread mit Wiederholung abspielen
+/**
+ * Neuer Thread in dem ein Sound ununterbrochen laeuft
+ */
 	public void loop() {
 		new Thread(new Runnable(){
 			@Override
@@ -61,7 +56,9 @@ public class Sound {
 			}
 		}).start();
 	}
-//Sound stoppen
+/**
+ * Zum Stoppen des Wiedergabe
+ */
 	public void stop() {
 		if(sound!=null) sound.stop();
 	}

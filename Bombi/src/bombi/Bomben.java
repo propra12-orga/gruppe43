@@ -58,13 +58,7 @@ public class Bomben {
         this.player = player;
         bLevel.putBombByPixel(posX, posY);
     }
-
- // SoundManager Audios einlesen
-    SoundManager playAudio = new SoundManager() {
-        public void initSounds() {
-            sounds.add(new Sound("Bumm", Sound.getURL("/Bumm.wav")));   // Explusionssound
-        }
-    };
+    
     /**
      * 
      * @return Gibt die Position der Bombe auf der X-Achse zurück
@@ -80,7 +74,7 @@ public class Bomben {
     public int getPosY() {
         return posY;
     }
-
+  
     // Update für die Bombe. Countdown etc wird runter gezählt
     // Sobald Countdown auf 0 steht, wir markiert welche Steine zerstört werden
     // und prüft, ob unzerstörbare im Weg sind.
@@ -187,7 +181,7 @@ public class Bomben {
                     breakleft = 1;
                     player.addpoints();
                 }
-            } playAudio.playSound("Bumm"); // sound abspielen
+            } player.playAudio.playSound("Bumm"); // sound abspielen
         } else if (radiusDelayCounter > 0)
             radiusDelayCounter--;
         else {
