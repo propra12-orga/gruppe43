@@ -199,7 +199,6 @@ public class Bomben {
             for (int i = 1; i <= radiusleft; i++) {
                 bLevel.removeFireByPixel(posX - i * width, posY);
             }
-            
             bLevel.removeBombByPixel(posX, posY);
             breakright = 0;
             breakleft = 0;
