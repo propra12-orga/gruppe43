@@ -98,7 +98,7 @@ public class BombermanLevel {
      */
     public static final boolean isValidTile(short tile) {
         tile &= TILE;
-        return (tile >= GRASS && tile <= CHUCKNORRIS);
+        return (tile >= GRASS && tile <= HEALTHPLUS);
     }
 
     // Konstanten fuer die Flags
