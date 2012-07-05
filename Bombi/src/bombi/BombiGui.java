@@ -23,6 +23,9 @@ public class BombiGui extends JComponent implements Runnable {
     private static final long SECOND = 1000000000; // eine Sekunde in
                                                    // Nanosekunden
     private static final long SLEEPTIME = SECOND / 60; // 60 FPS
+    
+    private static final int GAMEENDTIME = 120;
+    private int gameEndCounter = -1;
 
     private boolean running = true;
     protected static int stepCount = 0;
@@ -65,8 +68,11 @@ public class BombiGui extends JComponent implements Runnable {
         if (tut >= 1 && tut <= 6) {
             initializeLevel("tut" + tut + ".map");
             tutmsg = tut;
-        } else {
+        } else if(tut ==7) {
             initializeLevel("EigeneMap.map");
+        }
+        else {
+        	initializeLevel("empty.map");
         }
         initializeGraphics();
         initializeInput();
@@ -316,6 +322,45 @@ public class BombiGui extends JComponent implements Runnable {
     	   	
         if (getWidth() != width || getHeight() != height)
             rescale();
+        
+        if (gameEndCounter == 0) {
+        	running = false;
+        	frame.dispose();
+        	if(tut > 0)
+        		new Tutorials();
+        	else
+        		new Menu();
+        	return;
+        }
+        else if (gameEndCounter > 0) {
+        	gameEndCounter--;
+        	return;
+        	}
+        
+         if (player1.exit() || player1.death()) {
+            {
+                if (player1.exit())
+                    playAudio.playSound("Exit");
+                if (player1.death())
+                    playAudio.playSound("End");
+            }
+            gameEndCounter = GAMEENDTIME;
+            return;
+        }
+
+         else if (multiplayer && player2 != null) {
+            if (player2.exit()) {
+                playAudio.playSound("Exit");
+                gameEndCounter = GAMEENDTIME;
+                return;
+            }
+            if (player2.death()) {
+                playAudio.playSound("End");
+                gameEndCounter = GAMEENDTIME;
+                return;
+            }
+
+        }
 
         if (tutcounter > 0)
             tutcounter--;
@@ -377,63 +422,6 @@ public class BombiGui extends JComponent implements Runnable {
             playAudio.playSound("Step");
             stepCount = 0;
         }
-        if (player1.exit() && tut > 0 || player1.death() && tut > 0) {
-            {
-                if (player1.exit())
-                    playAudio.playSound("Exit");
-                if (player1.death()){
-                	Texture.P1WIN.draw(bLevel.getTileDim() * 3,
-                            bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
-                            bLevel.getTileDim() * 4, dbg);
-                	playAudio.playSound("End");
-                }
-
-            }
-
-            try {
-
-                Thread.sleep(5000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            running = false;
-            new Tutorials();
-            frame.dispose();
-            return;
-        }
-
-        if (player1.exit() && tut == 0 || player1.death() && tut == 0) {
-            {
-                if (player1.exit())
-                    playAudio.playSound("Exit");
-                if (player1.death())
-                    playAudio.playSound("End");
-            }
-
-            try {
-
-                Thread.sleep(5000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            running = false;
-            new Menu();
-            frame.dispose();
-            return;
-        }
-
-        if (multiplayer && player2 != null) {
-            if (player2.exit()) {
-                playAudio.playSound("Exit");
-                return;
-            }
-            if (player2.death()) {
-                playAudio.playSound("End");
-                return;
-            }
-
-        }
-
         handleKeyboard();
         updateBombs();
         bLevel.update();
