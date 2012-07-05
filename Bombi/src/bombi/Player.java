@@ -54,7 +54,11 @@ public class Player{
         height = l.getTileDim();
 		
     }
+    public int getLife() {
+    	return health;
+    }
     /**
+    }
      * Gibt den Wert von der Variablem stepsize zurück.
      * @return
      */
