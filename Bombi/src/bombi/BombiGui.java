@@ -53,6 +53,7 @@ public class BombiGui extends JComponent implements Runnable {
     Player player1, player2;
     BombermanLevel bLevel;
     Menu m;
+    Bomben b;
     int fps = 0; // wird durch den main-loop gesetzt
     int tutmsg;
     int tutcounter = 420;
@@ -246,6 +247,7 @@ public class BombiGui extends JComponent implements Runnable {
             sounds.add(new Sound("Step", Sound.getURL("/Step.wav")));
             sounds.add(new Sound("Fight", Sound.getURL("/Fight.wav")));
             sounds.add(new Sound("Pickup", Sound.getURL("/Pickup.wav")));
+            sounds.add(new Sound("Exit", Sound.getURL("/Exit.wav")));
 
         }
     };
@@ -311,6 +313,7 @@ public class BombiGui extends JComponent implements Runnable {
      * des Countdowns der Bomben etc.
      */
     protected void bombermanUpdate() {
+    	   	
         if (getWidth() != width || getHeight() != height)
             rescale();
 
@@ -489,6 +492,7 @@ public class BombiGui extends JComponent implements Runnable {
                 stepCount++;
             } else if (keyPoller.isKeyDown(KeyEvent.VK_CONTROL)) {
                 playAudio.playSound("Put");
+                
                 int posX = player2.getPosX();
                 int posY = player2.getPosY();
                 if (!bLevel.hasBombByPixel(posX, posY)
@@ -516,7 +520,7 @@ public class BombiGui extends JComponent implements Runnable {
         }
 
     }
-
+    
     private void updateBombs() {
         for (int i = 0; i < bombsP1.size(); i++) {
             bombsP1.get(i).update();
