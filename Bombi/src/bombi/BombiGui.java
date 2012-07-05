@@ -378,8 +378,12 @@ public class BombiGui extends JComponent implements Runnable {
             {
                 if (player1.exit())
                     playAudio.playSound("Exit");
-                if (player1.death())
-                    playAudio.playSound("End");
+                if (player1.death()){
+                	Texture.P1WIN.draw(bLevel.getTileDim() * 3,
+                            bLevel.getTileDim() * 4, bLevel.getTileDim() * 10,
+                            bLevel.getTileDim() * 4, dbg);
+                	playAudio.playSound("End");
+                }
 
             }
 

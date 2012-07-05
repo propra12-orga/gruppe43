@@ -348,6 +348,8 @@ public class Player{
     SoundManager playAudio = new SoundManager() {
         public void initSounds() {
             sounds.add(new Sound("Pickup", Sound.getURL("/Pickup.wav")));
+            sounds.add(new Sound("Bumm", Sound.getURL("/Bumm.wav")));
+
           
         }
     };
