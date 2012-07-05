@@ -66,6 +66,11 @@ public class ServerBombiGui extends BombiGui {
      * Werte fuer eine Kachel des Levels darstellen.
      */
     public static final String TILE = "TI";
+    /**
+     * Informiert den Client darueber, dass die folgenden Daten ein neues
+     * Powerup darstellen.
+     */
+    public static final String POWERUP = "PU";
 
     // Netzwerk In- und Output
     private ServerSocket serverSock;
@@ -160,6 +165,7 @@ public class ServerBombiGui extends BombiGui {
         }
         // sende dem Client neue Kacheln (idR Powerups)
         send(bLevel.createNewTilePacket());
+        send(bLevel.createNewPowerupPacket());
     }
 
     @Override

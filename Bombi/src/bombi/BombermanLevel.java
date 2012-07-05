@@ -1,7 +1,9 @@
 package bombi;
 
 import java.awt.Graphics;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
  * Diese Klasse erzeugt Objekte, welche als Spielfeld interpretiert werden.
@@ -125,10 +127,12 @@ public class BombermanLevel {
                                     // setzen. ATM auf true, da partielles
                                     // Updaten noch nicht von den anderen
                                     // Klassen unterstuetzt ist
-    private boolean destroyBlocks = true; // setze dies auf false fuer Clients
+    private boolean spawnPowerups = true; // setze dies auf false fuer Clients
 
-    public void setDestroyBlocks(boolean destroyBlocks) {
-        this.destroyBlocks = destroyBlocks;
+    public void setSpawnPowerups(boolean spawnPowerups) {
+        this.spawnPowerups = spawnPowerups;
+        if(!spawnPowerups)
+        	nextPowerups.clear();
     }
 
     /**
@@ -207,6 +211,8 @@ public class BombermanLevel {
 
     // zweidimensionales Array, welches das Spielfeld darstellt
     private short[][] tiles;
+    // in dieser Queue werden die naechsten zu spawnenden Powerups gehalten
+    private Queue<Short> nextPowerups;
     // Dimension des obigen Arrays
     private int width, height;
 
@@ -237,6 +243,7 @@ public class BombermanLevel {
         // erstelle ein leeres Spielfeld
         tiles = new short[this.width][this.height];
         fillRandomly();
+        initializePowerups();
     }
 
     /**
@@ -271,6 +278,19 @@ public class BombermanLevel {
         this.height = tiles[1].length;
         // Berechne die Größe der Felder in Pixel
         updateTileDimensions(pixelWidth, pixelHeight);
+        initializePowerups();
+    }
+    
+    private void initializePowerups(){
+    	nextPowerups = new LinkedList<Short>();
+    	for(int i = 0; i < 10; i++) {
+    		short powerup = markForTransmit(spawnPowerup());
+    		nextPowerups.offer(powerup);
+    	}
+    }
+    
+    public void addPowerup(short powerUp) {
+    	nextPowerups.offer((short)(powerUp & TILE));
     }
 
     /*
@@ -420,24 +440,32 @@ public class BombermanLevel {
 
     /* Innere Methode. Von Aussen wird destroyBlockByPixel genutzt. */
     private void destroyBlock(int posX, int posY) {
-        if (!destroyBlocks || posX < 0 || posX >= width || posY < 0
+        if (posX < 0 || posX >= width || posY < 0
                 || posY >= height)
             return;
         short tile = getTile(posX, posY);
         if (tile == STONE) {
             tiles[posX][posY] &= ~TILE;
-            tiles[posX][posY] |= spawnPowerup();
+            short powerUp;
+            if(!nextPowerups.isEmpty()) {
+            	powerUp = (short) (nextPowerups.poll() & TILE);
+            	if(spawnPowerups)
+            		nextPowerups.offer(markForTransmit(spawnPowerup()));
+            }
+        	else
+        		powerUp = GRASS;
+            tiles[posX][posY] |= powerUp;
             markForUpdate(posX, posY); // moechten Aenderung sehen
         } else if (tile == HIDDENEXIT) {
             tiles[posX][posY] &= ~TILE;
             tiles[posX][posY] |= EXIT;
             markForUpdate(posX, posY);
-        } else if (tile == BOMBPLUS || tile == FIREPLUS) {
+        } else if (tile == BOMBPLUS || tile == FIREPLUS || tile == SPEEDPLUS || tile == HEALTHPLUS) {
             tiles[posX][posY] &= ~TILE;
             tiles[posX][posY] |= GRASS;
             markForUpdate(posX, posY);
         }
-        markForTransmit(posX, posY);
+        // markForTransmit(posX, posY);
     }
 
     /*
@@ -837,12 +865,24 @@ public class BombermanLevel {
             return false;
         return (tiles[posX][posY] & TRANSMIT) != 0;
     }
+    
+    private boolean markedForTransmit(short tile) {
+        return (tile & TRANSMIT) != 0;
+    }
 
     private void markForTransmit(int posX, int posY) {
         if (posX < 0 || posX >= width || posY < 0 || posY >= height)
             return;
         tiles[posX][posY] |= TRANSMIT;
 
+    }
+    
+    private short markForTransmit(short tile) {
+    	return tile |= TRANSMIT;
+    }
+    
+    private short unmarkForTransmit(short tile) {
+    	return tile &= ~TRANSMIT;
     }
 
     private void unmarkForTransmit(int posX, int posY) {
@@ -885,6 +925,17 @@ public class BombermanLevel {
                             + i + ServerBombiGui.POSY + j + "\n";
                 }
         return packet;
+    }
+    
+    public String createNewPowerupPacket() {
+    	String packet = "";
+    	for(int i = 0; i < nextPowerups.size(); i++){
+    		Short powerUp = (Short)((LinkedList) nextPowerups).get(i);
+    		if(powerUp != null && markedForTransmit(powerUp)) {
+    			packet += ServerBombiGui.POWERUP + (powerUp & TILE) + "\n";
+    		}
+    	}
+    	return packet;
     }
 
     public void setTile(short tile, int posX, int posY) {

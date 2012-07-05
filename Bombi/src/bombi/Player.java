@@ -66,7 +66,7 @@ public class Player{
      * schneller laufen kann.
      */
     public void removeStepsize(){
-    	stepsize--;
+    	if(stepsize > 0) stepsize--;
     }
   /**
    * Die Methode erhöht die Punktezahl des Spielers um 100

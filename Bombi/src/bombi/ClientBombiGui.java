@@ -76,7 +76,12 @@ public class ClientBombiGui extends BombiGui {
      * Werte fuer eine Kachel des Levels darstellen.
      */
     public static final String TILE = "TI";
-
+    /**
+     * Informiert den Client darueber, dass die folgenden Daten ein neues
+     * Powerup darstellen.
+     */
+    public static final String POWERUP = "PU";
+    
     // Netzwerk In- und Output
     private Socket socket;
     private BufferedReader fromServer;
@@ -170,7 +175,7 @@ public class ClientBombiGui extends BombiGui {
                     if (input.startsWith(LEVEL)) {
                         System.out.print("Receiving Level... ");
                         // erzeuge eine temporaere Datei
-                        String filename = "map" + File.pathSeparator + "temp"
+                        String filename = "temp"
                                 + this.hashCode();
                         FileWriter fw = new FileWriter(filename);
                         // speichere alle Zeilen in diese Datei
@@ -182,9 +187,8 @@ public class ClientBombiGui extends BombiGui {
                         fw.flush();
                         fw.close();
                         // lese nun aus der temporaeren Datei das Level
-                        bLevel = new BombermanLevel(LevelParser.parseMap("temp"
-                                + this.hashCode(), false), width, height);
-                        bLevel.setDestroyBlocks(false);
+                        bLevel = new BombermanLevel(LevelParser.parseMap(filename,true), width, height);
+                        bLevel.setSpawnPowerups(false);
                         player1.setBombermanLevel(bLevel);
                         player2.setBombermanLevel(bLevel);
                         // und loesche die Datei
@@ -284,6 +288,15 @@ public class ClientBombiGui extends BombiGui {
                         // aktualisiere die empfangene Kachel
                         bLevel.setTile(tile, posX, posY);
                         System.out.println("Placed remote bomb");
+                    }
+                    
+                 // Fall 7: Ein neues Powerup wurde verschickt
+                    else if (input.startsWith(POWERUP)) {
+                        // nach dem Schluesselwort folgt das Powerup
+                        int beginIndex = POWERUP.length();
+                        short powerUp = Short.parseShort(input.substring(beginIndex));
+                        bLevel.addPowerup(powerUp);
+                        System.out.println("Received Powerup");
                     }
                 } catch (NumberFormatException e) {
                     System.err.println("Corrupt package.");
