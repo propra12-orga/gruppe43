@@ -66,7 +66,7 @@ public class BombiGui extends JComponent implements Runnable {
             initializeLevel("tut" + tut + ".map");
             tutmsg = tut;
         } else {
-            initializeLevel("");
+            initializeLevel("EigeneMap.map");
         }
         initializeGraphics();
         initializeInput();
