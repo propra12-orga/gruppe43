@@ -186,7 +186,7 @@ public class Bomben {
             radiusDelayCounter--;
         else {
             state = EXPLODED;
-            /*bLevel.removeFireByPixel(posX, posY);
+            bLevel.removeFireByPixel(posX, posY);
             for (int i = 1; i <= radiusup; i++) {
                 bLevel.removeFireByPixel(posX, posY - i * height);
             }
@@ -199,7 +199,7 @@ public class Bomben {
             for (int i = 1; i <= radiusleft; i++) {
                 bLevel.removeFireByPixel(posX - i * width, posY);
             }
-            */
+            
             bLevel.removeBombByPixel(posX, posY);
             breakright = 0;
             breakleft = 0;
@@ -236,19 +236,16 @@ public class Bomben {
             
         } else if (state == EXPLODING) {
             Texture.EXPLMID.draw(posX, posY, width, height, g);
-            bLevel.removeFireByPixel(posX, posY);
             
 
             for (int i = 1; i <= radiusup ; i++) {
             	if(i<radiusup && bLevel.hasFireByPixel(posX, posY - i * height) ){
             	Texture.EXPLVER.draw(posX, posY - i * height, width, height, g);
             	bLevel.markForUpdateByPixel(posX, posY - radiusup * height);
-            	bLevel.removeFireByPixel(posX, posY - i * height);
             	}
             	
             	else if (i==radiusup && bLevel.hasFireByPixel(posX, posY - i * height)){
             		Texture.EXPLTOP.draw(posX, posY - radiusup * height, width,height, g);
-                	bLevel.removeFireByPixel(posX, posY - i * height);
                     bLevel.markForUpdateByPixel(posX, posY - radiusup * height);
             	}
             }
@@ -256,12 +253,10 @@ public class Bomben {
             for (int i = 1; i <= radiusdown ; i++) {
             	if(i<radiusdown && bLevel.hasFireByPixel(posX, posY + i * height) ){
                 	Texture.EXPLVER.draw(posX, posY + i * height, width, height, g);
-                	bLevel.removeFireByPixel(posX, posY + i * height);
                 	bLevel.markForUpdateByPixel(posX, posY + radiusdown * height);}
                 	
                 	else if (i==radiusdown && bLevel.hasFireByPixel(posX, posY + i * height)){
                 		Texture.EXPLBOT.draw(posX, posY + radiusdown * height, width,height, g);
-                		bLevel.removeFireByPixel(posX, posY + i * height);
                         bLevel.markForUpdateByPixel(posX, posY + radiusdown * height);
                 	}
             }
@@ -269,12 +264,10 @@ public class Bomben {
             for (int i = 1; i <= radiusleft; i++) {
             	if(i<radiusleft && bLevel.hasFireByPixel(posX-i * width, posY)){
                 	Texture.EXPLHOR.draw(posX-i* width, posY, width, height, g);
-                	bLevel.removeFireByPixel(posX - i * width, posY);
                 	bLevel.markForUpdateByPixel(posX - radiusleft * width, posY);}
                 	
                 	else if (i==radiusleft && bLevel.hasFireByPixel(posX - i * width, posY)){
                 		Texture.EXPLLEF.draw(posX - radiusleft * width, posY, width,height, g);
-                		bLevel.removeFireByPixel(posX - i * width, posY);
                         bLevel.markForUpdateByPixel(posX -radiusleft * width, posY);
                 	}
             }
@@ -283,13 +276,11 @@ public class Bomben {
 
             	if(i<radiusright && bLevel.hasFireByPixel(posX+i * width, posY)){
                 	Texture.EXPLHOR.draw(posX+i* width, posY, width, height, g);
-                	bLevel.removeFireByPixel(posX + i * width, posY);
                 	bLevel.markForUpdateByPixel(posX + radiusright * width, posY);
 }
                 	
                 	else if (i==radiusright && bLevel.hasFireByPixel(posX + i * width, posY)){
                 		Texture.EXPLRIG.draw(posX + radiusright * width, posY, width,height, g);
-                		bLevel.removeFireByPixel(posX + i * width, posY);
                         bLevel.markForUpdateByPixel(posX +radiusright * width, posY);
                 	}
             }
