@@ -88,7 +88,25 @@ public class Multiauswahl extends JFrame {
 	    button2.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	                
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("BombiServer");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new ServerBombiGui(frame);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
 	            }
 	        });
 	    
@@ -96,7 +114,25 @@ public class Multiauswahl extends JFrame {
 	    button3.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	                
+	        	JFrame frame = new JFrame();
+                
+                frame.setTitle("BombiClient");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                BombiGui bGui = new ClientBombiGui(frame, "localhost", 1337);
+                
+                frame.add(bGui);
+                frame.pack();
+                // passt die Gr��e dem Inhalt an
+
+                // zentriert das Fenster
+                frame.setLocationRelativeTo(null);
+
+                frame.setVisible(true);
+                
+                new Thread(bGui).start();
+                
+                dispose();
 	            }
 	        });
 	    
