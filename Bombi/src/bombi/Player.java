@@ -290,7 +290,7 @@ public class Player{
   
     public void Direction(int xdir,int ydir) {
     	
-        int dim = (int)(l.getTileDim() * 0.8);
+        int dim = l.getTileDim();
        
 	       
       if(l.isSolidByPixel(posX, posY)){
@@ -306,6 +306,7 @@ public class Player{
     		 
     	return;  
       }
+      dim *= 0.8;
       if(xdir > 0){
     	  if(!l.isSolidByPixel(posX+dim+xdir, posY) && !l.isSolidByPixel(posX+dim+xdir, posY+dim))
     		  posX += xdir;
@@ -351,6 +352,11 @@ public class Player{
           
         }
     };
+
+
+	public void setBombermanLevel(BombermanLevel bLevel) {
+		this.l = bLevel;		
+	}
 
     
 	

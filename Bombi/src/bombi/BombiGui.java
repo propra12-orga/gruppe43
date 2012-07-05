@@ -62,10 +62,10 @@ public class BombiGui extends JComponent implements Runnable {
         this.frame = frame;
         this.tut = tut;
         if (tut >= 1 && tut <= 6) {
-            initializeLevel("/tut" + tut + ".map");
+            initializeLevel("tut" + tut + ".map");
             tutmsg = tut;
         } else {
-            initializeLevel("/empty.map");
+            initializeLevel("");
         }
         initializeGraphics();
         initializeInput();
@@ -429,6 +429,7 @@ public class BombiGui extends JComponent implements Runnable {
 
         handleKeyboard();
         updateBombs();
+        bLevel.update();
     }
 
     private void rescale() {
@@ -437,7 +438,17 @@ public class BombiGui extends JComponent implements Runnable {
         dbg.dispose();
         gameG.dispose();
         bLevel.updateTileDimensions(width, height);
+        int oldWidth = gameImage.getWidth();
+        int oldHeight = gameImage.getHeight();
         initializeGraphics();
+        int newWidth = gameImage.getWidth();
+        int newHeight = gameImage.getHeight();
+        player1.setPosX((player1.getPosX() * newWidth)/oldWidth);
+        player1.setPosY((player1.getPosY() * newHeight)/oldHeight);
+        if(multiplayer && player2 != null) {
+        	player2.setPosX((player2.getPosX() * newWidth)/oldWidth);
+            player2.setPosY((player2.getPosY() * newHeight)/oldHeight);
+        }        	
     }
 
     protected void handleKeyboard() {

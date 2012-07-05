@@ -297,8 +297,10 @@ public class Texture {
     
     public static Texture SPEED1 = new Texture(0, 1409, 32, 32);
     public static Texture SPEED2 = new Texture(32, 1409, 32, 32);
+    public static Texture[] ITEMSPEED = {SPEED1, SPEED2};
     public static Texture HEART1 = new Texture(64, 1409, 32, 32);
     public static Texture HEART2 = new Texture(96, 1409, 32,32);
+    public static Texture[] ITEMHEART = {HEART1, HEART2};
 
     // Abwaertskompatibilitaet
     public static Texture SPIELER1 = PLAYER_IDLE_FRONT;

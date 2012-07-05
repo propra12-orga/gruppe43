@@ -63,6 +63,18 @@ public class BombermanLevel {
     private static final float FIPLPROB = 0.2f;
     /**
      * Wert (ohne D, B oder F Flag), welcher als Powerup interpretiert wird,
+     * welches die Reichweite der Bomben erhoeht.
+     */
+    public static final short SPEEDPLUS = 8;
+    private static final float SPEEDPROB = 0.2f;
+    /**
+     * Wert (ohne D, B oder F Flag), welcher als Powerup interpretiert wird,
+     * welches die Reichweite der Bomben erhoeht.
+     */
+    public static final short HEALTHPLUS = 9;
+    private static final float HEALTHPROB = 0.2f;
+    /**
+     * Wert (ohne D, B oder F Flag), welcher als Powerup interpretiert wird,
      * welches den Spieler in Chuck Norris verwandelt.
      */
     public static final short CHUCKNORRIS = 7;
@@ -437,6 +449,10 @@ public class BombermanLevel {
             return BOMBPLUS;
         if (Math.random() <= FIPLPROB)
             return FIREPLUS;
+        if (Math.random() <= SPEEDPROB)
+            return SPEEDPLUS;
+        if (Math.random() <= HEALTHPROB)
+            return HEALTHPLUS;
         // if(Math.random() <= NORRISPROB)
         // return CHUCKNORRIS;
         return GRASS;
@@ -494,6 +510,12 @@ public class BombermanLevel {
 
                     else if (currentTile == FIREPLUS)
                         drawFirePlus(i, j, g);
+                    
+                    else if (currentTile == SPEEDPLUS)
+                        drawSpeedPlus(i, j, g);
+                    
+                    else if (currentTile == HEALTHPLUS)
+                        drawHealthPlus(i, j, g);
                 }
             }
         }
@@ -527,6 +549,16 @@ public class BombermanLevel {
 
     private void drawFirePlus(int posX, int posY, Graphics g) {
         Texture.ITEMFIRE[animFrame].draw(posX * tileDim, posY * tileDim,
+                tileDim, tileDim, g);
+    }
+    
+    private void drawSpeedPlus(int posX, int posY, Graphics g) {
+        Texture.ITEMSPEED[animFrame].draw(posX * tileDim, posY * tileDim,
+                tileDim, tileDim, g);
+    }
+    
+    private void drawHealthPlus(int posX, int posY, Graphics g) {
+        Texture.ITEMHEART[animFrame].draw(posX * tileDim, posY * tileDim,
                 tileDim, tileDim, g);
     }
 
