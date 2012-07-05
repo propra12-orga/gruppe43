@@ -460,10 +460,11 @@ public class BombermanLevel {
             tiles[posX][posY] &= ~TILE;
             tiles[posX][posY] |= EXIT;
             markForUpdate(posX, posY);
-        } else if (tile == BOMBPLUS || tile == FIREPLUS || tile == SPEEDPLUS || tile == HEALTHPLUS) {
+        } else if (spawnPowerups && (tile == BOMBPLUS || tile == FIREPLUS || tile == SPEEDPLUS || tile == HEALTHPLUS)) {
             tiles[posX][posY] &= ~TILE;
             tiles[posX][posY] |= GRASS;
             markForUpdate(posX, posY);
+            markForTransmit(posX, posY);
         }
         // markForTransmit(posX, posY);
     }
@@ -929,10 +930,12 @@ public class BombermanLevel {
     
     public String createNewPowerupPacket() {
     	String packet = "";
+    	LinkedList<Short> nextPowerups = (LinkedList)this.nextPowerups;
     	for(int i = 0; i < nextPowerups.size(); i++){
-    		Short powerUp = (Short)((LinkedList) nextPowerups).get(i);
+    		Short powerUp = nextPowerups.get(i);
     		if(powerUp != null && markedForTransmit(powerUp)) {
     			packet += ServerBombiGui.POWERUP + (powerUp & TILE) + "\n";
+    			nextPowerups.set(i, unmarkForTransmit(powerUp));
     		}
     	}
     	return packet;
